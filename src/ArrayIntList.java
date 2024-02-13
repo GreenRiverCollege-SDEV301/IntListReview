@@ -1,7 +1,19 @@
 import java.util.Iterator;
 
+//There is a class called Object
+//It's not explicit, but when we create a class we "extends Object",
+//which holds methods like toString();
 public class ArrayIntList implements IntList {
+    //Internal (private) representation
+    private int[] buffer;
+    private int size; //how much is actually currently contained ("spots used") in the buffer
+    //capacity is different - capacity is the total length of what can be held
+    private final static int INITIAL_CAPACITY = 10;
 
+    public ArrayIntList() {
+        this.buffer = new int[INITIAL_CAPACITY];
+        this.size = 0;
+    }
 
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
@@ -22,7 +34,9 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
-
+        //TODO: check to see if we still have room (i.e. capacity)
+        buffer[size] = value;
+        size++;
     }
 
     /**
@@ -145,5 +159,26 @@ public class ArrayIntList implements IntList {
     @Override
     public Iterator<Integer> iterator() {
         return null;
+    }
+
+    //toString() is from the object class
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        for (int i = 0; i < size - 1; i++) {
+            sb.append(buffer[i]);
+            sb.append(", ");
+        }
+
+        sb.append(this.buffer[size - 1]);
+
+        sb.append("]");
+        return sb.toString();
     }
 }
