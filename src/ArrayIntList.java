@@ -77,7 +77,17 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeBack() {
+        if (this.size > 0) {
+            //Note: You can do "lazy deletion" i.e. just update size
+            //because it'll auto "filter" via size (in toString)
+            this.size -= 1;
+            this.buffer[size] = 0;
 
+            //Alternative ways
+            //If using --size: subtract from size first, then access buffer
+            //If using size--: access buffer first and set to zero, then subtract size
+//            buffer[--size] = 0;
+        }
     }
 
     /**
@@ -195,6 +205,9 @@ public class ArrayIntList implements IntList {
 
     private void resize(int newSize) {
         //Create a new array that is of the new size
+        //If primitive array, we use primitive values (the array is set to zeros, not null)
+        //Since it's int[], we can only put in ints (i.e. 0's)
+        //If we had an object array, we'd be able to use null
         int[] temp = new int[newSize];
 
         //Copy over values from the existing buffer
