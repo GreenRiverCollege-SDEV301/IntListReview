@@ -9,6 +9,8 @@ public class Main {
         list1.addBack(42);
         list1.addBack(82);
         list1.addBack(97);
+        list1.removeBack();
+        list1.addFront(1);
 
         System.out.println(list1);
     }

@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
@@ -5,6 +7,32 @@ public class ArrayIntList implements IntList {
     // relationship between interface and class is a contract
     // implement without the blueprint methods is violating that contract
     // auto methods intellij inserts are called stubs - just enough to compile
+
+    // internal (private) representation
+    private int[] buffer;
+    // size is the number of indices actually being used, not the size of the list itself
+    private int size;
+    // easy to change constant for buffer start size
+    private final static int INITIAL_CAPACITY = 10;
+
+    ArrayIntList() {
+        buffer = new int[INITIAL_CAPACITY];
+        size = 0;
+    }
+
+    private void resize(int newSize){
+        // create new array that's larger
+        int[] temp = new int[newSize];
+
+        // copy values from existing buffer
+        for (int i = 0; i < size; i++) {
+            temp[i] = buffer[i];
+        }
+
+        // make the switch
+        buffer = temp;
+    }
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -14,6 +42,19 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
+        // check if full
+        if (size == buffer.length){
+            resize(buffer.length * 2);
+        }
+
+        for (int i = size; i > 0; i--) {
+            // shift everything over to open a spot at the front (move them to the right)
+            buffer[i] = buffer[i-1];
+        }
+        // set the first value to the added one
+        buffer[0] = value;
+        // change size since we added to the list
+        size++;
     }
 
     /**
@@ -23,7 +64,14 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
-
+        if (size == buffer.length){
+            // if size matches the capacity then it's full and resize is required
+            // create a new larger buffer/array and copy the values over
+            // make new size twice existing capacity/length
+            resize(2 * buffer.length);
+        }
+        buffer[size] = value;
+        size++;
     }
 
     /**
@@ -56,6 +104,16 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeBack() {
+        if (size == 0){
+            // don't allow size to be lowered to a negative
+            // could also just check if size is greater than zero
+            // that way avoids the error, but then it just does nothing with no statement
+            throw new IllegalStateException("There is nothing in this list to remove");
+        }
+        // subtract one from size
+        size--;
+        // set size index to zero since it will be the index beyond the new length
+        buffer[size] = 0;
 
     }
 
@@ -171,5 +229,29 @@ public class ArrayIntList implements IntList {
     @Override
     public void forEach(Consumer<? super Integer> action) {
         IntList.super.forEach(action);
+    }
+
+    /**
+     * This returns the list as a String
+     * @return String
+     */
+    @Override
+    public String toString() {
+        if (size == 0){
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        sb.append(buffer[0]);
+        for (int i = 1; i < size; i++) {
+            sb.append(", ");
+            sb.append(buffer[i]);
+
+        }
+        //sb.delete(sb.length() - 2, sb.length());
+        sb.append("]");
+
+        return sb.toString();
     }
 }
