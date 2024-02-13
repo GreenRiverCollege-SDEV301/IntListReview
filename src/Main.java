@@ -13,5 +13,10 @@ public class Main {
         list1.addBack(97);
 
         System.out.println(list1);
+
+        list1.removeBack();
+        list1.addFront(32);
+
+        System.out.println(list1);
     }
 }
