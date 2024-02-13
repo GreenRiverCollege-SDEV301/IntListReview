@@ -21,5 +21,10 @@ public class Main {
        list1.addBack(97);
 
         System.out.println(list1.toString());
+
+        list1.removeBack();
+        System.out.println(list1.toString());
+        list1.addFront(100);
+        System.out.println(list1.toString());
     }
 }

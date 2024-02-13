@@ -22,8 +22,14 @@ public class ArrayIntList implements IntList
      * @param value value to be inserted
      */
     @Override
-    public void addFront(int value) {
-
+    public void addFront(int value)
+    {
+        //backwards for loop that ends at 1 instead of 0 this way the list is incremented by 1
+        for (int i = size; i >= 1; i--)
+        {
+            buffer[i] = buffer[i--];
+        }
+        buffer[0] = value;
     }
     private void resize(int newSize)
     {
@@ -47,7 +53,7 @@ public class ArrayIntList implements IntList
         if (size == buffer.length)
         {
             //resize the buffer
-            resize(size+10);
+            resize(size * 2);
         }
         buffer[size] = value;
         size++;
@@ -63,7 +69,8 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public void add(int index, int value) {
+    public void add(int index, int value)
+    {
 
     }
 
@@ -73,7 +80,8 @@ public class ArrayIntList implements IntList
      * Shifts any subsequent values to the left.
      */
     @Override
-    public void removeFront() {
+    public void removeFront()
+    {
 
     }
 
@@ -82,8 +90,14 @@ public class ArrayIntList implements IntList
      * (at index size()-1), if it is present.
      */
     @Override
-    public void removeBack() {
-
+    public void removeBack()
+    {
+        if (size == 0)
+        {
+            throw new IllegalStateException("Already empty");
+        }
+        //size--;
+        buffer[--size] = 0;
     }
 
     /**
