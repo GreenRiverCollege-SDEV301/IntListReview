@@ -141,7 +141,7 @@ public class ArrayIntList  implements  IntList
     }
     private void checkSize()
     {
-        if(size < buffer.length - 2)
+        if(size > buffer.length - 2)
         {
             buffer = resize();
         }
