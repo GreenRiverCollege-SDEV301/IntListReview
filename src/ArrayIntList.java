@@ -40,6 +40,10 @@ public class ArrayIntList  implements  IntList
     @Override
     public void removeFront()
     {
+        if(size == 0)
+        {
+            throw new IndexOutOfBoundsException("Attempt to remove from empty arrayList.");
+        }
         size--;
     }
 
@@ -52,6 +56,10 @@ public class ArrayIntList  implements  IntList
     @Override
     public int remove(int index)
     {
+        if(size == 0)
+        {
+            throw new IndexOutOfBoundsException("Attempt to remove from empty arrayList.");
+        }
         checkIndex(index);
         int returnInt = buffer[index];
         for(int i = index; i < size;  i++)
