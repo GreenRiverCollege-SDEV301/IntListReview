@@ -14,6 +14,9 @@ public class Main {
         list1.addBack(82);
         list1.addBack(97);
 
+        list1.removeBack();
+        list1.addFront(1000);
+
         System.out.println(list1);
     }
 }
