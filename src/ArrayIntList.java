@@ -24,7 +24,20 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
+        //Check if full
+        if (size == buffer.length) {
+            resize(2 * buffer.length);
+        }
 
+        //Open a spot at index 0 where value will be saved
+        //Shift everything over to the right by 1 position
+        for (int i = size; i > 0; i--) {
+            buffer[i] = buffer[i - 1];
+        }
+
+        //Put value in position [0]
+        this.buffer[0] = value;
+        this.size++;
     }
 
     /**
@@ -87,6 +100,8 @@ public class ArrayIntList implements IntList {
             //If using --size: subtract from size first, then access buffer
             //If using size--: access buffer first and set to zero, then subtract size
 //            buffer[--size] = 0;
+        } else {
+            throw new IllegalStateException("Already empty!");
         }
     }
 
