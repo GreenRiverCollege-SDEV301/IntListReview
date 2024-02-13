@@ -33,7 +33,6 @@ public class ArrayIntList implements IntList
             temp[i] = buffer[i];
         }
         buffer = temp;
-
     }
 
     /**
