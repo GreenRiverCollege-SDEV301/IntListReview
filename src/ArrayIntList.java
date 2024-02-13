@@ -34,7 +34,15 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
-        //TODO: check to see if we still have room (i.e. capacity)
+        if (size == buffer.length) {
+            //If the size matches the capacity, then I know I'm "fulL"
+            //and I need to resize (create a new larger buffer and copy
+            //the values over from the older smaller buffer)
+
+            //make the newSize twice the existing capacity
+            resize(2 * buffer.length);
+        }
+
         buffer[size] = value;
         size++;
     }
@@ -180,5 +188,21 @@ public class ArrayIntList implements IntList {
 
         sb.append("]");
         return sb.toString();
+    }
+
+
+    //Helper Methods
+
+    private void resize(int newSize) {
+        //Create a new array that is of the new size
+        int[] temp = new int[newSize];
+
+        //Copy over values from the existing buffer
+        for (int i = 0; i < this.size; i++) {
+            temp[i] = this.buffer[i];
+        }
+
+        //Make the switchover
+        this.buffer = temp;
     }
 }
