@@ -26,5 +26,14 @@ public class Main {
         System.out.println(list1.toString());
         list1.addFront(100);
         System.out.println(list1.toString());
+        list1.removeFront();
+        System.out.println(list1.toString());
+        list1.add(4,99);
+        System.out.println(list1.toString());
+        System.out.println("Contains 99: "+list1.contains(99));
+        list1.remove(4);
+        System.out.println(list1.toString());
+        System.out.println("Contains 99: "+list1.contains(99));
+
     }
 }
