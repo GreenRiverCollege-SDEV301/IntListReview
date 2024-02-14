@@ -1,6 +1,20 @@
 import java.util.Iterator;
 
 public class ArrayIntList implements IntList{
+    private int[] buffer;
+    private int size;       // number of 'spots used'
+    private final static int INITIAL_CAPACITY = 10;
+
+    public ArrayIntList() {
+        buffer = new int[INITIAL_CAPACITY];
+        size = 0;
+    }
+
+
+
+
+
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -10,7 +24,15 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void addFront(int value) {
+        if(size == buffer.length) {
+            resize(2 * buffer.length);
+        }
 
+        for(int i = size; i > 0; i--) {
+            buffer[i] = buffer[i-1];
+        }
+        buffer[0] = value;
+        size++;
     }
 
     /**
@@ -20,6 +42,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void addBack(int value) {
+        if (size == buffer.length) {
+            resize(2 * buffer.length);
+        }
+        buffer[size] = value;
+        size++;
 
     }
 
@@ -45,6 +72,7 @@ public class ArrayIntList implements IntList{
     @Override
     public void removeFront() {
 
+
     }
 
     /**
@@ -53,6 +81,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void removeBack() {
+        if(size == 0) {
+            throw new IllegalStateException("Cannot remove elements from an empty array");
+        }
+        buffer[--size] = 0;
+
 
     }
 
@@ -143,5 +176,39 @@ public class ArrayIntList implements IntList{
     @Override
     public Iterator<Integer> iterator() {
         return null;
+    }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        sb.append(buffer[0]);
+
+        for(int i = 1; i < size; i++) {
+            sb.append(", ");
+            sb.append(buffer[i]);
+        }
+        sb.append("]");
+
+        return sb.toString();
+
+    }
+
+    private void resize(int newSize) {
+        // create a new array that is larger
+        int[] temp = new int[newSize];
+
+        // copy over values
+        for (int i = 0; i < size; i++) {
+            temp[i] = buffer[i];
+        }
+
+        // make the switchover
+        buffer = temp;
     }
 }
