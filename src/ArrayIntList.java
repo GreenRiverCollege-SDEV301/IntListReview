@@ -61,7 +61,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
-
+        size++;
+        for(int i = size; i > index; i--) {
+            buffer[i] = buffer[i-1];
+        }
+        buffer[index] = value;
     }
 
     /**
@@ -71,6 +75,15 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void removeFront() {
+        if(size == 0) {
+            throw new IllegalStateException("Cannot remove elements from an empty array");
+        }
+
+        for(int i = 0; i < size; i++) {
+            buffer[i] = buffer[i+1];
+        }
+
+        buffer[size--] = 0;
 
 
     }
@@ -100,7 +113,16 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if(index > size) {
+            throw new IndexOutOfBoundsException("Index " + index + " out of range for size " + size);
+        }
+        int temp = buffer[index];
+        for(int i = index; i < size; i++) {
+            buffer[i] = buffer[i+1];
+        }
+        return temp;
+
+
     }
 
     /**
@@ -112,7 +134,12 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int get(int index) {
-        return 0;
+        if(index > size) {
+            throw new IndexOutOfBoundsException("Index " + index + " out of range for size " + size);
+
+        }
+
+        return buffer[index];
     }
 
     /**
@@ -123,6 +150,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean contains(int value) {
+        for(int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -136,7 +168,12 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for(int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return buffer[i];
+            }
+        }
+        return -1;
     }
 
     /**
@@ -146,7 +183,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     /**
@@ -156,7 +193,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -165,7 +202,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void clear() {
-
+        size = 0;
     }
 
     /**
@@ -175,7 +212,19 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new Iterator<Integer>() {
+
+            private int index = 0;
+            @Override
+            public boolean hasNext() {
+                return index < size - 1;
+            }
+
+            @Override
+            public Integer next() {
+                return buffer[index++];
+            }
+        };
     }
 
     @Override
