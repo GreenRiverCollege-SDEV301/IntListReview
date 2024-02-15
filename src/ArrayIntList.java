@@ -2,6 +2,15 @@ import java.util.Iterator;
 
 public class ArrayIntList implements IntList
 {
+    // internal (private) representation
+    private int[] buffer;
+    private int size; //number of "spots used" in the buffer
+    private final static int INITIAL_CAPACITY = 10;
+
+    public ArrayIntList(){
+        buffer = new int[INITIAL_CAPACITY];
+        size  = 0 ;
+    }
 
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
@@ -13,7 +22,27 @@ public class ArrayIntList implements IntList
     @Override
     public void addFront(int value)
     {
+        resize(2*buffer.length);
+        for (int i = size; i >= 1; i--)
+        {
+            buffer[i]=buffer[i-1];
+        }
+        buffer[0]=value;
+        size++;
 
+//        if(size == buffer.length){
+//            //if the size meathces the capacity then i know
+//            //I need to resize the size of the buffer
+//            //
+//            resize(2*buffer.length);
+//        }
+//        for (int i = size; i >=1; i--)
+//        {
+//            buffer[i]= buffer[i-1];
+//        }
+//        //but value in position [0]
+//        buffer[0]= value;
+//        size++;
     }
 
     /**
@@ -24,6 +53,15 @@ public class ArrayIntList implements IntList
     @Override
     public void addBack(int value)
     {
+        if(size == buffer.length){
+            //if the size meathces the capacity then i know
+            //I need to resize the size of the buffer
+            //
+            resize(2*buffer.length);
+        }
+
+        buffer[size] = value;
+        size++;
 
     }
 
@@ -39,6 +77,21 @@ public class ArrayIntList implements IntList
     @Override
     public void add(int index, int value)
     {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+        resize(2*buffer.length);
+        for (int i = size; i >=index+1 ; i--)
+        {
+            if(size<index)
+            {
+                System.out.println("index is out of range");
+                break;
+            }
+            buffer[i] = buffer[i-1];
+        }
+        buffer[index]=value;
+        size++;
 
     }
 
@@ -50,7 +103,12 @@ public class ArrayIntList implements IntList
     @Override
     public void removeFront()
     {
-
+        for (int i = 0; i < size; i++)
+        {
+            buffer[i]=buffer[i+1];
+        }
+        buffer[size-1]= 0;
+        size--;
     }
 
     /**
@@ -60,6 +118,12 @@ public class ArrayIntList implements IntList
     @Override
     public void removeBack()
     {
+        if(size==0){
+     throw new IllegalArgumentException("already empty!");
+    }
+        size--;
+        buffer[size] = 0; // 这一行需要保留。 否则buffer里的数据依然会保存。
+        //总体来说是安全原因，
 
     }
 
@@ -88,7 +152,11 @@ public class ArrayIntList implements IntList
     @Override
     public int get(int index)
     {
-        return 0;
+        if(index <0 || index>=size) {
+            throw new IndexOutOfBoundsException("index is out of range");
+        }
+
+        return buffer[index];
     }
 
     /**
@@ -100,6 +168,11 @@ public class ArrayIntList implements IntList
     @Override
     public boolean contains(int value)
     {
+        for (int i = 0; i < size; i++)
+        {
+            if(buffer[i] == value)
+                return true;
+        }
         return false;
     }
 
@@ -114,7 +187,13 @@ public class ArrayIntList implements IntList
     @Override
     public int indexOf(int value)
     {
-        return 0;
+        for (int i = 0; i < size; i++)
+        {
+            if(buffer[i] == value){
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -125,6 +204,7 @@ public class ArrayIntList implements IntList
     @Override
     public boolean isEmpty()
     {
+        if (size<1) return true;
         return false;
     }
 
@@ -136,7 +216,7 @@ public class ArrayIntList implements IntList
     @Override
     public int size()
     {
-        return 0;
+        return size;
     }
 
     /**
@@ -146,7 +226,11 @@ public class ArrayIntList implements IntList
     @Override
     public void clear()
     {
-
+        for (int i = 0; i < size; i++)
+        {
+            buffer[i] = 0;
+        }
+        size =0;
     }
 
     /**
@@ -157,6 +241,55 @@ public class ArrayIntList implements IntList
     @Override
     public Iterator<Integer> iterator()
     {
-        return null;
+        return new Iterator<Integer>()
+        {
+            @Override
+            public boolean hasNext()
+            {
+                return false;
+            }
+
+            @Override
+            public Integer next()
+            {
+                return null;
+            }
+        };
+    }
+
+    @Override
+    public String toString(){
+        if(size == 0){
+            return"[]";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        sb.append(buffer[0]); // we know there is at least a value at[0]
+        // then start at [1];
+        for (int i = 1; i < size; i++)
+        {
+
+            sb.append(", " );
+            sb.append(buffer[i]);
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
+
+    private void resize(int newSize){
+        // crete a new array that is of the new size
+        int [] temp = new int[newSize];
+
+
+        // copy over values form the exiting buffer
+        for (int i = 0; i < size; i++)
+        {
+            temp[i] = buffer[i];
+        }
+
+        // make the switchover
+        buffer = temp;
     }
 }
