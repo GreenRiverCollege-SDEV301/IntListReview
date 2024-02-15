@@ -13,7 +13,11 @@ public class Main {
 
 
         IntList list1 = new ArrayIntList();
-        IntList list2 = new LinkedIntList();
+        IntList list2 = new LinkedIntList(20);
+
+        /*
+
+        TESTING CODES FOR ARRAYLIST
 
         //add 3 int to the back of the list
         list1.addBack(42);
@@ -71,7 +75,77 @@ public class Main {
         System.out.println("The list after clearing");
         System.out.println(list1.toString());
 
+         */
 
+        //TESTING CODES FOR LINKED LIST
+        System.out.println("Current linked list : " + list2.toString());
+        System.out.println();
+
+        list2.addFront(36);
+        System.out.println("Added 36 to the front");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(15);
+        System.out.println("Added 15 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(66);
+        System.out.println("Added 15 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(45);
+        System.out.println("Added 15 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(3);
+        System.out.println("Added 15 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        System.out.println("Value of Index 1 = " + list2.get(1));
+        System.out.println();
+
+        list2.add(1, 82);
+        System.out.println("Added 82 at index of 1");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.removeFront();
+        System.out.println("Removed front");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.removeBack();
+        System.out.println("Removed back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.remove(2);
+        System.out.println("Removed at index of 2");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        System.out.println("Does the list contain 20 ? = " + list2.contains(20));
+        System.out.println("Does the list contain 10 ? = " + list2.contains(10));
+        System.out.println();
+
+        System.out.println("The index of 20 = " + list2.indexOf(82));
+        System.out.println("The index of 10 = " + list2.indexOf(10));
+        System.out.println();
+
+        System.out.println("Is the list empty? = " + list2.isEmpty());
+        System.out.println();
+
+        System.out.println("The length of list is " + list2.size());
+        System.out.println();
+
+        list2.clear();
+        System.out.println("Removed all list values");
+        System.out.println(list2.toString());
 
 
     }
