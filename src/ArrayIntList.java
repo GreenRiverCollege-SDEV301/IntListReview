@@ -2,6 +2,19 @@ import java.util.Iterator;
 
 public class ArrayIntList implements  IntList
 {
+    //internal (private) representation
+    private int[] buffer;
+    private int size;
+
+    private static  final  int INITIAL_CAPACITY = 10;   //constant for initial array size
+
+    //constructor to initialize the variables on the top
+    public ArrayIntList()
+    {
+        buffer = new int[INITIAL_CAPACITY];
+        size = 0;
+    }
+
 
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
@@ -13,6 +26,27 @@ public class ArrayIntList implements  IntList
     @Override
     public void addFront(int value)
     {
+        //open a spot at index 0 where value will be saved
+        // shift everything over to the right by 1 position
+        for (int i = size; i > 0 ; i--)
+        {
+
+            buffer[i] = buffer[i -1];
+
+        }
+
+        //try to the bottom way
+//        for (int i = 0; i < size ; i++)
+//        {
+//
+//            buffer[i] = buffer[i +1];
+//
+//        }
+
+        //put value in position [0]
+        buffer[0] = value;
+
+        size++;
 
     }
 
@@ -25,6 +59,36 @@ public class ArrayIntList implements  IntList
     public void addBack(int value)
     {
 
+        //Tddd: check to see if we still have room (capacity)
+        if(size == buffer.length)
+        {
+            //if the size mathces the capacity, then I know I'm "full"
+            // and I need to resize (create a new larger buffer and copy
+            // switch the values over from the older smaller buffer
+
+            //make a new array with length twice as long
+            resize(2 * buffer.length);
+
+        }
+
+        buffer[size] = value;
+        size++;
+    }
+
+    private void resize (int newSize)
+    {
+        //create a new array that is of the new size
+        int[] temp = new int[newSize];
+
+
+        //copy over values from the existing buffer
+        for (int i = 0; i < size; i++)
+        {
+            temp[i] = buffer[i];
+        }
+
+        //make the switchover
+        buffer = temp;
     }
 
     /**
@@ -58,8 +122,19 @@ public class ArrayIntList implements  IntList
      * (at index size()-1), if it is present.
      */
     @Override
-    public void removeBack()
+    public void removeBack() ????
     {
+        if(size == 0)
+        {
+            throw new IllegalStateException("already")
+        }
+        size --;
+        buffer[size] = 0;
+
+
+
+
+
 
     }
 
@@ -158,5 +233,29 @@ public class ArrayIntList implements  IntList
     public Iterator<Integer> iterator()
     {
         return null;
+    }
+
+    @Override //Meaning this toString method is overwriting the toString method in the parents class
+    public String toString() ???
+    {
+        if(size == 0)
+        {
+            return "[]";
+        }
+        //prints out the list using stringbuilder
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < size; i++)
+        {
+            sb.append(buffer[i]);
+            sb.append(", ");
+
+//            sb.append(buffer[i]);
+//            sb.append(", ");
+
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }
