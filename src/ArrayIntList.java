@@ -74,8 +74,27 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public void add(int index, int value) {
+    public void add(int index, int value)
+    {
+        if(index < 0 || index > size)
+        {
+            throw new IndexOutOfBoundsException("The index is out of range");
+        }
 
+        // check if full
+        if(size == buffer.length)
+        {
+            resize(2 * buffer.length);
+        }
+
+        // move elements to right
+        for (int i = size; i > index; i--)
+        {
+            buffer[i] = buffer[i - 1];
+        }
+
+        buffer[index] = value;
+        size++;
     }
 
     /**
@@ -84,8 +103,20 @@ public class ArrayIntList implements IntList
      * Shifts any subsequent values to the left.
      */
     @Override
-    public void removeFront() {
+    public void removeFront()
+    {
+        if(size == 0)
+        {
+            throw new IllegalStateException("List is empty");
+        }
 
+        for (int i = 0; i < size - 1; i++)
+        {
+            buffer[i] = buffer[i + 1];
+        }
+
+        buffer[size - 1] = 0;
+        size--;
     }
 
     /**
@@ -119,8 +150,23 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int remove(int index) {
-        return 0;
+    public int remove(int index)
+    {
+        if (index < 0 || index >= size)
+        {
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
+
+        int removedValue = buffer[index];
+
+        for (int i = index; i < size - 1; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+
+        buffer[size - 1] = 0;
+        size--;
+
+        return removedValue;
     }
 
     /**
@@ -131,8 +177,14 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int get(int index) {
-        return 0;
+    public int get(int index)
+    {
+        if (index < 0 || index >= size)
+        {
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
+
+        return buffer[index];
     }
 
     /**
@@ -142,7 +194,15 @@ public class ArrayIntList implements IntList
      * @return true if this list contains the specified value
      */
     @Override
-    public boolean contains(int value) {
+    public boolean contains(int value)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (buffer[i] == value)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -155,8 +215,16 @@ public class ArrayIntList implements IntList
      * or -1 if this list does not contain the value
      */
     @Override
-    public int indexOf(int value) {
-        return 0;
+    public int indexOf(int value)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (buffer[i] == value)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -165,8 +233,9 @@ public class ArrayIntList implements IntList
      * @return true if this list contains no values
      */
     @Override
-    public boolean isEmpty() {
-        return false;
+    public boolean isEmpty()
+    {
+        return size == 0;
     }
 
     /**
@@ -175,8 +244,9 @@ public class ArrayIntList implements IntList
      * @return the number of values in this list
      */
     @Override
-    public int size() {
-        return 0;
+    public int size()
+    {
+        return size;
     }
 
     /**
@@ -184,8 +254,9 @@ public class ArrayIntList implements IntList
      * The list will be empty after this call returns.
      */
     @Override
-    public void clear() {
-
+    public void clear()
+    {
+        size = 0;
     }
 
     private void resize(int newSize)
