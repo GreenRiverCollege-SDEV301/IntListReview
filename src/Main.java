@@ -67,5 +67,13 @@ public class Main {
         System.out.println("Testing contains(int 100) - should be true:");
         System.out.println(list1.contains(100));
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing indexOf(int 97) - should be 2:");
+        System.out.println(list1.indexOf(97));
+        System.out.println(list1);
+        System.out.println("Testing indexOf(int 50) - should be -1:");
+        System.out.println(list1.indexOf(50));
+        System.out.println(list1);
     }
 }

@@ -240,7 +240,16 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        if (this.size == 0) {
+            return -1;
+        }
+
+        for (int i = 0; i < this.size; i++) {
+            if (this.buffer[i] == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
