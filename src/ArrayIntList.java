@@ -218,6 +218,15 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        if (this.size == 0) {
+            return false;
+        }
+
+        for (int i = 0; i < this.size; i++) {
+            if (value == this.buffer[i]) {
+                return true;
+            }
+        }
         return false;
     }
 

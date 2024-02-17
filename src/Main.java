@@ -59,5 +59,13 @@ public class Main {
         System.out.println("Testing get(int 2):");
         System.out.println(list1.get(2));
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing contains(int 1) - should be false:");
+        System.out.println(list1.contains(1));
+        System.out.println(list1);
+        System.out.println("Testing contains(int 100) - should be true:");
+        System.out.println(list1.contains(100));
+        System.out.println(list1);
     }
 }
