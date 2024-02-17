@@ -47,6 +47,12 @@ public class Main {
         list1.removeBack();
         System.out.println(list1);
 
-
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing remove(int 0):");
+        System.out.println(list1.remove(0));
+        System.out.println(list1);
+        System.out.println("Testing remove(int 2):");
+        System.out.println(list1.remove(2));
+        System.out.println(list1);
     }
 }

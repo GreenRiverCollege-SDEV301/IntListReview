@@ -115,6 +115,10 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeFront() {
+        if (this.size <= 0) {
+            throw new IllegalStateException("Already empty!");
+        }
+
         int[] newBuffer = new int[this.buffer.length];
 
         for (int i = 0; i < this.size; i++) {
@@ -157,7 +161,41 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        //If the index is higher than our buffer's size
+        if (index > this.size) {
+            throw new IllegalStateException("Error: the given index to remove is higher than what's currently in buffer");
+        }
+
+        int value = this.buffer[index];
+
+        //If index is the first element in this.buffer
+        if (index == 0) {
+            this.removeFront();
+        } else {
+            //If index is anywhere else
+            int[] newBuffer = new int[this.size];
+
+            int counter = 0;
+
+            //Add in the buffer values prior to the given index
+            for (int i = 0; i < index; i++) {
+                newBuffer[i] = this.buffer[i];
+                counter = i;
+            }
+
+            //Increment counter by 1 so that we're at the next index
+            counter++;
+
+            //Add in the buffer values post the given index
+            for (int i = counter; i < this.size; i++) {
+                newBuffer[i] = this.buffer[i + 1];
+            }
+
+            this.buffer = newBuffer;
+            size--;
+        }
+
+        return value;
     }
 
     /**
