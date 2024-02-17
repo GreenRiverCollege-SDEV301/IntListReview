@@ -1,5 +1,5 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
         //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
@@ -107,5 +107,19 @@ public class Main {
         System.out.println("Testing clear():");
         list1.clear();
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing iterator() - should be false:");
+        Iterator<Integer> list = list1.iterator();
+        System.out.println(list.hasNext());
+        System.out.println(list1);
+        System.out.println("Testing iterator() - should be true:");
+        list1.addBack(3);
+        list1.addBack(20);
+        list = list1.iterator();
+        System.out.println(list.hasNext());
+        System.out.println(list1);
+        System.out.println("Testing iterator() - next() - should be 20:");
+        System.out.println(list.next());
     }
 }

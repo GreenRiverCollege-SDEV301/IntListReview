@@ -1,5 +1,5 @@
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 //There is a class called Object
 //It's not explicit, but when we create a class we "extend Object",
@@ -289,7 +289,42 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new Iterator<Integer>() {
+            private int currentIndex = 0;
+
+            /**
+             * Returns {@code true} if the iteration has more elements.
+             * (In other words, returns {@code true} if {@link #next} would
+             * return an element rather than throwing an exception.)
+             *
+             * @return {@code true} if the iteration has more elements
+             */
+            @Override
+            public boolean hasNext() {
+                //If current index is 5 & the current size is 6, this would return true even though
+                //there is no "next" element. We have to reduce size by 1 in order to have the current
+                //index point to the right "size".
+                return currentIndex < size - 1;
+            }
+
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration
+             * @throws NoSuchElementException if the iteration has no more elements
+             */
+            @Override
+            public Integer next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+
+                return buffer[currentIndex + 1];
+            }
+
+            //We do not have to override remove() or forEachRemaining(), because the Iterator interface
+            //already defines these two methods.
+        };
     }
 
     //toString() is from the object class
