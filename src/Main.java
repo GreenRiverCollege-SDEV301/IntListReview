@@ -13,26 +13,37 @@ public class Main {
         IntList list1 = new ArrayIntList();
         IntList list2 = new LinkedIntList();
 
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing addBack(int 42), addBack(int 82), addBack(int 97):");
         //Add 3 ints to the back of the list
         list1.addBack(42);
         list1.addBack(82);
         list1.addBack(97);
-
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-
-        list1.removeBack();
-        list1.addFront(1);
-
         System.out.println(list1);
+
+//        System.out.println("------------------------------------------------");
+//        System.out.println("Testing removeBack():");
+//        list1.removeBack();
+//        System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing addFront(int 1):");
+        list1.addFront(1);
+        System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing add(int 0, int 0) - insert in the beginning of the array:");
+        list1.add(0, 0);
+        System.out.println(list1);
+        System.out.println("Testing add(int 3, int 100) - insert in the middle of the array:");
+        list1.add(3, 100);
+        System.out.println(list1);
+        System.out.println("Testing add(int 5, int 6) - outside of current max index:");
+        list1.add(11, 6);
+        System.out.println(list1);
+
+
+
+
     }
 }

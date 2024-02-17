@@ -1,7 +1,8 @@
+import java.util.Arrays;
 import java.util.Iterator;
 
 //There is a class called Object
-//It's not explicit, but when we create a class we "extends Object",
+//It's not explicit, but when we create a class we "extend Object",
 //which holds methods like toString();
 public class ArrayIntList implements IntList {
     //Internal (private) representation
@@ -48,11 +49,8 @@ public class ArrayIntList implements IntList {
     @Override
     public void addBack(int value) {
         if (size == buffer.length) {
-            //If the size matches the capacity, then I know I'm "fulL"
-            //and I need to resize (create a new larger buffer and copy
-            //the values over from the older smaller buffer)
-
-            //make the newSize twice the existing capacity
+            //If the size matches the capacity, then I know I'm "fulL" and I need to resize (create a new larger buffer
+            // and copy the values over from the older smaller buffer) make the newSize twice the existing capacity
             resize(2 * buffer.length);
         }
 
@@ -71,7 +69,43 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        //If we are inserting to the front, we can use our addFront() method
+        if (index == 0) {
+            this.addFront(value);
+            return;
+        }
 
+        //Check if our buffer is full or if the given index is outside our buffer length
+        if (this.size == this.buffer.length) {
+            //Check if full
+            resize(2 * this.buffer.length);
+        } else if (index >= this.buffer.length) {
+            //If we insert to an index outside the length of buffer, we have to resize it first
+            resize(2 * index);
+            this.size = index;
+        }
+
+        int[] newList = new int[this.buffer.length];
+
+        int counter = 0;
+        //Go through the array until we get to the index (index) given
+        for (int i = 0; i < index; i++) {
+            newList[i] = this.buffer[i];
+            counter = i;
+        }
+
+        //When we get there, we can add the new value
+        counter++;
+        newList[counter] = value;
+        counter++;
+        size++;
+
+        //Then add in the rest
+        for (int i = counter; i < size; i++) {
+            newList[i] = this.buffer[i-1];
+        }
+
+        this.buffer = newList;
     }
 
     /**
