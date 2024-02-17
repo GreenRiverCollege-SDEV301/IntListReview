@@ -98,10 +98,10 @@ public class ArrayIntList implements IntList {
         counter++;
         newList[counter] = value;
         counter++;
-        size++;
+        this.size++;
 
         //Then add in the rest
-        for (int i = counter; i < size; i++) {
+        for (int i = counter; i < this.size; i++) {
             newList[i] = this.buffer[i-1];
         }
 
@@ -115,7 +115,14 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeFront() {
+        int[] newBuffer = new int[this.buffer.length];
 
+        for (int i = 0; i < this.size; i++) {
+            newBuffer[i] = this.buffer[i+1];
+        }
+
+        this.buffer = newBuffer;
+        size--;
     }
 
     /**

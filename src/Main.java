@@ -21,11 +21,6 @@ public class Main {
         list1.addBack(97);
         System.out.println(list1);
 
-//        System.out.println("------------------------------------------------");
-//        System.out.println("Testing removeBack():");
-//        list1.removeBack();
-//        System.out.println(list1);
-
         System.out.println("------------------------------------------------");
         System.out.println("Testing addFront(int 1):");
         list1.addFront(1);
@@ -42,7 +37,15 @@ public class Main {
         list1.add(11, 6);
         System.out.println(list1);
 
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing removeFront():");
+        list1.removeFront();
+        System.out.println(list1);
 
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing removeBack():");
+        list1.removeBack();
+        System.out.println(list1);
 
 
     }
