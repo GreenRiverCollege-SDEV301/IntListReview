@@ -54,5 +54,10 @@ public class Main {
         System.out.println("Testing remove(int 2):");
         System.out.println(list1.remove(2));
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing get(int 2):");
+        System.out.println(list1.get(2));
+        System.out.println(list1);
     }
 }
