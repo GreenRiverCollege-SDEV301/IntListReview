@@ -269,7 +269,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     /**

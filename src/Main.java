@@ -91,5 +91,16 @@ public class Main {
         System.out.println("Testing isEmpty() - should be true:");
         System.out.println(list1.isEmpty());
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing size() - should be 0:");
+        System.out.println(list1.size());
+        System.out.println(list1);
+        System.out.println("Testing size() - should be 3:");
+        list1.addBack(42);
+        list1.addBack(82);
+        list1.addBack(97);
+        System.out.println(list1.size());
+        System.out.println(list1);
     }
 }
