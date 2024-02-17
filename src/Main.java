@@ -102,5 +102,10 @@ public class Main {
         list1.addBack(97);
         System.out.println(list1.size());
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing clear():");
+        list1.clear();
+        System.out.println(list1);
     }
 }

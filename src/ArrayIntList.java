@@ -278,7 +278,8 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void clear() {
-
+        this.buffer = new int[INITIAL_CAPACITY];
+        this.size = 0;
     }
 
     /**
