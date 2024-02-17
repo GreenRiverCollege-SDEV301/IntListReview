@@ -259,7 +259,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     /**

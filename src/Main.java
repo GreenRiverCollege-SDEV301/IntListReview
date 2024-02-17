@@ -75,5 +75,21 @@ public class Main {
         System.out.println("Testing indexOf(int 50) - should be -1:");
         System.out.println(list1.indexOf(50));
         System.out.println(list1);
+
+        System.out.println("------------------------------------------------");
+        System.out.println("Testing isEmpty() - should be false:");
+        System.out.println(list1.isEmpty());
+        System.out.println(list1);
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        list1.removeBack();
+        System.out.println("Testing isEmpty() - should be true:");
+        System.out.println(list1.isEmpty());
+        System.out.println(list1);
     }
 }
