@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList{
 
@@ -180,7 +181,35 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        // return new instance of the helper class
+        return new ArrayIntListIterator();
+    }
+
+    public class ArrayIntListIterator implements Iterator<Integer> {
+        private int currentPosition;
+
+        public ArrayIntListIterator(){
+            currentPosition = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            if (currentPosition< size()){
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public Integer next(){
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
     }
 
     private void resize(int newSize){

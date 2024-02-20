@@ -1,3 +1,4 @@
+import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
@@ -16,6 +17,18 @@ public class Main {
         list1.removeBack();
 
         System.out.println(list1);
+
+        for (int value : list1) {
+            System.out.println(value);
+        }
+
+        System.out.println("-----------");
+
+        Iterator<Integer> itr = list1.iterator();
+        while (itr.hasNext()){
+            int value = itr.next();
+            System.out.println(value);
+        }
 
 
     }
