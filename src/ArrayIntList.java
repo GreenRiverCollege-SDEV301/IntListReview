@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList {
 
@@ -93,7 +94,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        buffer[0] = 0;
+        size--;
+        for (int i = 0; i < size; i++) {
+            buffer[i] = buffer[i+1];
+        }
     }
 
     /**
@@ -132,7 +137,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        return buffer[index];
     }
 
     /**
@@ -143,6 +148,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -156,7 +166,13 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        int index = 0;
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     /**
@@ -166,7 +182,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        if (buffer.length == 0 || size == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -176,7 +196,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return buffer.length;
     }
 
     /**
@@ -185,7 +205,9 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void clear() {
-
+        int[] list = new int[0];
+        size = 0;
+        buffer = list;
     }
 
     /**
@@ -195,7 +217,33 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        // return a new instance of the helper iterator class (below)
+        return new ArrayIntListIterator();
+    }
+
+    // nested or inner class (helper class)
+    public class ArrayIntListIterator implements Iterator<Integer> {
+        private int currentPosition;
+
+        public ArrayIntListIterator() {
+            currentPosition = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (currentPosition < size);
+        }
+
+        @Override
+        public Integer next() {
+            // just to be safe - make sure there is a next
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
     }
 
     @Override
