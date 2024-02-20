@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.function.Consumer;
 
@@ -85,7 +83,24 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        // check index vs size for out of bounds
+        if (index > size || index < 0){
+            throw new IndexOutOfBoundsException("This index does not exist");
+        }
+        // check if full
+        if (size == buffer.length){
+            resize(buffer.length * 2);
+        }
 
+        // move everything to the right up to the index point
+        for (int i = size; i > index; i--) {
+            // shift everything over to open a spot at the front (move them to the right)
+            buffer[i] = buffer[i-1];
+        }
+        // put the value in the newly cleared spot
+        buffer[index] = value;
+        // change size since we added to the list
+        size++;
     }
 
     /**
@@ -95,7 +110,12 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        // place every item on the list to the left
+        for (int i = 0; i < size; i++) {
+            buffer[i] = buffer[i+1];
+        }
+        // decrease size
+        size--;
     }
 
     /**
@@ -128,7 +148,21 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index > size || index < 0){
+            throw new IndexOutOfBoundsException("This index does not exist");
+        }
+
+        // set the number to return
+        int remove = buffer[index];
+        // move everything to the left starting at the index
+        for (int i = index; i < size; i++) {
+            // shift everything over to remove the value
+            buffer[i] = buffer[i+1];
+        }
+        // change size since we removed from the list
+        size--;
+        // return the removed number
+        return remove;
     }
 
     /**
@@ -140,7 +174,16 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index > size || index < 0){
+            throw new IndexOutOfBoundsException("This index does not exist");
+        }
+        for (int i = 0; i < index; i++) {
+            if (i == index - 1){
+                return buffer[index];
+            }
+        }
+        // return -1 to signal error if it makes it passed the for loop
+        return -1;
     }
 
     /**
@@ -151,6 +194,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -164,7 +212,13 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value){
+                return i;
+            }
+        }
+        // return -1 to show it wasn't in the list
+        return -1;
     }
 
     /**
@@ -174,7 +228,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size == 0){
+            return false;
+        }
+        // if size isn't 0 then it is not empty
+        return true;
     }
 
     /**
@@ -184,7 +242,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -193,7 +251,8 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void clear() {
-
+        // create new empty list for buffer
+        buffer = new int[INITIAL_CAPACITY];
     }
 
     /**
@@ -203,6 +262,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
+
         return null;
     }
 
@@ -214,7 +274,7 @@ public class ArrayIntList implements IntList {
      * caller.
      * <p>
      * The behavior of this method is unspecified if the action performs
-     * side-effects that modify the underlying source of elements, unless an
+     * side effects that modify the underlying source of elements, unless an
      * overriding class has specified a concurrent modification policy.
      *
      * @param action The action to be performed for each element
