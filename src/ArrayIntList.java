@@ -256,12 +256,8 @@ public class ArrayIntList implements IntList
     @Override
     public Iterator<Integer> iterator()
     {
-        while(iterator().hasNext())
-        {
-            int value = iterator().next();
-            System.out.println(value);
-        }
-        return null;
+        //return new instance of the helper class
+        return new ArrayIntListIterator();
     }
 
     public String toString()
@@ -284,7 +280,7 @@ public class ArrayIntList implements IntList
 
     public class ArrayIntListIterator implements Iterator<Integer>
     {
-        private int position;
+        private int current = 0;
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -294,8 +290,9 @@ public class ArrayIntList implements IntList
          * @return {@code true} if the iteration has more elements
          */
         @Override
-        public boolean hasNext() {
-            return false;
+        public boolean hasNext()
+        {
+            return (current < size);
         }
 
         /**
@@ -305,8 +302,11 @@ public class ArrayIntList implements IntList
          * @throws NoSuchElementException if the iteration has no more elements
          */
         @Override
-        public Integer next() {
-            return null;
+        public Integer next()
+        {
+            int value = get(current);
+            current++;
+            return value;
         }
     }
 }
