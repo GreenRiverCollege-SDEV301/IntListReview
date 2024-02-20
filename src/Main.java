@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello and welcome!");
@@ -13,5 +15,17 @@ public class Main {
         list1.addFront(1);
 
         System.out.println(list1);
+
+        // convenience code for using foreach code which is
+        // only possible if class provides an Iterator:
+        for (int value: list1){
+            System.out.println(value);
+        }
+        // on manual, behind the scenes:
+         Iterator<Integer> itr = list1.iterator();
+        while (itr.hasNext()) {
+              int value = itr.next();
+            System.out.println(value);
+          }
     }
 }

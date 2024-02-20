@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.function.Consumer;
 
 public class ArrayIntList implements IntList {
@@ -177,8 +178,8 @@ public class ArrayIntList implements IntList {
         if (index > size || index < 0){
             throw new IndexOutOfBoundsException("This index does not exist");
         }
-        for (int i = 0; i < index; i++) {
-            if (i == index - 1){
+        for (int i = 0; i <= index; i++) {
+            if (i == index){
                 return buffer[index];
             }
         }
@@ -262,8 +263,12 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
+        // provides next + hasNext methods and foreach capabilities
+        // we could create a seperate class for ArrayListIterator
+        // but we could also just nest a class since this won't be used outside ArrayIntList
 
-        return null;
+        // return new instance of the inner class containing our iterator
+        return new ArrayIntListIterator();
     }
 
     /**
@@ -313,5 +318,50 @@ public class ArrayIntList implements IntList {
         sb.append("]");
 
         return sb.toString();
+    }
+
+    // nested/inner/helper class
+    public class ArrayIntListIterator implements Iterator<Integer> {
+        private int currentPosition;
+
+        // constructor
+        public ArrayIntListIterator(){
+            currentPosition = 0;
+        }
+
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            if (currentPosition < size()){
+                return true;
+            } else {
+                return false;
+            }
+            // could just say return (currentPosition < size);
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next() {
+            // double-check the list has another spot to go to / has another next at all
+            if (!hasNext()){
+                throw new NoSuchElementException("You have reached the end of the list!");
+            }
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
     }
 }
