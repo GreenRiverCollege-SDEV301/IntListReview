@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList
 {
@@ -281,8 +282,10 @@ public class ArrayIntList implements IntList
      * @return an Iterator.
      */
     @Override
-    public Iterator<Integer> iterator() {
-        return null;
+    public Iterator<Integer> iterator()
+    {
+        // return a new instance of the helper iterator class (below)
+        return new ArrayIntListIterator();
     }
 
     @Override
@@ -305,4 +308,45 @@ public class ArrayIntList implements IntList
         sb.append("]");
         return sb.toString();
     }
-}
+
+    // nested or inner class (helper class)
+    public class ArrayIntListIterator implements Iterator<Integer>
+    {
+        private int currentPosition;
+
+        public ArrayIntListIterator()
+        {
+            currentPosition = 0;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            //can also use shortcut like:
+            // return (currentPosition < size());   (this is all that is needed to do same as code below)
+            if (currentPosition < size)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        @Override
+        public Integer next()
+        {
+            // just to be safe - make sure there is a next
+            if(!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
+
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
+    }
+
+} // end of ArrayIntList

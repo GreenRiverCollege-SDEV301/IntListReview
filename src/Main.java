@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -18,5 +20,22 @@ public class Main {
         list1.addFront(1000);
 
         System.out.println(list1);
+
+        // convenience code using a for each loop
+        // only possible if class provides an iterator
+        for (int value : list1)
+        {
+            System.out.println(value);
+        }
+
+        System.out.println("-----------");
+
+        // on manual, behind the scenes
+        Iterator<Integer> itr = list1.iterator();
+        while(itr.hasNext())
+        {
+            int value = itr.next();
+            System.out.println(value);
+        }
     }
 }
