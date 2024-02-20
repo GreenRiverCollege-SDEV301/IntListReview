@@ -169,7 +169,7 @@ public class ArrayIntList implements IntList
     @Override
     public int get(int index)
     {
-        return 0;
+        return buffer[index];
     }
 
     /**
