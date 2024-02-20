@@ -14,8 +14,14 @@ class ArrayIntListTest {
         theList.addBack(88);
         theList.addBack(22);
         int count = theList.size();
-        //assertEquals(count, 3);
+        //check to ensure list is proper size
+        assertEquals(count, 3);
+        //check to ensure list is in proper order
         assertEquals(theList.get(1), 88);
+        assertEquals(theList.get(2), 22);
+        theList.removeBack();
+        theList.addBack(33);
+        assertEquals(theList.get(2), 33);
     }
 
     @org.junit.jupiter.api.Test
@@ -23,11 +29,29 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void removeFront() {
+    void removeFront()
+    {
+
     }
 
     @org.junit.jupiter.api.Test
-    void removeBack() {
+    void removeBackFromListOf10()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++)
+        {
+            theList.addBack(i);
+        }
+        theList.removeBack();
+        String out = theList.toString();
+        assertEquals(out, "[0,1,2,3,4,5,6,7,8]");
+
+    }
+    @org.junit.jupiter.api.Test
+    void removeBackFromEmptyList()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertThrowsExactly(IllegalStateException.class, () -> theList.removeBack());
     }
 
     @org.junit.jupiter.api.Test

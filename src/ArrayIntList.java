@@ -1,3 +1,4 @@
+import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -202,7 +203,14 @@ public class ArrayIntList implements IntList
     @Override
     public int indexOf(int value)
     {
-        return 0;
+        for (int i = 0; i < size; i++)
+        {
+            if (buffer[i] == value)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -248,6 +256,11 @@ public class ArrayIntList implements IntList
     @Override
     public Iterator<Integer> iterator()
     {
+        while(iterator().hasNext())
+        {
+            int value = iterator().next();
+            System.out.println(value);
+        }
         return null;
     }
 
@@ -267,5 +280,33 @@ public class ArrayIntList implements IntList
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public class ArrayIntListIterator implements Iterator<Integer>
+    {
+        private int position;
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            return false;
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next() {
+            return null;
+        }
     }
 }
