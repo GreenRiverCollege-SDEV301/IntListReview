@@ -3,7 +3,37 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
-    void addFront() {
+    void addFrontToEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(42);
+        assertEquals(theList.get(0), 42);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addFrontToResizedList() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 100; i++) {
+            theList.addFront(i);
+        }
+        theList.addFront(42);
+        assertEquals(theList.get(0),42);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addFrontToListOfOne() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(1);
+        theList.addFront(42);
+        assertEquals(theList.get(0), 42);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addFrontToListOfTen() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++){
+            theList.addFront(42);
+        }
+        assertEquals(theList.get(0), 42);
     }
 
     @org.junit.jupiter.api.Test
@@ -65,11 +95,73 @@ class ArrayIntListTest {
 
 
     @org.junit.jupiter.api.Test
-    void add() {
+    void addOne() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.add(0, 100);
+        assertEquals(theList.get(0), 100);
     }
 
     @org.junit.jupiter.api.Test
-    void removeFront() {
+    void addIndexOutOfBounds() {
+        ArrayIntList theList = new ArrayIntList();
+        // adding anything at this point should be out of bounds, the list is 0
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                // lambda to tell it the code to run that should throw the exception
+                () -> {theList.add(2, 4);});
+    }
+
+    @org.junit.jupiter.api.Test
+    void addMultiple() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 5; i++) {
+            theList.add(i, i);
+        }
+        assertEquals(theList.toString(), "[0, 1, 2, 3, 4]");
+    }
+
+    @org.junit.jupiter.api.Test
+    void addResize() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 100; i++) {
+            theList.add(i, i);
+        }
+        theList.add(99, 42);
+        assertEquals(theList.get(99), 42);
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontFromEmpty() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.removeFront();
+        // trying to get the index should throw an error because the list is empty
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.get(0);});
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontFromMultipleList() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 5; i++) {
+            theList.addFront(i);
+        }
+        theList.removeFront();
+        // removing the front should remove the 4 at index 0, leaving a 3
+        assertEquals(theList.get(0), 3);
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontAfterResize() {
+        ArrayIntList theList = new ArrayIntList();
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontListOfOne() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(1);
+        theList.removeFront();
+        assertEquals(theList.get(0), 0);
+
     }
 
     @org.junit.jupiter.api.Test
@@ -90,7 +182,17 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void removeBackFromSingleItemList() {
-    }
+        ArrayIntList theList = new ArrayIntList();
+
+        theList.addBack(1);
+
+        // remove the item at the back
+        theList.removeBack();
+        // test - index is 0, since the one added item was index 0
+        // size - 1 as we've been using would give us an error, which we might also test
+        assertEquals(theList.get(0), 0);
+        }
+
 
     @org.junit.jupiter.api.Test
     void removeBackFromListOfTen() {
