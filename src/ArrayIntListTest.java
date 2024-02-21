@@ -1,9 +1,17 @@
+import java.util.Iterator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
-    void addFront() {
+    void addFront()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(42);
+        theList.addFront(88);
+        assertEquals(theList.get(0), 88);
+        assertEquals(theList.get(1), 42);
     }
 
     @org.junit.jupiter.api.Test
@@ -25,13 +33,24 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void add() {
+    void add()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.add(0, 42);
+        theList.add(1, 88);
+        assertEquals(theList.get(0), 42);
+        assertEquals(theList.get(1), 88);
     }
 
     @org.junit.jupiter.api.Test
     void removeFront()
     {
-
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        theList.removeFront();
+        assertEquals(theList.size(), 1);
+        assertEquals(theList.get(0), 88);
     }
 
     @org.junit.jupiter.api.Test
@@ -58,42 +77,101 @@ class ArrayIntListTest {
     @org.junit.jupiter.api.Test
     void removeBackFromSingletonList()
     {
-
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.removeBack();
+        assertEquals(theList.size(), 0);
     }
 
     @org.junit.jupiter.api.Test
-    void remove() {
+    void remove()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        assertEquals(theList.remove(1), 88);
+        assertEquals(theList.size(), 1);
     }
 
     @org.junit.jupiter.api.Test
-    void get() {
+    void get()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        assertEquals(theList.get(1), 88);
     }
 
     @org.junit.jupiter.api.Test
-    void contains() {
+    void contains()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        assertTrue(theList.contains(42));
+        assertFalse(theList.contains(99));
     }
 
     @org.junit.jupiter.api.Test
-    void indexOf() {
+    void indexOf()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        assertEquals(theList.indexOf(42), 0);
+        assertEquals(theList.indexOf(88), 1);
+        assertEquals(theList.indexOf(99), -1);
     }
 
     @org.junit.jupiter.api.Test
-    void isEmpty() {
+    void isEmpty()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertTrue(theList.isEmpty());
+        theList.addBack(42);
+        assertFalse(theList.isEmpty());
     }
 
     @org.junit.jupiter.api.Test
-    void size() {
+    void size()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertEquals(theList.size(), 0);
+        theList.addBack(42);
+        assertEquals(theList.size(), 1);
     }
 
     @org.junit.jupiter.api.Test
-    void clear() {
+    void clear()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        theList.clear();
+        assertTrue(theList.isEmpty());
     }
 
     @org.junit.jupiter.api.Test
-    void iterator() {
+    void iterator()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        theList.addBack(88);
+        Iterator<Integer> iterator = theList.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals(iterator.next(), 42);
+        assertTrue(iterator.hasNext());
+        assertEquals(iterator.next(), 88);
+        assertFalse(iterator.hasNext());
     }
 
     @org.junit.jupiter.api.Test
-    void testToString() {
+    void testToString()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertEquals(theList.toString(), "[]");
+        theList.addBack(42);
+        theList.addBack(88);
+        assertEquals(theList.toString(), "[42, 88]");
     }
 }
