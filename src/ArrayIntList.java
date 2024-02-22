@@ -327,6 +327,36 @@ public class ArrayIntList implements IntList {
         };
     }
 
+//    /**
+//     * Returns an iterator over elements of type {@code T}.
+//     *
+//     * @return an Iterator.
+//     */
+//    public class ArrayIntListIterator implements Iterator<Integer> {
+//        private int currentPosition;
+//
+//        public ArrayIntListIterator() {
+//            currentPosition = 0;
+//        }
+//
+//        @Override
+//        public boolean hasNext() {
+//            return currentPosition < size();
+//        }
+//
+//        @Override
+//        public Integer next() {
+//            //Ensure that there is a next
+//            if (!hasNext()) {
+//                throw new NoSuchElementException();
+//            }
+//
+//            int value = get(currentPosition);
+//            currentPosition++;
+//            return value;
+//        }
+//    }
+
     //toString() is from the object class
     @Override
     public String toString() {
