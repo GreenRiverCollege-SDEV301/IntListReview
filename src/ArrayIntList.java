@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList
 {
@@ -13,6 +14,13 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * relatively slow liner time O(size)
+     * because needs shift size items
+     * addFront-liner resize-liner
+     *      /               \
+     *    O(n)             O(n)
+     *          \       /
+     *       O(2n) or O(2size)
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
@@ -46,6 +54,8 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * fast, constant time if no resize
+     * can be slow liner time if resize O(n） Or O(size)
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
      *
      * @param value value to be inserted
@@ -66,6 +76,9 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * worst case: add index 0, liner time O(n)
+     * best csae: add at last, O(1)
+     * averagecase O(1/2 n)
      * Inserts the specified value at the specified position in this list.
      * Shifts the value currently at that position (if any) and any subsequent
      * values to the right.
@@ -96,6 +109,7 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * slow, liner time, depends on size, O(n)
      * Removes the value located at the front of the list
      * (at index 0), if it is present.
      * Shifts any subsequent values to the left.
@@ -112,6 +126,7 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * fast constant time O(1)
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
      */
@@ -128,6 +143,8 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     *  * worst case: add index 0, liner time O(n)
+     *      * best csae: add at last, O(1)
      * Removes the value at the specified position in this list.
      * Shifts any subsequent values to the left. Returns the value
      * that was removed from the list.
@@ -139,10 +156,26 @@ public class ArrayIntList implements IntList
     @Override
     public int remove(int index)
     {
-        return 0;
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
+        }
+
+
+        int removedElement = buffer[index];
+
+        for (int i = index; i < size - 1; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+
+        buffer[size - 1] = 0;
+        size--;
+
+        return removedElement;
+
     }
 
     /**
+     * fast , constant time, O(1)
      * Returns the value at the specified position in the list.
      *
      * @param index index of the value to return
@@ -160,6 +193,9 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * WcC liner time o(n)
+     * when value is not in list
+     * or value is last in list
      * Returns true if this list contains the specified value.
      *
      * @param value value whose presence in this list is to be searched for
@@ -177,6 +213,9 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     *      * WC liner time o(n)
+     *      * when value is not in list
+     *      * or value is last in list
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
      *
@@ -197,6 +236,7 @@ public class ArrayIntList implements IntList
     }
 
     /**
+     * fast
      * Returns true if this list contains no values.
      *
      * @return true if this list contains no values
@@ -240,24 +280,14 @@ public class ArrayIntList implements IntList
      */
     @Override
     public Iterator<Integer> iterator()
-    {
-        return new Iterator<Integer>()
-        {
-            @Override
-            public boolean hasNext()
-            {
-                return false;
-            }
+    { //return a new instance of
+        return new ArrayIntListIterator();
 
-            @Override
-            public Integer next()
-            {
-                return null;
-            }
-        };
+
     }
 
     @Override
+    //slow liner time, o(n)
     public String toString(){
         if(size == 0){
             return"[]";
@@ -277,7 +307,9 @@ public class ArrayIntList implements IntList
         sb.append("]");
         return sb.toString();
     }
-
+/*
+Slow - liner time, 0(n) or(size)
+ */
     private void resize(int newSize){
         // crete a new array that is of the new size
         int [] temp = new int[newSize];
@@ -291,5 +323,46 @@ public class ArrayIntList implements IntList
 
         // make the switchover
         buffer = temp;
+    }
+    public class ArrayIntListIterator implements Iterator<Integer>{
+
+        private int currentPosition;
+
+        public ArrayIntListIterator(){
+            currentPosition =0;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext()
+        {
+//            if(currentPosition<size){
+//                return true;
+//            }else {
+//                return false;
+//            }
+            return (currentPosition < size);
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next()
+        {
+            if(!hasNext()) throw new NoSuchElementException();
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
     }
 }
