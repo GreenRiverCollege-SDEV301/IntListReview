@@ -16,6 +16,10 @@ public class ArrayIntList implements IntList {
         this.size = 0;
     }
 
+    //Assuming no resizing
+    //Slow, linear time O(size)
+    //Shift size items right
+    //If resizing, it'll take a bit longer
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -41,6 +45,7 @@ public class ArrayIntList implements IntList {
         this.size++;
     }
 
+    //Fast, constant time if no resize O(1)
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
      *
@@ -58,6 +63,9 @@ public class ArrayIntList implements IntList {
         size++;
     }
 
+    //This can be as good as addBack (add at index size - O(1), constant)
+    //But also be as bad as addFront (add at index 0 - O(n), linear)
+    //Average case - 0(1/2n)
     /**
      * Inserts the specified value at the specified position in this list.
      * Shifts the value currently at that position (if any) and any subsequent
@@ -129,6 +137,7 @@ public class ArrayIntList implements IntList {
         size--;
     }
 
+    //Fast constant time, O(1)
     /**
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
@@ -198,6 +207,7 @@ public class ArrayIntList implements IntList {
         return value;
     }
 
+    //Fast, constant time, O(1)
     /**
      * Returns the value at the specified position in the list.
      *
@@ -210,6 +220,11 @@ public class ArrayIntList implements IntList {
         return this.buffer[index];
     }
 
+    //Best case is that what you're looking for is in the front
+    //Worst case: Looking for something at the end, or
+    //looking for something that's not in the list
+    //Worse case is linear time O(size) when the value isn't present/in the list or
+    //the value is last in the list
     /**
      * Returns true if this list contains the specified value.
      *
@@ -230,6 +245,7 @@ public class ArrayIntList implements IntList {
         return false;
     }
 
+    //Slow
     /**
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
@@ -252,6 +268,7 @@ public class ArrayIntList implements IntList {
         return -1;
     }
 
+    //Fast, O(1)
     /**
      * Returns true if this list contains no values.
      *
@@ -262,6 +279,7 @@ public class ArrayIntList implements IntList {
         return this.size == 0;
     }
 
+    //Fast, just O(1)
     /**
      * Returns the number of values in this list.
      *
@@ -358,6 +376,7 @@ public class ArrayIntList implements IntList {
 //    }
 
     //toString() is from the object class
+    //Slow because you have to visit every single item
     @Override
     public String toString() {
         if (size == 0) {
@@ -381,6 +400,8 @@ public class ArrayIntList implements IntList {
 
     //Helper Methods
 
+    //"Slow" -> linear time -> O(n)
+    //Can also be O(size)
     private void resize(int newSize) {
         //Create a new array that is of the new size
         //If primitive array, we use primitive values (the array is set to zeros, not null)

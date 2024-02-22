@@ -3,14 +3,60 @@ import java.lang.reflect.Array;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {
+    //Helper methods (creating lists for tests)
+    //Create an empty list
+    public ArrayIntList getEmptyList() {
+        return new ArrayIntList();
+    }
 
+    //Create a list with 4 values
+    public ArrayIntList getListWithFourValues() {
+        ArrayIntList list = new ArrayIntList();
+        list.addBack(1);
+        list.addBack(2);
+        list.addBack(3);
+        list.addBack(42);
+        return list;
+    }
+
+    //Create a list with 10 values
+    public ArrayIntList getListWithTenValues() {
+        ArrayIntList list = new ArrayIntList();
+        //Fill the list with INITIAL_CAPACITY or 10 items
+        for (int i = 0; i < 10; i++) {
+            list.addBack(i);
+        }
+        return list;
+    }
+
+    //Test addfront()
     @org.junit.jupiter.api.Test
-    void addFront() {
+    void addFrontWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        list.addFront(42);
+        assertEquals(list.get(0), 42);
+        assertEquals(list.size(), 1);
     }
 
     @org.junit.jupiter.api.Test
+    void addFrontWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertEquals(list.get(list.size() - 1), 42);
+        String out = list.toString();
+        assertEquals(out, "[1, 2, 3, 42]");
+    }
+
+    @org.junit.jupiter.api.Test
+    void addFrontWithResize() {
+        ArrayIntList list = getListWithTenValues();
+        list.addFront(42);
+        assertEquals(list.get(0), 42);
+    }
+
+    //Test addBack()
+    @org.junit.jupiter.api.Test
     void addBackWithEmptyList() {
-        ArrayIntList theList = new ArrayIntList();
+        ArrayIntList theList = getEmptyList();
         theList.addBack(42);
         int count = theList.size();
         assertEquals(count, 1);
@@ -21,11 +67,7 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void addBackWithNonEmptyList() {
-        ArrayIntList theList = new ArrayIntList();
-        theList.addBack(1);
-        theList.addBack(2);
-        theList.addBack(3);
-        theList.addBack(42);
+        ArrayIntList theList = getListWithFourValues();
         assertEquals(theList.get(theList.size() - 1), 42);
         String out = theList.toString();
         assertEquals(out, "[1, 2, 3, 42]");
@@ -33,11 +75,7 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void addBackWithResize() {
-        ArrayIntList theList = new ArrayIntList();
-        //Fill the list with INITIAL_CAPACITY or 10 items
-        for (int i = 0; i < 10; i++) {
-            theList.addBack(i);
-        }
+        ArrayIntList theList = getListWithTenValues();
         //Now add item 11:
         theList.addBack(42);
         assertEquals(theList.get(theList.size() - 1), 42);
