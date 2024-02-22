@@ -23,7 +23,9 @@ public class ArrayIntList implements IntList
      * @param value value to be inserted
      */
     @Override
-    public void addFront(int value) {
+    public void addFront(int value) // slow, linear time O(size), shift size items right
+                                    // assuming no resize, if resize needed, will be even slower
+    {
         // check if full
         if(size == buffer.length)
         {
@@ -49,7 +51,9 @@ public class ArrayIntList implements IntList
      * @param value value to be inserted
      */
     @Override
-    public void addBack(int value) {
+    public void addBack(int value) // fast, constant time if no resize
+                                   // can be slow, linear time if resize O(n) is needed
+    {
         // check to see if we still have room (capacity)
         if(size == buffer.length)
         {
@@ -75,7 +79,10 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public void add(int index, int value)
+    public void add(int index, int value) // can be as good as addBack(), can be as bad/slow as addFront()
+                                          // worst case, add at index 0 & resize, linear O(size)
+                                          // best case, add at index size & no resize, constant O(1)
+                                          // average case, O(1/2 n)
     {
         if(index < 0 || index > size)
         {
@@ -104,7 +111,7 @@ public class ArrayIntList implements IntList
      * Shifts any subsequent values to the left.
      */
     @Override
-    public void removeFront()
+    public void removeFront() // slow, linear time O(size)
     {
         if(size == 0)
         {
@@ -125,7 +132,8 @@ public class ArrayIntList implements IntList
      * (at index size()-1), if it is present.
      */
     @Override
-    public void removeBack() {
+    public void removeBack() // fast, constant time O(1)
+    {
         if(size == 0)
         {
             throw new IllegalStateException("Already empty!");
@@ -151,7 +159,9 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int remove(int index)
+    public int remove(int index) // worst case - add at index 0 & resize, linear time O(size)
+                                 // best case, add at index size & no resize, constant time O(1)
+                                 // average case, O(1/2 n)
     {
         if (index < 0 || index >= size)
         {
@@ -178,7 +188,7 @@ public class ArrayIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int get(int index)
+    public int get(int index) // fast, constant time, O(1)
     {
         if (index < 0 || index >= size)
         {
@@ -195,7 +205,8 @@ public class ArrayIntList implements IntList
      * @return true if this list contains the specified value
      */
     @Override
-    public boolean contains(int value)
+    public boolean contains(int value) // worst case - linear time O(size)
+                                       // when value is not in list or when value is last in list
     {
         for (int i = 0; i < size; i++)
         {
@@ -216,7 +227,8 @@ public class ArrayIntList implements IntList
      * or -1 if this list does not contain the value
      */
     @Override
-    public int indexOf(int value)
+    public int indexOf(int value) // worst case - linear time O(size)
+                                  // when value is not in list or when value is last in list
     {
         for (int i = 0; i < size; i++)
         {
@@ -234,7 +246,7 @@ public class ArrayIntList implements IntList
      * @return true if this list contains no values
      */
     @Override
-    public boolean isEmpty()
+    public boolean isEmpty() // fast, constant time O(1)
     {
         return size == 0;
     }
@@ -245,7 +257,7 @@ public class ArrayIntList implements IntList
      * @return the number of values in this list
      */
     @Override
-    public int size()
+    public int size() // fast, constant time O(1)
     {
         return size;
     }
@@ -260,7 +272,8 @@ public class ArrayIntList implements IntList
         size = 0;
     }
 
-    private void resize(int newSize)
+    private void resize(int newSize) // "slow", linear time - O(n) or O(size),
+                                     // it is slow because it depends on the elements being copied over
     {
         // create a new array that is of the new size
         int[] temp = new int[newSize];
@@ -289,7 +302,8 @@ public class ArrayIntList implements IntList
     }
 
     @Override
-    public String toString() {
+    public String toString() // slow, linear time O(size) because we have to visit every item
+    {
         if (size == 0)
         {
             return "[]";
