@@ -44,7 +44,7 @@ class ArrayIntListTest {
             theList.addFront(i);
         }
         theList.removeFront();
-        assertEquals(1, theList.get(0));
+        assertEquals(8, theList.get(0));
     }
 
     @org.junit.jupiter.api.Test
