@@ -166,7 +166,7 @@ public class ArrayIntList implements IntList
         for (int i = index; i < size - 1; i++) {
             buffer[i] = buffer[i + 1];
         }
-
+//
         buffer[size - 1] = 0;
         size--;
 
