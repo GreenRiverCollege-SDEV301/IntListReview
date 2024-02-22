@@ -1,6 +1,39 @@
 import java.util.Iterator;
+import java.util.LinkedList;
 
 public class LinkedIntList implements IntList {
+    // helper / inner / nested class
+    public class Node {
+        int data; // holds data value
+        // this attribute makes this a self-referential class
+        Node next; // holds address of next node
+
+        // constructor for empty
+        Node(){
+            data = 0;
+            next = null;
+        }
+
+        // constructor with the data and next
+        Node(int data, Node next){
+            this.data = data;
+            this.next = next;
+        }
+    } // end of class Node
+
+    // fields for LinkedIntList class
+    private Node head;
+    private int size;
+
+    public LinkedIntList() {
+        head = null;
+        size = 0;
+    }
+
+    public LinkedIntList(Node head){
+        this.head = head;
+    }
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -10,7 +43,14 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
-
+        // if the list is empty
+        if (head == null){
+            head = new Node(value, null);
+        } else {
+            // if the list is not empty
+            head = new Node(value, head);
+        }
+        size++;
     }
 
     /**
@@ -20,7 +60,16 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
+        // create a variable to keep track of the location
+        Node current = head;
+        // go forward until we reach the back
+        while(current.next != null){
+            // iterate through the list
+            current = current.next;
+        }
 
+        // we are now at the end so we can make this node equal our new one
+        current = new Node(value, null);
     }
 
     /**

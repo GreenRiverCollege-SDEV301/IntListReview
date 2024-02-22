@@ -19,6 +19,16 @@ public class ArrayIntList implements IntList {
         size = 0;
     }
 
+    /**
+     * This method will resize the array when size meets capacity.
+     *
+     * Speed: O(n) AKA linear time - time dependent on size
+     * Slow, have to make new array and copy over EVERY value
+     * Some people write O(size). The n is just a generic letter
+     *
+     *
+     * @param newSize
+     */
     private void resize(int newSize){
         // create new array that's larger
         int[] temp = new int[newSize];
@@ -36,6 +46,11 @@ public class ArrayIntList implements IntList {
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
+     *
+     * Speed: O(size) - linear time (assuming no resize)
+     * Every value has to be moved to the right to put something at the front of the list
+     * relatively slow method, depending on the size
+     * ON RESIZE: O(2n) - double linear time
      *
      * @param value value to be inserted
      */
@@ -58,6 +73,9 @@ public class ArrayIntList implements IntList {
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     * Speed: O(1) AKA Constant Time if resize is NOT needed
+     * O(size) linear time if resize IS needed
+     *
      *
      * @param value value to be inserted
      */
@@ -77,6 +95,10 @@ public class ArrayIntList implements IntList {
      * Inserts the specified value at the specified position in this list.
      * Shifts the value currently at that position (if any) and any subsequent
      * values to the right.
+     *
+     * Speed: Can be as good as addBack - O(1) OR as bad as addFront - O(n)
+     * Items closer to the front of the list will take longer to add in
+     * Resize will also increase the time to linear time at LEAST
      *
      * @param index index at which the specified value is to be inserted
      * @param value value to be inserted
@@ -108,6 +130,9 @@ public class ArrayIntList implements IntList {
      * Removes the value located at the front of the list
      * (at index 0), if it is present.
      * Shifts any subsequent values to the left.
+     *
+     * Speed: O(n) - linear time
+     * The list has to be shifted over one value at a time
      */
     @Override
     public void removeFront() {
@@ -122,6 +147,8 @@ public class ArrayIntList implements IntList {
     /**
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
+     *
+     * Speed: O(1) - constant time
      */
     @Override
     public void removeBack() {
@@ -142,6 +169,10 @@ public class ArrayIntList implements IntList {
      * Removes the value at the specified position in this list.
      * Shifts any subsequent values to the left. Returns the value
      * that was removed from the list.
+     *
+     * Speed: Best case remove last index - O(1)
+     * Worst case remove first index - O(n)
+     * Resize makes time minimum of O(n)
      *
      * @param index the index of the value to be removed
      * @return the value previously at the specified position
@@ -169,6 +200,12 @@ public class ArrayIntList implements IntList {
     /**
      * Returns the value at the specified position in the list.
      *
+     * Spped: O(1)
+     * Constant Time (no matter the item in the list, the time to run is the same)
+     * This method should run very quickly since we know the index to go to
+     * The computer uses the address for buffer and then uses the index
+     * so it doesn't have to look anywhere and finds it fast
+     *
      * @param index index of the value to return
      * @return the value at the specified position in this list
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -190,6 +227,10 @@ public class ArrayIntList implements IntList {
     /**
      * Returns true if this list contains the specified value.
      *
+     * Speed: Best case item is at index 0 - O(1)
+     * Worst case item is at last index OR the item is not there, but
+     * it still has to search the whole list - O(n)
+     *
      * @param value value whose presence in this list is to be searched for
      * @return true if this list contains the specified value
      */
@@ -206,6 +247,8 @@ public class ArrayIntList implements IntList {
     /**
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
+     *
+     * Speed: Worst case is item is last or not found - O(size)
      *
      * @param value value to search for
      * @return the index of the first occurrence of the specified value in this list
@@ -225,6 +268,9 @@ public class ArrayIntList implements IntList {
     /**
      * Returns true if this list contains no values.
      *
+     * Speed: O(1)
+     * Only checking the first index, fast
+     *
      * @return true if this list contains no values
      */
     @Override
@@ -238,6 +284,9 @@ public class ArrayIntList implements IntList {
 
     /**
      * Returns the number of values in this list.
+     *
+     * Speed: O(1)
+     * just returns a value
      *
      * @return the number of values in this list
      */
@@ -298,6 +347,10 @@ public class ArrayIntList implements IntList {
 
     /**
      * This returns the list as a String
+     *
+     * Speed: O(n) - linear time
+     * relatively slow, have to visit every item in order to print it out
+     *
      * @return String
      */
     @Override
