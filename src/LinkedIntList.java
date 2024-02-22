@@ -68,7 +68,16 @@ public class LinkedIntList implements IntList
     @Override
     public void addBack(int value)
     {
-
+        if (head == null) {
+            head = new Node(value, null);
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = new Node(value, null);
+        }
+        size++;
     }
 
     /**
@@ -91,8 +100,13 @@ public class LinkedIntList implements IntList
      * Shifts any subsequent values to the left.
      */
     @Override
-    public void removeFront() {
-
+    public void removeFront()
+    {
+        if(head != null)
+        {
+            head = head.next;
+            size--;
+        }
     }
 
     /**
@@ -100,8 +114,21 @@ public class LinkedIntList implements IntList
      * (at index size()-1), if it is present.
      */
     @Override
-    public void removeBack() {
-
+    public void removeBack()
+    {
+        if (head == null) {
+            return;
+        } else if (head.next == null) {
+            // Only one element in the list
+            head = null;
+        } else {
+            Node current = head;
+            while (current.next.next != null) {
+                current = current.next;
+            }
+            current.next = null;
+        }
+        size--;
     }
 
     /**
