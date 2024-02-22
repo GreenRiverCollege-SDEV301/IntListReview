@@ -29,9 +29,22 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
+    void removeFrontEmpty()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertThrowsExactly(IllegalStateException.class, () -> theList.removeFront());
+    }
+//not working :(((
+    @org.junit.jupiter.api.Test
     void removeFront()
     {
-
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++)
+        {
+            theList.addFront(i);
+        }
+        theList.removeFront();
+        assertEquals(1, theList.get(0));
     }
 
     @org.junit.jupiter.api.Test

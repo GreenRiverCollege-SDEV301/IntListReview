@@ -26,12 +26,14 @@ public class ArrayIntList implements IntList
     public void addFront(int value)
     {
         //backwards for loop that ends at 1 instead of 0 this way the list is incremented by 1
-        for (int i = size; i >= 1; i--)
+        size++;
+        for (int i = size-1; i >= 1; i--)
         {
             buffer[i] = buffer[i--];
         }
         buffer[0] = value;
     }
+    //slow, linear time, 0(size)
     private void resize(int newSize)
     {
         int[] temp = new int[newSize];
@@ -69,6 +71,10 @@ public class ArrayIntList implements IntList
      * @param value value to be inserted
      * @throws IndexOutOfBoundsException if the index is out of range
      */
+
+    //the run time can be as good as addBack or as slow as addFront.
+    //worst case 0(n). best case 0(1)
+    //average case -0(1/2n)
     @Override
     public void add(int index, int value)
     {
@@ -96,6 +102,7 @@ public class ArrayIntList implements IntList
      * (at index 0), if it is present.
      * Shifts any subsequent values to the left.
      */
+    // Relatively slow, linear time. 0(size) shift size items to the right
     @Override
     public void removeFront()
     {
@@ -103,6 +110,8 @@ public class ArrayIntList implements IntList
         {
             throw new IllegalStateException("Already Empty");
         }
+        //note to self maybe do this without making another list. perhaps set 0 to index+1
+        // and then index = index+1 throughout??
         int[] temp = new int[size];
         for (int i = 0; i < size-1; i++)
         {
@@ -116,6 +125,7 @@ public class ArrayIntList implements IntList
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
      */
+    //fast operation. constant time. 1(1)
     @Override
     public void removeBack()
     {
@@ -136,6 +146,7 @@ public class ArrayIntList implements IntList
      * @return the value previously at the specified position
      * @throws IndexOutOfBoundsException if the index is out of range
      */
+    //best case remove back 0(1). worst case remove front 0(n)
     @Override
     public int remove(int index)
     {
@@ -167,6 +178,7 @@ public class ArrayIntList implements IntList
      * @return the value at the specified position in this list
      * @throws IndexOutOfBoundsException if the index is out of range
      */
+    //Fast, constant time 0(1)
     @Override
     public int get(int index)
     {
@@ -179,6 +191,8 @@ public class ArrayIntList implements IntList
      * @param value value whose presence in this list is to be searched for
      * @return true if this list contains the specified value
      */
+    //best case value is at the first index. worst case is at the end of the loop or not there
+    //0(size)
     @Override
     public boolean contains(int value)
     {
@@ -200,6 +214,8 @@ public class ArrayIntList implements IntList
      * @return the index of the first occurrence of the specified value in this list
      * or -1 if this list does not contain the value
      */
+    //best case value is at the first index. worst case is at the end of the loop or not there
+    //0(size)
     @Override
     public int indexOf(int value)
     {
@@ -218,6 +234,7 @@ public class ArrayIntList implements IntList
      *
      * @return true if this list contains no values
      */
+    //fast 0(1)
     @Override
     public boolean isEmpty()
     {
@@ -233,6 +250,7 @@ public class ArrayIntList implements IntList
      *
      * @return the number of values in this list
      */
+    //fast 0(1)
     @Override
     public int size() {
         return size;
@@ -259,7 +277,7 @@ public class ArrayIntList implements IntList
         //return new instance of the helper class
         return new ArrayIntListIterator();
     }
-
+    //0(n)
     public String toString()
     {
         if (size ==0)
@@ -299,7 +317,7 @@ public class ArrayIntList implements IntList
          * Returns the next element in the iteration.
          *
          * @return the next element in the iteration
-         * @throws NoSuchElementException if the iteration has no more elements
+         * @throws /NoSuchElementException if the iteration has no more elements
          */
         @Override
         public Integer next()

@@ -26,7 +26,9 @@ public class Main {
 
         list1.removeBack();
         System.out.println(list1.toString());
+        System.out.println("adding to front");
         list1.addFront(100);
+        list1.addFront(101);
         System.out.println(list1.toString());
         list1.removeFront();
         System.out.println(list1.toString());
