@@ -9,7 +9,7 @@ public class ArrayIntList implements IntList{
     private final static int INITIAL_CAPACITY = 10;
 
     public ArrayIntList(){
-        buffer = new int[10];
+        buffer = new int[INITIAL_CAPACITY];
         size = 0;
     }
 
@@ -68,7 +68,18 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
 
+        // shift elements to the right
+        for (int i = size; i > index ; i--) {
+            buffer[i] = buffer[i - 1];
+        }
+
+        // insert new value
+        buffer[index] = value;
+        size++;
     }
 
     /**
@@ -78,6 +89,14 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void removeFront() {
+        if(size > 0) {
+            for (int i = 0; i < size - 1; i++) {
+                buffer[i] = buffer[i + 1];
+            }
+
+            buffer[size - 1] = 0;
+            size--;
+        }
 
     }
 
@@ -106,7 +125,22 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index is out of range");
+        }
+
+        int removedValue = buffer[index];
+
+        // shift elements to the left
+        for (int i = index; i < size; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+
+        // clear the last element and decrement size
+        buffer[size - 1] = 0;
+        size--;
+
+        return removedValue;
     }
 
     /**
@@ -118,7 +152,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index out of range");
+        }
+
+        return buffer[index];
     }
 
     /**
@@ -129,6 +167,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -142,7 +185,12 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -152,7 +200,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     /**
@@ -162,7 +210,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -171,6 +219,8 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void clear() {
+        buffer = new int[10];
+        size = 0;
 
     }
 

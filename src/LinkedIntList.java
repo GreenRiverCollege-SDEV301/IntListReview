@@ -1,5 +1,31 @@
 import java.util.Iterator;
 public class LinkedIntList implements IntList{
+    // helper inner/nested class
+    public class Node{
+        int data;  // holds the data value
+        Node next; // holds address of next node
+
+        public Node(){
+            data = 0;
+            next = null;
+        }
+
+        public Node(int data, Node next){
+            this.data = data;
+            this.next = next;
+        }
+    } // end of class Node
+
+    // fields for LinkedIntList class
+    private Node head; // address of first node in list
+    private int size;
+
+    public LinkedIntList(){
+        head = null;
+        size = 0;
+    }
+
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -9,7 +35,16 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void addFront(int value) {
+        // if list is empty
+        if (head == null){
+           head = new Node(value, null);
+        }
+        // if list not empty
+        else {
+            head = new Node(value, head);
+        }
 
+        size++;
     }
 
     /**
@@ -19,6 +54,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void addBack(int value) {
+
 
     }
 
