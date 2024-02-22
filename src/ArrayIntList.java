@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList {
     // internal (private) representation
@@ -107,7 +108,15 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index > size) {
+            throw new IndexOutOfBoundsException("index is out of bounds");
+        }
+        int removed = buffer[index];
+        for (int i = index; i < size; i++) {
+
+        }
+
+        return removed;
     }
 
     /**
@@ -119,7 +128,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        return buffer[index];
     }
 
     /**
@@ -163,7 +172,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -182,7 +191,8 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        // return a new instance of the helper iterator class (below)
+        return new ArrayIntListIterator();
     }
 
     @Override
@@ -216,4 +226,30 @@ public class ArrayIntList implements IntList {
         // make the switchover
         buffer = temp;
     }
-}
+    // nested or inner class (helper class)
+    public class ArrayIntListIterator implements Iterator<Integer> {
+        private int currentPosition;
+
+        public ArrayIntListIterator() {
+            currentPosition = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (currentPosition < size);
+        }
+
+        @Override
+        public Integer next() {
+            // Just to be safe - make sure there is a next
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
+    }
+
+} // end of ArrayIntList
