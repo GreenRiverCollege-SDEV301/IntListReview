@@ -95,7 +95,7 @@ class ArrayIntListTest {
 
 
     @org.junit.jupiter.api.Test
-    void addOne() {
+    void addListOfOne() {
         ArrayIntList theList = new ArrayIntList();
         theList.add(0, 100);
         assertEquals(theList.get(0), 100);
@@ -152,6 +152,11 @@ class ArrayIntListTest {
     @org.junit.jupiter.api.Test
     void removeFrontAfterResize() {
         ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 15; i++) {
+            theList.addFront(i);
+        }
+        theList.addFront(42);
+        assertEquals(theList.get(0), 42);
 
     }
 
@@ -207,44 +212,46 @@ class ArrayIntListTest {
         assertEquals(theList.get(theList.size() - 1), 8);
     }
 
+    // TODO: add tests for remove
     @org.junit.jupiter.api.Test
     void remove() {
 
         fail();
     }
 
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void get() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void contains() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void indexOf() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void isEmpty() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void size() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void clear() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void iterator() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void forEach() {
     }
-
+    // TODO: add tests
     @org.junit.jupiter.api.Test
     void testToString() {
     }
