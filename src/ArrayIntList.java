@@ -20,6 +20,12 @@ public class ArrayIntList implements IntList
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     * This is a relatively slow operation
+     * Linear time - O(size) or O(n)
+     * because we have to shift every item
+     * in the buffer to the right to make room
+     * at the front for the new item
+     *
      * @param value value to be inserted
      */
     @Override
