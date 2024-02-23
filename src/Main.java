@@ -8,7 +8,7 @@ public class Main {
         int[] arrayOfNumbers = new int[10];
 
         IntList list1 = new ArrayIntList();
-        IntList list2 = new LinkedIntList();
+        IntList list2 = new ArrayIntList();
 
         // add 3 ints to the back of the list
         list1.addBack(42);
@@ -32,19 +32,30 @@ public class Main {
 
         System.out.println(list1);
 
-        // convenience code using a for each loop
-        // only possible if class provides an iterator
-        for (int value : list1) {
-            System.out.println(value);
-        }
+//        // convenience code using a for each loop
+//        // only possible if class provides an iterator
+//        for (int value : list1) {
+//            System.out.println(value);
+//        }
+//
+//        System.out.println("------------");
+//
+//        // on manual, behind the scenes
+//        Iterator<Integer> itr = list1.iterator();
+//        while (itr.hasNext()) {
+//            int value = itr.next();
+//            System.out.println(value);
+//        }
 
-        System.out.println("------------");
+        list1.add(12, 1 );
+        System.out.println(list1);
+        list1.removeFront();
+        System.out.println(list1);
+        System.out.println(list1.contains(99));
+        System.out.println(list1.indexOf(1));
 
-        // on manual, behind the scenes
-        Iterator<Integer> itr = list1.iterator();
-        while (itr.hasNext()) {
-            int value = itr.next();
-            System.out.println(value);
-        }
+        System.out.println(list2);
+        list2.add(0, 1);
+        System.out.println(list2);
     }
 }
