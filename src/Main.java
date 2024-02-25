@@ -50,6 +50,13 @@ public class Main {
         list2.addBack(101);
         list2.addBack(102);
         System.out.println(list2.toString());
+        System.out.println("list2 size: " + list2.size());
+        list2.removeBack();
+        System.out.println(list2.toString());
+        System.out.println("List2 size" + list2.size());
+        list2.addBack(102);
+        list2.addBack(103);
+        list2.addBack(104);
 
     }
 }

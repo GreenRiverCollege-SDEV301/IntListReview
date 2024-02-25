@@ -3,7 +3,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
-    void addFront() {
+    void addFront()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(11);
+        theList.addFront(12);
+        theList.addFront(13);
+        theList.addFront(14);
+        theList.addFront(15);
+        String out = theList.toString();
+        assertEquals(out, "[15,14,13,12,11]");
     }
 
     @org.junit.jupiter.api.Test
@@ -25,7 +34,22 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void add() {
+    void add()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++)
+        {
+            theList.addBack(i);
+        }
+        theList.add(5,99);
+        assertEquals(99, theList.get(5));
+        assertEquals(4, theList.get(4));
+        assertEquals(5, theList.get(6));
+        assertEquals(9,theList.get(10));
+        theList.add(10, 1000);
+        assertEquals(1000,theList.get(10));
+        assertEquals(9,theList.get(11));
+
     }
 
     @org.junit.jupiter.api.Test
@@ -41,10 +65,10 @@ class ArrayIntListTest {
         ArrayIntList theList = new ArrayIntList();
         for (int i = 0; i < 10; i++)
         {
-            theList.addFront(i);
+            theList.addBack(i);
         }
         theList.removeFront();
-        assertEquals(8, theList.get(0));
+        assertEquals(1, theList.get(0));
     }
 
     @org.junit.jupiter.api.Test
@@ -84,7 +108,12 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void isEmpty() {
+    void isEmpty()
+    {
+        ArrayIntList theList = new ArrayIntList();
+        assertEquals(true, theList.isEmpty());
+        theList.addBack(88);
+        assertEquals(false, theList.isEmpty());
     }
 
     @org.junit.jupiter.api.Test

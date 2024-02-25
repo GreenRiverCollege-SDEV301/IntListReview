@@ -27,9 +27,9 @@ public class ArrayIntList implements IntList
     {
         //backwards for loop that ends at 1 instead of 0 this way the list is incremented by 1
         size++;
-        for (int i = size-1; i >= 1; i--)
+        for (int i = size; i > 0; i--)
         {
-            buffer[i] = buffer[i--];
+            buffer[i] = buffer[i - 1];
         }
         buffer[0] = value;
     }
@@ -78,23 +78,32 @@ public class ArrayIntList implements IntList
     @Override
     public void add(int index, int value)
     {
-        //go to array index position
-        int[] temp = new int[size+1];
-        //fill the first half of the array
-        for (int i = 0; i < index; i++)
+        //ensure the index isnt out of range
+        if (index < size + 2)
         {
-            temp[i] = buffer[i];
-        }
-        //fill desired value
-        temp[index] = value;
-        //fill last half of array
-        for (int i = index; i < size; i++)
-        {
-            temp[i+1] = buffer[i];
+            int[] temp = new int[size+1];
+            //fill the first half of the array
+            for (int i = 0; i < index; i++)
+            {
+                temp[i] = buffer[i];
+            }
+            //fill desired value
+            temp[index] = value;
+            //fill last half of array
+            for (int i = index; i < size; i++)
+            {
+                temp[i+1] = buffer[i];
 
+            }
+            buffer = temp;
+            size++;
         }
-        buffer = temp;
-        size++;
+        else
+        {
+            throw new IllegalStateException("Index out of range please be between 0 and " + size+1);
+        }
+
+
     }
 
     /**

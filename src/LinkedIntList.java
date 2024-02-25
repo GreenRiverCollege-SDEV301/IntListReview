@@ -112,10 +112,12 @@ public class LinkedIntList implements IntList
         if (head != null)
         {
             Node temp = head;
-            while(temp.next != null)
+            while(temp.next.next != null)
             {
                 temp = temp.next;
             }
+            temp.next = null;
+            size--;
         }
     }
 
@@ -129,8 +131,26 @@ public class LinkedIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int remove(int index) {
-        return 0;
+    public int remove(int index)
+    {
+        Node temp = head;
+        for (int i = 0; i < index; i++)
+        {
+            if (temp.next != null)
+            {
+                temp = temp.next;
+            }
+        }
+
+        //store removed data in order to return
+        int removedData = temp.next.data;
+        if (temp.next.next != null)
+        {
+
+            temp.next = temp.next.next;
+        }
+        size--;
+        return removedData;
     }
 
     /**
