@@ -52,8 +52,25 @@ public class LinkedIntList implements IntList
      * @param value value to be inserted
      */
     @Override
-    public void addBack(int value) {
-
+    public void addBack(int value)
+    {
+        //check if head is null
+        if(head == null)
+        {
+            head = new Node(value, null);
+        }
+        //move through the list and add back value
+        else
+        {
+            Node temp = head;
+            //go through list until find the end
+            while(temp.next != null)
+            {
+                temp = temp.next;
+            }
+            temp.next = new Node(value, null);
+        }
+        size++;
     }
 
     /**
@@ -76,8 +93,12 @@ public class LinkedIntList implements IntList
      * Shifts any subsequent values to the left.
      */
     @Override
-    public void removeFront() {
-
+    public void removeFront()
+    {
+        if (head.next != null)
+        {
+            head = head.next;
+        }
     }
 
     /**
@@ -85,8 +106,17 @@ public class LinkedIntList implements IntList
      * (at index size()-1), if it is present.
      */
     @Override
-    public void removeBack() {
-
+    public void removeBack()
+    {
+        //check if empty
+        if (head != null)
+        {
+            Node temp = head;
+            while(temp.next != null)
+            {
+                temp = temp.next;
+            }
+        }
     }
 
     /**
@@ -155,8 +185,9 @@ public class LinkedIntList implements IntList
      * @return the number of values in this list
      */
     @Override
-    public int size() {
-        return 0;
+    public int size()
+    {
+        return size;
     }
 
     /**
@@ -164,8 +195,9 @@ public class LinkedIntList implements IntList
      * The list will be empty after this call returns.
      */
     @Override
-    public void clear() {
-
+    public void clear()
+    {
+        head = null;
     }
 
     /**
@@ -174,7 +206,21 @@ public class LinkedIntList implements IntList
      * @return an Iterator.
      */
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Integer> iterator()
+    {
         return null;
+    }
+
+    public String toString()
+    {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Head -> ");
+        Node temp = head;
+        while(temp != null)
+        {
+            sb.append(" [" + temp.data + "]");
+            temp = temp.next;
+        }
+        return sb.toString();
     }
 }

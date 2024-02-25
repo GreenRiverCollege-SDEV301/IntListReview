@@ -38,12 +38,18 @@ public class Main {
         list1.remove(4);
         System.out.println(list1.toString());
         System.out.println("Contains 99: "+list1.contains(99));
+        System.out.println(list1.get(4));
 
         Iterator<Integer> itr = list1.iterator();
         while (itr.hasNext())
         {
             System.out.println(itr.next());
         }
+
+        list2.addBack(100);
+        list2.addBack(101);
+        list2.addBack(102);
+        System.out.println(list2.toString());
 
     }
 }
