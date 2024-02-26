@@ -36,6 +36,17 @@ class LinkedIntListTest {
 
     @Test
     void addBackWithEmptyLinkedList() {
+        LinkedIntList ll = getEmptyLinkedList();
+        ll.addBack(1);
+        ll.addBack(2);
+        assertEquals(ll.get(1), 2);
+    }
+
+    @Test
+    void addBackWithNonEmptyLinkedList() {
+        LinkedIntList ll = getLinkedListWithFourValues();
+        ll.addBack(5);
+        assertEquals(ll.get(4), 5);
     }
 
     @Test
