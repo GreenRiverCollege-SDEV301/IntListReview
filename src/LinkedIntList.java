@@ -1,8 +1,9 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList {
     //Helper/nested class
-    public class Node {
+    public static class Node {
         int data; //Holds the data value
         Node next; //Holds address of next node
 
@@ -25,6 +26,7 @@ public class LinkedIntList implements IntList {
         }
     }
 
+    //LinkedIntList's variables
     Node head;
     int size;
 
@@ -37,8 +39,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
-        Node temp = new Node(value, head);
-        head = temp;
+        this.head = new Node(value, head);
         size++;
     }
 
@@ -124,7 +125,18 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index > this.size - 1 || index < 0) {
+            throw new IndexOutOfBoundsException("The provided index is outside the range of this LinkedIntList.");
+        }
+
+        Node currentNode = this.head;
+        for (int i = 0; i <= index; i++) {
+            if (i == index) {
+                break;
+            }
+            currentNode = currentNode.next;
+        }
+        return currentNode.data;
     }
 
     /**

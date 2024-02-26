@@ -22,11 +22,16 @@ class LinkedIntListTest {
 
     @Test
     void addFrontWithEmptyLinkedList() {
+        LinkedIntList ll = getEmptyLinkedList();
+        ll.addFront(1);
+        assertEquals(ll.get(0), 1);
     }
 
     @Test
     void addFrontWithNonEmptyLinkedList() {
-
+        LinkedIntList ll = getLinkedListWithFourValues();
+        ll.addFront(0);
+        assertEquals(ll.get(0), 0);
     }
 
     @Test
