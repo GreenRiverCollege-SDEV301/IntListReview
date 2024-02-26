@@ -66,7 +66,23 @@ class LinkedIntListTest {
     }
 
     @Test
-    void removeBack() {
+    void removeBackFromEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IllegalStateException.class, ll::removeBack);
+    }
+
+    @Test
+    void removeBackFromNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.removeBack();
+
+        LinkedIntList.Node currentNode = ll.head;
+        //Get the last node that has data
+        while (currentNode.next != null) {
+            currentNode = currentNode.next;
+        }
+
+        assertEquals(currentNode.data, 3);
     }
 
     @Test

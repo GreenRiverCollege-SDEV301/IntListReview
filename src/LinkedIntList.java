@@ -102,7 +102,18 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeBack() {
+        if (this.size == 0) {
+            throw new IllegalStateException("Back node is unable to be removed because LinkedIntList is currently empty.");
+        }
 
+        LinkedIntList.Node currentNode = this.head;
+
+        while (currentNode.next.next != null) {
+            currentNode = currentNode.next;
+        }
+
+        currentNode.next = null;
+        this.size--;
     }
 
     /**
