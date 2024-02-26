@@ -1,12 +1,11 @@
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedIntListTest {
     //Helper methods (creating LinkedIntList's for tests)
 
     //Create an empty list
-    public LinkedIntList getEmptyLinkedList() {
+    public LinkedIntList getEmptyLinkedIntList() {
         return new LinkedIntList();
     }
 
@@ -22,7 +21,7 @@ class LinkedIntListTest {
 
     @Test
     void addFrontWithEmptyLinkedList() {
-        LinkedIntList ll = getEmptyLinkedList();
+        LinkedIntList ll = getEmptyLinkedIntList();
         ll.addFront(1);
         assertEquals(ll.get(0), 1);
     }
@@ -36,7 +35,7 @@ class LinkedIntListTest {
 
     @Test
     void addBackWithEmptyLinkedList() {
-        LinkedIntList ll = getEmptyLinkedList();
+        LinkedIntList ll = getEmptyLinkedIntList();
         ll.addBack(1);
         ll.addBack(2);
         assertEquals(ll.get(1), 2);
@@ -66,7 +65,18 @@ class LinkedIntListTest {
     }
 
     @Test
-    void get() {
+    void getDataFromEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.get(0));
+    }
+
+    @Test
+    void getDataFromNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedListWithFourValues();
+        assertEquals(ll.get(0), 1);
+        assertEquals(ll.get(1), 2);
+        assertEquals(ll.get(3), 4);
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.get(4));
     }
 
     @Test

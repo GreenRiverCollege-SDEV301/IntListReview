@@ -1,5 +1,3 @@
-import java.lang.reflect.Array;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {

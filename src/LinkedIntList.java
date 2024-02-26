@@ -1,5 +1,4 @@
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList {
     //Helper/nested class
