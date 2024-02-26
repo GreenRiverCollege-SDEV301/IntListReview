@@ -22,7 +22,7 @@ public class LinkedIntList implements IntList
         public LinkedIntList (int value)
     {
         Node newNode = new Node (value);
-        head = tail = newNode;
+        head = newNode;
         length = 1;
     }
 
@@ -53,11 +53,17 @@ public class LinkedIntList implements IntList
     public void addBack(int value)      //completed
     {
         Node newNode = new Node(value);
+        Node current = head;
 
         if(head == null) head = tail = newNode;
 
-        tail.next = newNode;
-        tail = newNode;
+        while(current.next != null)
+        {
+            current = current.next;
+        }
+//        tail.next = newNode;
+//        tail = newNode;
+        current.next = newNode;
         length++;
 
     }
@@ -130,8 +136,9 @@ public class LinkedIntList implements IntList
             current = current.next;
         }
 
-        tail = current;
-        tail.next = null;
+//        tail = current;
+//        tail.next = null;
+        current.next = null;
         length--;
     }
 
@@ -278,7 +285,7 @@ public class LinkedIntList implements IntList
     @Override
     public void clear() //completed
     {
-        head = tail = null;
+        head = null;
         length = 0;
     }
 

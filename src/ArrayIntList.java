@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements  IntList
 {
@@ -95,25 +96,36 @@ public class ArrayIntList implements  IntList
     @Override
     public void add(int index, int value)   //completed
     {
-        if(index < 0 || index > size -1)
+        if(index < 0 || index > size)
         {
             throw new IndexOutOfBoundsException("Index out of bound");
         }
 
-        for (int i = buffer.length-1 ; i > 0; i--)
+        if(index == 0)
         {
-
-
-            if(i == index)
+            addFront(value);
+        }
+        else if (index > size-1)
+        {
+            addBack(value);
+        }
+        else
+        {
+            for (int i = buffer.length - 1; i > 0; i--)
             {
-                buffer[i] = value;
-                size++;
-            }
-            else
-            {
-                buffer[i] = buffer[i - 1];
-            }
 
+
+                if (i == index)
+                {
+                    buffer[i] = value;
+
+                } else
+                {
+                    buffer[i] = buffer[i - 1];
+                }
+
+            }
+            size++;
         }
 
     }
@@ -126,6 +138,11 @@ public class ArrayIntList implements  IntList
     @Override
     public void removeFront()   //completed
     {
+        if(size == 0)
+        {
+            throw new IllegalStateException("already empty!");
+        }
+
         buffer[0] = 0;
         size--;
 
@@ -167,9 +184,14 @@ public class ArrayIntList implements  IntList
     @Override
     public int remove(int index)    //completed
     {
-        if(index < 0 || index > size -1)
+        if(index < 0 || index > size)
         {
             throw new IndexOutOfBoundsException("Index out of bound");
+        }
+
+        if (size == 0)
+        {
+            throw new IllegalStateException("already empty!");
         }
 
         int temp = buffer[index];
@@ -281,11 +303,11 @@ public class ArrayIntList implements  IntList
     @Override
     public Iterator<Integer> iterator()
     {
-        return null;
+        //return a new instance of the helper iterator class (below)
+        return new ArrayIntListIterator();
     }
 
     @Override //Meaning this toString method is overwriting the toString method in the parents class
-//    ???
     public String toString()
     {
         if(size == 0)
@@ -306,5 +328,33 @@ public class ArrayIntList implements  IntList
 
         sb.append("]");
         return sb.toString();
+    }
+
+    //nested or inner class (helper class)
+    public class ArrayIntListIterator implements Iterator<Integer>
+    {
+        private int currentPosition;
+
+        public ArrayIntListIterator()
+        {
+            currentPosition = 0;
+        }
+
+        public boolean hasNext()
+        {
+            return (currentPosition < size());  //if < return true, else return false
+        }
+
+        public Integer next()
+        {
+            if(!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
+
+            int value = get(currentPosition);
+            currentPosition++;
+            return value;
+        }
     }
 }
