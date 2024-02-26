@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {
     //Helper methods (creating lists for tests)
+
     //Create an empty list
     public ArrayIntList getEmptyList() {
         return new ArrayIntList();
@@ -29,7 +30,7 @@ class ArrayIntListTest {
         return list;
     }
 
-    //Test addfront()
+    //Test addFront()
     @org.junit.jupiter.api.Test
     void addFrontWithEmptyList() {
         ArrayIntList list = getEmptyList();
@@ -93,8 +94,19 @@ class ArrayIntListTest {
         assertEquals(theList.get(theList.size() - 1), 42);
     }
 
+    //Test add()
     @org.junit.jupiter.api.Test
-    void add() {
+    void addWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        list.add(0, 0);
+        assertEquals(list.get(0), 0);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addWithNonEmptyList() {
+        ArrayIntList list = getEmptyList();
+        list.add(0, 0);
+        assertEquals(list.get(0), 0);
     }
 
     @org.junit.jupiter.api.Test

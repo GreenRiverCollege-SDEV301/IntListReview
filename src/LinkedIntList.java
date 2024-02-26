@@ -1,7 +1,32 @@
 import java.util.Iterator;
 
 public class LinkedIntList implements IntList {
+    //Helper/nested class
+    public class Node {
+        int data; //Holds the data value
+        Node next; //Holds address of next node
 
+        //Create a new Node object
+        public Node() {
+            this.data = 0;
+            this.next = null;
+        }
+
+        //Create a new Node object with just data
+        public Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+
+        //Create a new Node object with data and a next node value
+        public Node(int data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    }
+
+    Node head;
+    int size;
 
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
@@ -12,7 +37,9 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
-
+        Node temp = new Node(value, head);
+        head = temp;
+        size++;
     }
 
     /**
@@ -22,7 +49,23 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
+        //If head is null, that means we have an empty LinkedIntList
+        if (this.head == null) {
+            this.head = new Node(value);
+            this.size = 1;
+            return;
+        }
 
+        //If head is not null, we have to find the end of the LinkedIntList and add the
+        //new node
+        Node currentNode = this.head;
+
+        while (currentNode.next != null) {
+            currentNode = currentNode.next;
+        }
+
+        currentNode.next = new Node(value);
+        size++;
     }
 
     /**
@@ -146,4 +189,27 @@ public class LinkedIntList implements IntList {
     public Iterator<Integer> iterator() {
         return null;
     }
+
+    //Create a toString() method to pretty print the LinkedIntList
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        Node currentNode = this.head;
+        while (currentNode != null) {
+            sb.append("[");
+            sb.append(currentNode.data);
+            sb.append("]->");
+            currentNode = currentNode.next;
+        }
+
+        sb.append("[");
+        sb.append("null]");
+        return sb.toString();
+    }
 }
+
