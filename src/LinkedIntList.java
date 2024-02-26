@@ -184,7 +184,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     /**
@@ -194,7 +194,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     /**

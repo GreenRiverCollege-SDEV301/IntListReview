@@ -113,11 +113,27 @@ class LinkedIntListTest {
     }
 
     @Test
-    void isEmpty() {
+    void isEmptyWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertTrue(ll.isEmpty());
     }
 
     @Test
-    void size() {
+    void isEmptyWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        assertFalse(ll.isEmpty());
+    }
+
+    @Test
+    void sizeWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertEquals(ll.size(), 0);
+    }
+
+    @Test
+    void sizeWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        assertEquals(ll.size(), 4);
     }
 
     @Test
