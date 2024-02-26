@@ -83,7 +83,8 @@ public class LinkedIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public void add(int index, int value) {
+    public void add(int index, int value)
+    {
 
     }
 
@@ -161,7 +162,8 @@ public class LinkedIntList implements IntList
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
-    public int get(int index) {
+    public int get(int index)
+    {
         return 0;
     }
 
@@ -172,8 +174,20 @@ public class LinkedIntList implements IntList
      * @return true if this list contains the specified value
      */
     @Override
-    public boolean contains(int value) {
-        return false;
+    public boolean contains(int value)
+    {
+        Node temp = head;
+        Boolean found = false;
+        while (temp.next != null)
+        {
+            if (temp.data == value)
+            {
+                found = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        return found;
     }
 
     /**
@@ -185,7 +199,8 @@ public class LinkedIntList implements IntList
      * or -1 if this list does not contain the value
      */
     @Override
-    public int indexOf(int value) {
+    public int indexOf(int value)
+    {
         return 0;
     }
 

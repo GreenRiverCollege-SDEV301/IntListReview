@@ -57,6 +57,8 @@ public class Main {
         list2.addBack(102);
         list2.addBack(103);
         list2.addBack(104);
+        System.out.println(list2.contains(9));
+        System.out.println(list2.contains(102));
 
     }
 }

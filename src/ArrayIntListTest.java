@@ -115,7 +115,8 @@ class ArrayIntListTest {
         theList.addBack(3);
         theList.addBack(4);
         assertEquals(0, theList.get(9));
-        assertEquals(0,theList.get(1));
+        assertEquals(2,theList.get(1));
+        assertEquals(4,theList.get(3));
 
     }
 
@@ -135,7 +136,17 @@ class ArrayIntListTest {
     @org.junit.jupiter.api.Test
     void indexOf()
     {
+        ArrayIntList theList = new ArrayIntList();
+        //test while empty
+        assertEquals(-1, theList.indexOf(2));
 
+        //test with items
+        theList.addBack(1);
+        theList.addBack(2);
+        theList.addBack(3);
+        theList.addBack(4);
+        assertEquals(3, theList.indexOf(4));
+        assertEquals(-1, theList.indexOf(8));
     }
 
     @org.junit.jupiter.api.Test
@@ -181,7 +192,7 @@ class ArrayIntListTest {
     @org.junit.jupiter.api.Test
     void iterator()
     {
-
+        //tbh no clue how I should test this
     }
 
     @org.junit.jupiter.api.Test
