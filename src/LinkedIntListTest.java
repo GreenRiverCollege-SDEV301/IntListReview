@@ -10,7 +10,7 @@ class LinkedIntListTest {
     }
 
     //Create a list with 4 values
-    public LinkedIntList getLinkedListWithFourValues() {
+    public LinkedIntList getLinkedIntListWithFourValues() {
         LinkedIntList ll = new LinkedIntList();
         ll.addBack(1);
         ll.addBack(2);
@@ -20,21 +20,21 @@ class LinkedIntListTest {
     }
 
     @Test
-    void addFrontWithEmptyLinkedList() {
+    void addFrontWithEmptyLinkedIntList() {
         LinkedIntList ll = getEmptyLinkedIntList();
         ll.addFront(1);
         assertEquals(ll.get(0), 1);
     }
 
     @Test
-    void addFrontWithNonEmptyLinkedList() {
-        LinkedIntList ll = getLinkedListWithFourValues();
+    void addFrontWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
         ll.addFront(0);
         assertEquals(ll.get(0), 0);
     }
 
     @Test
-    void addBackWithEmptyLinkedList() {
+    void addBackWithEmptyLinkedIntList() {
         LinkedIntList ll = getEmptyLinkedIntList();
         ll.addBack(1);
         ll.addBack(2);
@@ -42,8 +42,8 @@ class LinkedIntListTest {
     }
 
     @Test
-    void addBackWithNonEmptyLinkedList() {
-        LinkedIntList ll = getLinkedListWithFourValues();
+    void addBackWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
         ll.addBack(5);
         assertEquals(ll.get(4), 5);
     }
@@ -53,7 +53,16 @@ class LinkedIntListTest {
     }
 
     @Test
-    void removeFront() {
+    void removeFrontFromEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IllegalStateException.class, ll::removeFront);
+    }
+
+    @Test
+    void removeFrontFromNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.removeFront();
+        assertEquals(ll.get(0), 2);
     }
 
     @Test
@@ -72,7 +81,7 @@ class LinkedIntListTest {
 
     @Test
     void getDataFromNonEmptyLinkedIntList() {
-        LinkedIntList ll = getLinkedListWithFourValues();
+        LinkedIntList ll = getLinkedIntListWithFourValues();
         assertEquals(ll.get(0), 1);
         assertEquals(ll.get(1), 2);
         assertEquals(ll.get(3), 4);

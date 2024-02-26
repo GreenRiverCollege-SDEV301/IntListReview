@@ -89,7 +89,11 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        if (this.size == 0) {
+            throw new IllegalStateException("Front node is unable to be removed because LinkedIntList is currently empty.");
+        }
+        this.head = this.head.next;
+        this.size--;
     }
 
     /**
