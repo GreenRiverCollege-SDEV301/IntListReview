@@ -159,25 +159,33 @@ public class ArrayIntList implements IntList
     @Override
     public int remove(int index)
     {
-        //go to array index position
-        int[] temp = new int[size];
-        //fill the first half of the array
-        for (int i = 0; i <= index; i++)
+        if (index <= size)
         {
-            temp[i] = buffer[i];
-            //System.out.print(temp[i]);
+            //go to array index position
+            int[] temp = new int[size];
+            //fill the first half of the array
+            for (int i = 0; i <= index; i++)
+            {
+                temp[i] = buffer[i];
+                //System.out.print(temp[i]);
+            }
+            int removed = buffer[index];
+            index++;
+            //fill last half of array
+            for (int i = index; i < size; i++)
+            {
+                temp[i-1] = buffer[i];
+
+            }
+            buffer = temp;
+            size--;
+            return removed;
+        }
+        else
+        {
+            throw new IllegalStateException("Index out of bounds");
         }
 
-        index++;
-        //fill last half of array
-        for (int i = index; i < size; i++)
-        {
-            temp[i-1] = buffer[i];
-
-        }
-        buffer = temp;
-        size--;
-        return 0;
     }
 
     /**
@@ -272,6 +280,7 @@ public class ArrayIntList implements IntList
     @Override
     public void clear()
     {
+        size = 0;
         buffer = new int[size];
     }
 
