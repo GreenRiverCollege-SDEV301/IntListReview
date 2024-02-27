@@ -37,5 +37,32 @@ public class Main {
             int value = itr.next();
             System.out.println(value);
         }
+
+        System.out.println("------------------------------------------------");
+
+        //------------------------------
+        // Linked List short test
+        //------------------------------
+
+        list2.addFront(9);
+        list2.addFront(7);
+        list2.addFront(4);
+        list2.addBack(18);
+
+        System.out.println(list2);
+
+        /// short way
+        for(int value : list2)
+        {
+            System.out.println(value);
+        }
+
+        // long way
+        Iterator<Integer> itr2 = list2.iterator();
+        while(itr2.hasNext())
+        {
+            System.out.println(itr2.next());
+        }
+
     }
 }

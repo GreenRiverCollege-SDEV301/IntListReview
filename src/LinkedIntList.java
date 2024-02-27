@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList
 {
@@ -68,13 +69,22 @@ public class LinkedIntList implements IntList
     @Override
     public void addBack(int value)
     {
-        if (head == null) {
+        // if list is empty
+        if (head == null)
+        {
             head = new Node(value, null);
-        } else {
+        }
+        else {
+            // if list is not empty
             Node current = head;
-            while (current.next != null) {
+            // loop and stop on last node in list
+            // (but not all the way to null)
+            while (current.next != null)
+            {
+                // move current forward
                 current = current.next;
             }
+            // when I am here - current is referencing the last node
             current.next = new Node(value, null);
         }
         size++;
@@ -164,7 +174,16 @@ public class LinkedIntList implements IntList
      * @return true if this list contains the specified value
      */
     @Override
-    public boolean contains(int value) {
+    public boolean contains(int value)
+    {
+        Node current = head;
+        while(current != null)
+        {
+            if(current.data == value)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -177,8 +196,20 @@ public class LinkedIntList implements IntList
      * or -1 if this list does not contain the value
      */
     @Override
-    public int indexOf(int value) {
-        return 0;
+    public int indexOf(int value)
+    {
+        int count = 0;
+        Node current = head;
+        while(current != null)
+        {
+            if(current.data == value)
+            {
+                return count;
+            }
+            count++;
+            current = current.next;
+        }
+        return -1;
     }
 
     /**
@@ -216,7 +247,107 @@ public class LinkedIntList implements IntList
      * @return an Iterator.
      */
     @Override
-    public Iterator<Integer> iterator() {
-        return null;
+    public Iterator<Integer> iterator()
+    {
+        // LinkedIterator iterator = new LinkedIterator();
+        return new LinkedIterator();
+    }
+
+    public void print()
+    {
+        //create temp variable
+        //copy address from head
+        Node curr = head;
+        while(curr != null)
+        {
+            System.out.println(curr.data);
+            curr = curr.next;
+        }
+    }
+
+
+    @Override
+    public String toString()
+    {
+        if (head == null)
+        {
+            //if list is empty, indicate with []
+            return "[]";
+        }
+
+        // if I get here, the list is not empty for sure
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node current = head;
+
+        // stop one before the last node
+        while (current.next != null)
+        {
+            sb.append(current.data);
+            sb.append(", ");
+
+            current = current.next;
+        }
+
+        // add in the last node
+        sb.append(current.data);
+
+        sb.append("]");
+        return sb.toString();
+    }
+
+    // helper class
+    public class LinkedIterator implements Iterator<Integer>
+    {
+        // keep track of my current position
+        private Node current;       // holds address of current node
+
+        public LinkedIterator()
+        {
+            // start the current position at the first node in list
+            current = head;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext()
+        {
+            // return (current!= null); <-- this works too
+
+            if(current == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next()
+        {
+            if(!hasNext())
+            {
+                throw new NoSuchElementException();
+            }
+
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
     }
 }
