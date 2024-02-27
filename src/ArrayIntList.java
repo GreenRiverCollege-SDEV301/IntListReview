@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList  implements  IntList
 {
@@ -11,7 +12,8 @@ public class ArrayIntList  implements  IntList
     }
 
     @Override
-    public void addFront(int value)
+    // Normally fast (constant time unless you have to resize)
+    public void addBack(int value)
     {
         checkSize();
         buffer[size] = value;
@@ -19,26 +21,30 @@ public class ArrayIntList  implements  IntList
     }
 
     @Override
-    public void addBack(int value)
+    //Slow must move every element in array O(N)
+    public void addFront(int value)
     {
         checkSize();
         add(0, value);
     }
 
     @Override
+    //Slow, must move every element in array located above entry index O(N)
     public void add(int index, int value)
     {
         checkSize();
+        size ++;
+        checkIndex(index);
         for(int i = size; i > index;  i--)
         {
             buffer[i] = buffer[i-1];
         }
         buffer[index] = value;
-        size ++;
     }
 
     @Override
-    public void removeFront()
+    // Fast, constant time.
+    public void removeBack()
     {
         if(size == 0)
         {
@@ -48,12 +54,14 @@ public class ArrayIntList  implements  IntList
     }
 
     @Override
-    public void removeBack()
+    //Slow must move every element in array O(N)
+    public void removeFront()
     {
         remove(0);
     }
 
     @Override
+    //Slow, must move every element in array located above entry index O(N)
     public int remove(int index)
     {
         if(size == 0)
@@ -71,6 +79,7 @@ public class ArrayIntList  implements  IntList
     }
 
     @Override
+    //Very fast operation. O(1) constant time
     public int get(int index)
     {
         checkIndex(index);
@@ -146,7 +155,7 @@ public class ArrayIntList  implements  IntList
             buffer = resize();
         }
     }
-
+    // Slow because you must "touch" every element in array to copy to new array O(N)
     private int[] resize() {
         int[] returnInt = new int[buffer.length * 2];
 
@@ -159,6 +168,32 @@ public class ArrayIntList  implements  IntList
 
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new ArrayIntListIterator();
+    }
+
+    private class ArrayIntListIterator implements Iterator<Integer>
+    {
+      private int position;
+
+      public ArrayIntListIterator()
+      {
+          position = 0;
+      }
+
+      public boolean hasNext()
+      {
+          return position != size;
+      }
+
+      public Integer next()
+      {
+          if(hasNext())
+          {
+              Integer output = buffer[position];
+              position++;
+              return output;
+          }
+          throw new NoSuchElementException("No elements left.");
+      }
     }
 }

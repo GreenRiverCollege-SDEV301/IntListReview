@@ -3,8 +3,8 @@
 public class Main {
     public static void main(String[] args)
     {
-        IntList list1 = new ArrayIntList();
-        //IntList list2 = new LinkedIntList();
+        //IntList list1 = new ArrayIntList();
+        IntList list1 = new LinkedIntList();
 
         list1.addBack(1);
         list1.addBack(2);
@@ -27,7 +27,11 @@ public class Main {
         list1.addBack(1);
         list1.addBack(2);
         list1.addBack(3);
-
+        for(int i : list1)
+        {
+            System.out.printf(i + ", ");
+        }
+        System.out.println();
         System.out.println(list1);
 
         System.out.println(list1.contains(2));
@@ -54,7 +58,5 @@ public class Main {
         System.out.println(list1);
         list1.remove(2);
         System.out.println(list1);
-
-
     }
 }
