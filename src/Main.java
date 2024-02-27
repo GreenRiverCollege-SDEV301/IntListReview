@@ -18,14 +18,20 @@ public class Main {
 
         // convenience code for using foreach code which is
         // only possible if class provides an Iterator:
-        for (int value: list1){
+        for (int value : list1) {
             System.out.println(value);
         }
         // on manual, behind the scenes:
-         Iterator<Integer> itr = list1.iterator();
+        Iterator<Integer> itr = list1.iterator();
         while (itr.hasNext()) {
-              int value = itr.next();
+            int value = itr.next();
             System.out.println(value);
-          }
+        }
+
+        list2.addFront(9);
+        list2.addFront(7);
+        list2.addFront(4);
+        list2.addBack(18);
+        System.out.println(list2.toString());
+        }
     }
-}

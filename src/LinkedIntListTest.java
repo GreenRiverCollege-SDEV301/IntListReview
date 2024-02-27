@@ -5,7 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class LinkedIntListTest {
 
     @Test
-    void addFront() {
+    void addFrontListOfOne() {
+        LinkedIntList list = new LinkedIntList();
+        list.addFront(5);
+
+        //assertEquals(list., 5);
     }
 
     @Test

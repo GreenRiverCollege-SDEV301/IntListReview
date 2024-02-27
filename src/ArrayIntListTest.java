@@ -370,24 +370,68 @@ class ArrayIntListTest {
         assertEquals(theList.isEmpty(), false);
     }
 
+
+    @org.junit.jupiter.api.Test
+    void sizeOfEmpty() {
+        ArrayIntList list = new ArrayIntList();
+        assertEquals(list.size(), 0);
+    }
+
+    @org.junit.jupiter.api.Test
+    void sizeOfMulti() {
+        ArrayIntList list = new ArrayIntList();
+        list.addFront(32);
+        list.addFront(231);
+        list.addFront(1);
+        assertEquals(list.size(), 3);
+    }
+
+    @org.junit.jupiter.api.Test
+    void sizeAfterResize() {
+        ArrayIntList list = new ArrayIntList();
+        for (int i = 0; i < 12; i++) {
+            list.addFront(i);
+        }
+        assertEquals(list.size(), 12);
+    }
+
     // TODO: add tests
     @org.junit.jupiter.api.Test
-    void size() {
+    void clearEmptyList() {
+
     }
-    // TODO: add tests
+
     @org.junit.jupiter.api.Test
-    void clear() {
+    void clearMultiList() {
+
     }
-    // TODO: add tests
+
     @org.junit.jupiter.api.Test
-    void iterator() {
+    void clearListOfOne() {
+
     }
-    // TODO: add tests
+
+    // TODO: finish test
     @org.junit.jupiter.api.Test
     void forEach() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 3; i++) {
+            theList.addBack(i);
+        }
+        for (int num : theList) {
+            System.out.println(num);
+        }
+       // assertEquals((for (int num : theList) {
+         //   System.out.print(num);
+        //}), "012");
     }
-    // TODO: add tests
+
     @org.junit.jupiter.api.Test
     void testToString() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 3; i++) {
+            theList.addBack(i);
+        }
+        assertEquals(theList.toString(), "[0, 1, 2]");
     }
 }

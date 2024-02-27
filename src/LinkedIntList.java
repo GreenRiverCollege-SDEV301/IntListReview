@@ -1,5 +1,5 @@
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList {
     // helper / inner / nested class
@@ -60,8 +60,14 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
+        // check if list is empty
+        if (head == null){
+            head = new Node(value, null);
+        }
+
         // create a variable to keep track of the location
         Node current = head;
+
         // go forward until we reach the back
         while(current.next != null){
             // iterate through the list
@@ -69,7 +75,8 @@ public class LinkedIntList implements IntList {
         }
 
         // we are now at the end so we can make this node equal our new one
-        current = new Node(value, null);
+        current.next = new Node(value, null);
+        size++;
     }
 
     /**
@@ -83,7 +90,33 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        // check size to throw exception
+        if (size < index){
+            throw new IndexOutOfBoundsException("That index does not exist in this list.");
+        }
 
+        // create a counter and a tracker for current
+        int count = 0;
+        Node current = head;
+
+        while (current.next != null){
+            // our 'index' will start at 0 like a typical list, so
+            // we make this comparison before we increase it
+            if (count == index){
+                // keep old pointer to this node and point to the old node
+                current = new Node(value, current);
+                return;
+            } else {
+                // increase count and move to next node
+                count++;
+                current = current.next;
+            }
+        }
+
+        // check the very last piece of data
+        if (count == index){
+            current.next = new Node(value, null);
+        }
     }
 
     /**
@@ -131,6 +164,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int remove(int index) {
+
         return 0;
     }
 
@@ -154,8 +188,28 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        if (head == null){
+            return false;
+        }
+
+        // create index tracker
+        Node current = head;
+        while(current.next != null){
+            // check index data and return if matches
+            if (current.data == value){
+                return true;
+            }
+            // if not the same as value, keep searching
+            current = current.next;
+        }
+        // checked the final value
+        if (current.data == value){
+            return true;
+        }
+        // if we make it this far we didn't find it
         return false;
     }
+
 
     /**
      * Returns the index of the first occurrence of the specified value
@@ -167,7 +221,28 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        if (head == null){
+            return -1;
+        }
+
+        // create index tracker and counter
+        Node current = head;
+        int counter = 0;
+        while(current.next != null){
+            // check index data and return if matches
+            if (current.data == value){
+                return counter;
+            }
+            // if not the same as value, keep searching
+            current = current.next;
+            counter++;
+        }
+        // checked the final value
+        if (current.data == value){
+            return counter;
+        }
+        // if we make it this far we didn't find it
+        return -1;
     }
 
     /**
@@ -207,6 +282,86 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new LinkedIterator();
     }
-}
+
+    public void print() {
+        // create temp variable (similar to index)
+        // copy in head and save it
+        Node current = head;
+
+        while (current != null){
+            // print data in node
+            System.out.println(current.data);
+
+            // go to next node
+            current = current.next;
+        }
+    }
+
+    public String toString() {
+        if (head == null) {
+            // if empty
+            return "[]";
+        } else {
+            // if not empty
+            Node current = head;
+            StringBuilder result = new StringBuilder();
+            result.append("[");
+
+            // this will stop one before the last node
+            while (current.next != null){
+                result.append(current.data).append(", ");
+                current = current.next;
+            }
+
+            // add last node
+            result.append(current.data).append("]");
+            return result.toString();
+        }
+
+    }
+    public class LinkedIterator implements Iterator<Integer>{
+        // keep track of current position
+        private Node current;
+
+        public LinkedIterator(){
+            // start at first node of list
+            current = head;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+            if (current == null) {
+                return false;
+            } else {
+                return true;
+            }
+            //or return (current!=null)
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
+    } // end of helper class
+} // end of LinkedIntList
+
