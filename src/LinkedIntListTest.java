@@ -93,7 +93,14 @@ class LinkedIntListTest {
     }
 
     @Test
-    void isEmpty() {
+    void isEmpty()
+    {
+        LinkedIntList theList = new LinkedIntList();
+        assertEquals(true, theList.isEmpty());
+        theList.addFront(4);
+        assertEquals(false, theList.isEmpty());
+        theList.clear();
+        assertEquals(true, theList.isEmpty());
     }
 
     @Test

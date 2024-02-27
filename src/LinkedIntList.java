@@ -266,7 +266,7 @@ public class LinkedIntList implements IntList
     @Override
     public Iterator<Integer> iterator()
     {
-        return null;
+        return new LinkedIterator();
     }
 
     public String toString()
@@ -290,6 +290,35 @@ public class LinkedIntList implements IntList
         {
             System.out.println(temp.data);
             temp = temp.next;
+        }
+    }
+    public class LinkedIterator implements Iterator<Integer>
+    {
+        //keep track of current position
+        private Node current;
+
+        public LinkedIterator()
+        {
+            //construct iterator at first Node.
+            current = head;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            if(current == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public Integer next()
+        {
+            int result = current.data;
+            current = current.next;
+            return result;
         }
     }
 }
