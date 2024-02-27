@@ -160,6 +160,14 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        Node currentNode = this.head;
+
+        while (currentNode != null) {
+            if (currentNode.data == value) {
+                return true;
+            }
+            currentNode = currentNode.next;
+        }
         return false;
     }
 

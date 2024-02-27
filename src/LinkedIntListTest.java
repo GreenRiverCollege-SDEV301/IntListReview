@@ -105,7 +105,15 @@ class LinkedIntListTest {
     }
 
     @Test
-    void contains() {
+    void containsWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertFalse(ll.contains(5));
+    }
+
+    @Test
+    void containsWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        assertTrue(ll.contains(3));
     }
 
     @Test
