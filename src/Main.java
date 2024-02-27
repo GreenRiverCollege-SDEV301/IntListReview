@@ -8,7 +8,7 @@ public class Main {
         int[] arrayOfNumbers = new int[10];
 
         IntList list1 = new ArrayIntList();
-        IntList list2 = new ArrayIntList();
+        IntList list2 = new LinkedIntList();
 
         // add 3 ints to the back of the list
         list1.addBack(42);
@@ -47,15 +47,31 @@ public class Main {
 //            System.out.println(value);
 //        }
 
-        list1.add(12, 1 );
-        System.out.println(list1);
-        list1.removeFront();
-        System.out.println(list1);
-        System.out.println(list1.contains(99));
-        System.out.println(list1.indexOf(1));
+        // ----------------------
+        // Linked list short test
+        // ----------------------
+        System.out.println("------------------------");
+
+        list2.addFront(4);
+        list2.addFront(7);
+        list2.addFront(9);
 
         System.out.println(list2);
-        list2.add(0, 1);
+
+        list2.add(0, 5);
+
         System.out.println(list2);
+
+
+        // short way
+//        for (int value : list2) {
+//            System.out.println(value);
+//        }
+
+        // long way
+//        Iterator<Integer> itr = list2.iterator();
+//        while (itr.hasNext()) {
+//            System.out.println(itr.next());
+//        }
     }
 }
