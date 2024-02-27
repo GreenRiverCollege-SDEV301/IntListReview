@@ -317,6 +317,7 @@ public class LinkedIntList implements IntList{
     @Override
     public void clear()
     {
+        size = 0;
         head = null;
     }
 

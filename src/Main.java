@@ -53,17 +53,8 @@ public class Main {
         list2.addFront(4);
         list2.addBack(18);
         list2.add(4, 15);
-        list2.remove(0);
-        System.out.println(list2.contains(8));
-
         System.out.println(list2);
-        System.out.println(list2.size());
-
-        System.out.println("---------------");
-        System.out.println(list2.indexOf(7));
-
-        System.out.println("---------------");
-        list2.clear();
+        list2.remove(1);
         System.out.println(list2);
 
 
