@@ -167,6 +167,7 @@ public class LinkedIntList implements IntList {
             nodeIndex++;
         }
 
+        return -1;
     }
 
     /**
