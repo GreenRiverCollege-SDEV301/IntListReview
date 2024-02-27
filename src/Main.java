@@ -11,7 +11,6 @@ public class Main {
         int[] arrayOfNumbers = new int[10];
 
         IntList list1 = new ArrayIntList();
-        IntList list2 = new LinkedIntList();
 
         System.out.println("------------------------------------------------");
         System.out.println("Testing addBack(int 42), addBack(int 82), addBack(int 97):");
@@ -121,5 +120,12 @@ public class Main {
         System.out.println(list1);
         System.out.println("Testing iterator() - next() - should be 20:");
         System.out.println(list.next());
+
+        IntList list2 = new LinkedIntList();
+        list2.addFront(9);
+        list2.addFront(7);
+        list2.addFront(4);
+        list2.addBack(50);
+        System.out.println(list2);
     }
 }

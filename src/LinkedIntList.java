@@ -52,19 +52,17 @@ public class LinkedIntList implements IntList {
         //If head is null, that means we have an empty LinkedIntList
         if (this.head == null) {
             this.head = new Node(value);
-            this.size = 1;
-            return;
+        } else {
+            //If head is not null, we have to find the end of the LinkedIntList and add the
+            //new node
+            Node currentNode = this.head;
+
+            while (currentNode.next != null) {
+                currentNode = currentNode.next;
+            }
+
+            currentNode.next = new Node(value);
         }
-
-        //If head is not null, we have to find the end of the LinkedIntList and add the
-        //new node
-        Node currentNode = this.head;
-
-        while (currentNode.next != null) {
-            currentNode = currentNode.next;
-        }
-
-        currentNode.next = new Node(value);
         size++;
     }
 
@@ -236,6 +234,23 @@ public class LinkedIntList implements IntList {
         sb.append("[");
         sb.append("null]");
         return sb.toString();
+    }
+
+    //Helper Methods
+
+    //Keep
+    public void print() {
+        //Create a temp variable (almost like an index i)
+        //Copy in the address from head and save it
+        Node current = head;
+
+        while (current != null) {
+            //Print the value in the node
+            System.out.println(current.data);
+
+            //Go to the next node
+            current = current.next;
+        }
     }
 }
 
