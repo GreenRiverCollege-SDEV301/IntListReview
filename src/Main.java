@@ -14,7 +14,7 @@ public class Main {
 
 
         IntList list1 = new ArrayIntList();
-        IntList list2 = new LinkedIntList(20);
+        IntList list2 = new LinkedIntList();
 
 
 
@@ -22,29 +22,29 @@ public class Main {
 //        TESTING CODES FOR ARRAYLIST
 
         //add 6 int to the back of the list
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-        list1.addBack(33);
-        list1.addBack(24);
-        list1.addBack(67);
-
-        System.out.println(list1.toString());
-
-        list1.removeBack();
-        System.out.println("After remove back");
-        System.out.println(list1.toString());
-        System.out.println();
-
-        list1.addFront(30);
-        System.out.println("After adding front");
-        System.out.println(list1.toString());
-        System.out.println();
-
-        list1.add(0, 20);
-        System.out.println("After adding 20 at index 1");
-        System.out.println(list1.toString());
-        System.out.println();
+//        list1.addBack(42);
+//        list1.addBack(82);
+//        list1.addBack(97);
+//        list1.addBack(33);
+//        list1.addBack(24);
+//        list1.addBack(67);
+//
+//        System.out.println(list1.toString());
+//
+//        list1.removeBack();
+//        System.out.println("After remove back");
+//        System.out.println(list1.toString());
+//        System.out.println();
+//
+//        list1.addFront(30);
+//        System.out.println("After adding front");
+//        System.out.println(list1.toString());
+//        System.out.println();
+//
+//        list1.add(0, 20);
+//        System.out.println("After adding 20 at index 1");
+//        System.out.println(list1.toString());
+//        System.out.println();
 
 //        list1.removeFront();
 //        System.out.println("After removing front");
@@ -96,33 +96,33 @@ public class Main {
 
 
         //TESTING CODES FOR LINKED LIST
-//        System.out.println("Current linked list : " + list2.toString());
-//        System.out.println();
-//
-//        list2.addFront(36);
-//        System.out.println("Added 36 to the front");
-//        System.out.println(list2.toString());
-//        System.out.println();
-//
-//        list2.addBack(15);
-//        System.out.println("Added 15 to the back");
-//        System.out.println(list2.toString());
-//        System.out.println();
-//
-//        list2.addBack(66);
-//        System.out.println("Added 66 to the back");
-//        System.out.println(list2.toString());
-//        System.out.println();
-//
-//        list2.addBack(45);
-//        System.out.println("Added 45 to the back");
-//        System.out.println(list2.toString());
-//        System.out.println();
-//
-//        list2.addBack(3);
-//        System.out.println("Added 3 to the back");
-//        System.out.println(list2.toString());
-//        System.out.println();
+        System.out.println("Current linked list : " + list2.toString());
+        System.out.println();
+
+        list2.addFront(36);
+        System.out.println("Added 36 to the front");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addFront(15);
+        System.out.println("Added 15 to the front");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addFront(66);
+        System.out.println("Added 66 to the front");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(45);
+        System.out.println("Added 45 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
+
+        list2.addBack(3);
+        System.out.println("Added 3 to the back");
+        System.out.println(list2.toString());
+        System.out.println();
 //
 //        System.out.println("Value of Index 1 = " + list2.get(1));
 //        System.out.println();
@@ -164,6 +164,20 @@ public class Main {
 //        list2.clear();
 //        System.out.println("Removed all list values");
 //        System.out.println(list2.toString());
+
+
+        //iterator short way
+//        for(int value: list2)
+//        {
+//            System.out.println(value);
+//        }
+//
+//        //long way
+//        Iterator<Integer> itr2 = list2.iterator();
+//        while (itr2.hasNext())
+//        {
+//            System.out.println(itr2.next());
+//        }
 
 
     }

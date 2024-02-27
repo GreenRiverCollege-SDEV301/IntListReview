@@ -5,7 +5,6 @@ import java.util.Iterator;
 public class LinkedIntList implements IntList
 {
     private Node head;
-    private Node tail;
     private int length;
 
     class Node
@@ -19,11 +18,10 @@ public class LinkedIntList implements IntList
     }
 
 
-        public LinkedIntList (int value)
+        public LinkedIntList ()
     {
-        Node newNode = new Node (value);
-        head = newNode;
-        length = 1;
+        head = null;
+        length = 0;
     }
 
 
@@ -55,15 +53,21 @@ public class LinkedIntList implements IntList
         Node newNode = new Node(value);
         Node current = head;
 
-        if(head == null) head = tail = newNode;
-
-        while(current.next != null)
+        if(head == null)
         {
-            current = current.next;
+            head = newNode;
         }
+        else
+        {
+            while (current.next != null)
+            {
+                current = current.next;
+            }
 //        tail.next = newNode;
 //        tail = newNode;
-        current.next = newNode;
+            current.next = newNode;
+
+        }
         length++;
 
     }
@@ -159,6 +163,8 @@ public class LinkedIntList implements IntList
             throw new IndexOutOfBoundsException("Index out of bound");
         }
 
+        Node current = head;
+        Node temp = current.next;
 
         if(index == 0)
         {
@@ -166,26 +172,27 @@ public class LinkedIntList implements IntList
             length--;
         }
 
-        if (index == length-1)
+        else if (index == length-1)
         {
             removeBack();
             length--;
         }
 
-        Node current = head;
-        for (int i = 0; i < index - 1; i++)
+        else
         {
-            current = current.next;
+            for (int i = 0; i < index - 1; i++)
+            {
+                current = current.next;
+            }
+            Node after = current.next.next;
+            current.next = after;
+            temp.next = null;
+            length--;
+
         }
-        Node temp = current.next;
-        Node after = current.next.next;
-
-        current.next = after;
-        temp.next = null;
-
-        length--;
-
         return temp.value;
+
+
     }
 
     /**
@@ -224,7 +231,7 @@ public class LinkedIntList implements IntList
     public boolean contains(int value)
     {
         Node current = head;
-        while (current.next != null )
+        while (current != null )
         {
             if(current.value == value)
             {
@@ -297,7 +304,57 @@ public class LinkedIntList implements IntList
     @Override
     public Iterator<Integer> iterator()
     {
-        return null;
+        return new LinkedIterator();
+    }
+
+    public class LinkedIterator implements Iterator<Integer>
+    {
+        //keep track of my current position
+        private Node current;
+
+        public LinkedIterator()
+        {
+            //start the current position at the first node in list
+            current = head;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            if(current != null)     //check why current, and not current.next??
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        @Override
+        public Integer next()
+        {
+            int result = current.value;
+            current = current.next;
+            return result;
+        }
+    }
+
+    //helper method (not required, but nice example to reference)
+    public void print()
+    {
+        //create a temp variable ( almost like on index 1)
+        //copy in the address from head and save it
+        Node current = head;
+
+        while(current != null)  //print first then move
+        {
+            //print the value insdie the node
+            System.out.println(current.value);
+
+            //go to the next node
+            current = current.next;
+        }
     }
 
     @Override
@@ -310,11 +367,10 @@ public class LinkedIntList implements IntList
         {
             sb.append("");
         }
-
         else
         {
-            sb.append(current.value);
-            while (current.next != null)    //why .next ??
+            sb.append(current.value);       //print the first index first to compensate for stringbuilder eztra comma
+            while (current.next != null)    //use .next to compensate for the stringbuilder extra comma, //move first then print
             {
                 current = current.next;
                 sb.append(", ");
@@ -322,9 +378,7 @@ public class LinkedIntList implements IntList
             }
         }
 
-            sb.append("]");
-            return sb.toString();
-
-
+        sb.append("]");
+        return sb.toString();
     }
 }
