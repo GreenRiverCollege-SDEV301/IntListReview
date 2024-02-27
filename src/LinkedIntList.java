@@ -93,7 +93,9 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        // set the head to the next one, removing the link with the original head
+        this.head = this.head.next;
+        size--;
     }
 
     /**
@@ -102,7 +104,20 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeBack() {
-
+        Node current = head;
+        // iterate through the list
+        while (current.next != null){
+            // check if it's the last one before the end
+            if (current.next.next != null) {
+                current = current.next;
+            } else {
+                // if next.next is null, then next is what we want to cut out
+                // all we have to do is make it direct to null next
+                current.next = new Node(current.next.data, null);
+                // this cuts connection with the last node
+            }
+        }
+        size--;
     }
 
     /**
@@ -162,7 +177,8 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        // if head is null, list is empty
+        return (head == null);
     }
 
     /**
@@ -172,7 +188,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**

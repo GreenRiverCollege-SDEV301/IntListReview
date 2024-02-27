@@ -276,10 +276,10 @@ public class ArrayIntList implements IntList {
     @Override
     public boolean isEmpty() {
         if (size == 0){
-            return false;
+            return true;
         }
         // if size isn't 0 then it is not empty
-        return true;
+        return false;
     }
 
     /**
