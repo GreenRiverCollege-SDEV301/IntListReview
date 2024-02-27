@@ -81,10 +81,32 @@ public class LinkedIntList implements IntList
      * @param value value to be inserted
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    @Override
+    @Override //MUST BE FIXED
     public void add(int index, int value)
     {
+        try
+        {
+            if (index == 0)
+            {
+                addFront(value);
+            }
+            else
+            {
+                Node temp = head;
+                for (int i = 0; i < index; i++)
+                {
+                    temp = temp.next;
+                }
+                Node insert = new Node(value, temp.next);
+                temp.next = insert;
+            }
 
+            size++;
+        }
+        catch (NullPointerException e)
+        {
+            throw new NullPointerException("Index out of bounds");
+        }
     }
 
     /**
@@ -98,6 +120,7 @@ public class LinkedIntList implements IntList
         if (head.next != null)
         {
             head = head.next;
+            size--;
         }
     }
 
@@ -218,8 +241,18 @@ public class LinkedIntList implements IntList
     @Override
     public int indexOf(int value)
     {
-
-        return 0;
+        Node temp = head;
+        int index = 0;
+        while(temp != null)
+        {
+            if (temp.data == value)
+            {
+                return index;
+            }
+            temp = temp.next;
+            index++;
+        }
+        throw new IllegalStateException("Index out of bounds");
     }
 
     /**
@@ -255,6 +288,7 @@ public class LinkedIntList implements IntList
     @Override
     public void clear()
     {
+        size = 0;
         head = null;
     }
 

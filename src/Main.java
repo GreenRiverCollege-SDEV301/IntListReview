@@ -60,5 +60,6 @@ public class Main {
         System.out.println(list2.contains(9));
         System.out.println(list2.contains(102));
 
+
     }
 }

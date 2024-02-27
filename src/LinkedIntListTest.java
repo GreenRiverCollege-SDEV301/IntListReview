@@ -38,11 +38,20 @@ class LinkedIntListTest {
     }
 
     @Test
-    void add() {
+    void add()
+    {
+        LinkedIntList theList = new LinkedIntList();
+        theList.add(0, 11);
+        theList.add(1, 12);
+        theList.add(2,13);
+        String out = theList.toString();
+        assertEquals(out, "Head ->  [11] [12] [13]");
     }
 
     @Test
-    void removeFront() {
+    void removeFront()
+    {
+
     }
 
     @Test
@@ -89,7 +98,20 @@ class LinkedIntListTest {
     }
 
     @Test
-    void indexOf() {
+    void indexOf()
+    {
+        LinkedIntList theList = new LinkedIntList();
+        assertThrowsExactly(IllegalStateException.class, () -> theList.indexOf(5));
+        theList.addFront(5);
+        theList.addFront(4);
+        theList.addFront(3);
+        theList.addFront(2);
+        theList.addFront(1);
+        theList.addFront(0);
+        assertEquals(5, theList.indexOf(5));
+        assertEquals(0, theList.indexOf(0));
+        assertEquals(3, theList.indexOf(3));
+
     }
 
     @Test
@@ -104,7 +126,24 @@ class LinkedIntListTest {
     }
 
     @Test
-    void size() {
+    void size()
+    {
+        LinkedIntList theList = new LinkedIntList();
+        //test empty
+        assertEquals(0, theList.size());
+        theList.addBack(12);
+        theList.addFront(11);
+        theList.add(1,14);
+        assertEquals(3, theList.size()); //size 3
+        theList.remove(1); //remove 1
+        assertEquals(2, theList.size()); //size 2
+        theList.addFront(22);
+        theList.addFront(11);
+        assertEquals(4, theList.size()); //size 4
+        theList.removeFront();
+        theList.removeBack();
+        assertEquals(2,theList.size());
+
     }
 
     @Test
