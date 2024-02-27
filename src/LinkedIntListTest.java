@@ -109,7 +109,15 @@ class LinkedIntListTest {
     }
 
     @Test
-    void indexOf() {
+    void indexOfWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertEquals(ll.indexOf(5), -1);
+    }
+
+    @Test
+    void indexOfWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        assertEquals(ll.indexOf(3), 2);
     }
 
     @Test

@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList {
     //Helper/nested class
@@ -172,7 +173,22 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        if (this.head == null) {
+            return -1;
+        }
+
+        Node currentNode = this.head;
+        int index = 0;
+        while (currentNode != null) {
+            if (currentNode.data == value) {
+                return index;
+            }
+
+            currentNode = currentNode.next;
+            index++;
+        }
+
+        return -1;
     }
 
     /**
@@ -211,7 +227,33 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new LinkedIterator();
+    }
+
+    public class LinkedIterator implements Iterator<Integer> {
+        //keep track of current position
+        private Node current; //Holds address of current node
+
+        public LinkedIterator() {
+            //Start the current position at the first node in the listt
+            current = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
     }
 
     //Create a toString() method to pretty print the LinkedIntList

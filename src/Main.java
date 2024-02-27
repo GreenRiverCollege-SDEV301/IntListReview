@@ -127,5 +127,11 @@ public class Main {
         list2.addFront(4);
         list2.addBack(50);
         System.out.println(list2);
+
+        Iterator<Integer> list2Iter = list2.iterator();
+        while (list2Iter.hasNext()) {
+            System.out.println(list2Iter);
+            list2Iter.next();
+        }
     }
 }
