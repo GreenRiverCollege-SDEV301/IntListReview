@@ -40,7 +40,6 @@ public class LinkedIntList implements IntList
     public void addFront(int value)
     {
         //this works due to if the list is null then we will simply assign next as null
-        //and if the list isnt null then the
         Node temp = new Node(value, head);
         head = temp;
         size++;
@@ -164,7 +163,21 @@ public class LinkedIntList implements IntList
     @Override
     public int get(int index)
     {
-        return 0;
+        try
+        {
+            Node temp = head;
+            for (int i = 0; i < index; i++)
+            {
+                temp = temp.next;
+            }
+            return temp.data;
+        }
+        catch (NullPointerException e)
+        {
+            throw new NullPointerException("Index out of bounds");
+            //System.out.println("Null Pointer Exception Error");
+        }
+
     }
 
     /**
@@ -176,16 +189,20 @@ public class LinkedIntList implements IntList
     @Override
     public boolean contains(int value)
     {
-        Node temp = head;
         Boolean found = false;
-        while (temp.next != null)
+        if (head != null)
         {
-            if (temp.data == value)
+            Node temp = head;
+
+            while (temp != null)
             {
-                found = true;
-                break;
+                if (temp.data == value)
+                {
+                    found = true;
+                    break;
+                }
+                temp = temp.next;
             }
-            temp = temp.next;
         }
         return found;
     }
@@ -201,6 +218,7 @@ public class LinkedIntList implements IntList
     @Override
     public int indexOf(int value)
     {
+
         return 0;
     }
 
@@ -210,7 +228,12 @@ public class LinkedIntList implements IntList
      * @return true if this list contains no values
      */
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty()
+    {
+        if (head == null)
+        {
+            return true;
+        }
         return false;
     }
 
@@ -257,5 +280,16 @@ public class LinkedIntList implements IntList
             temp = temp.next;
         }
         return sb.toString();
+    }
+
+    //helper method not required but nice to have as reference
+    public void print()
+    {
+        Node temp = head;
+        while(temp != null)
+        {
+            System.out.println(temp.data);
+            temp = temp.next;
+        }
     }
 }
