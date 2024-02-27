@@ -412,10 +412,10 @@ class LinkedIntListTest {
         testList1.addBack(100000);
         testList1.addBack(1000000);
         testList1.addBack(10000000);
-        assertEquals(true, testList1.contains(0));
-        assertEquals(false, testList1.contains(24));
-        assertEquals(true, testList1.contains(-31));
-        assertEquals(true, testList1.contains(10000000));
+        assertTrue(testList1.contains(0));
+        assertFalse(testList1.contains(24));
+        assertTrue(testList1.contains(-31));
+        assertTrue(testList1.contains(10000000));
 
         String out = testList1.toString();
         assertEquals(out, "[0, -42, -51, -41, -31, -21, -11, -1, 0, 1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 101, 1000, 10000, 100000, 1000000, 10000000]");
@@ -461,20 +461,20 @@ class LinkedIntListTest {
     @Test
     void isEmpty() {
         LinkedIntList testList1 = new LinkedIntList();
-        assertEquals(true, testList1.isEmpty());
+        assertTrue(testList1.isEmpty());
         testList1.add(0,-42);
-        assertEquals(false, testList1.isEmpty());
+        assertFalse(testList1.isEmpty());
         testList1.removeBack();
-        assertEquals(true, testList1.isEmpty());
+        assertTrue(testList1.isEmpty());
         String out = testList1.toString();
         assertEquals(out, "[]");
 
         LinkedIntList testList2 = new LinkedIntList();
-        assertEquals(true, testList2.isEmpty());
+        assertTrue(testList2.isEmpty());
         testList2.add(0,-42);
-        assertEquals(false, testList2.isEmpty());
+        assertFalse(testList2.isEmpty());
         testList2.removeFront();
-        assertEquals(true, testList2.isEmpty());
+        assertTrue(testList2.isEmpty());
         out = testList2.toString();
         assertEquals(out, "[]");
     }
