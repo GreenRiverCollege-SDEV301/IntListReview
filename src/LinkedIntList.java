@@ -86,9 +86,10 @@ public class LinkedIntList implements IntList
     {
         try
         {
-            if (index == 0)
+            if (size == 0)
             {
-                addFront(value);
+                size++;
+                head = new Node(value, null);
             }
             else
             {
@@ -100,7 +101,6 @@ public class LinkedIntList implements IntList
                 Node insert = new Node(value, temp.next);
                 temp.next = insert;
             }
-
             size++;
         }
         catch (NullPointerException e)
