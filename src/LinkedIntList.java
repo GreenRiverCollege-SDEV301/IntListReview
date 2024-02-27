@@ -1,6 +1,32 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList {
+
+    // helper inner/nested class
+    public static class Node {
+        int data;
+        Node next;
+
+        public Node() {
+            data = 0;
+            next = null;
+        }
+
+        public Node(int data, Node next) {
+            this.data = data;
+            this.next = next;
+        }
+    } // end of class node
+
+    // fields for LinkedIntList class
+    private Node head; // address of first node in list
+    private int size; // number of nodes/items in list
+
+    public LinkedIntList() {
+        head = null;
+        size = 0;
+    }
 
 
     /**
@@ -12,7 +38,15 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
+        // if the list is empty
+        if (head == null) {
+            head = new Node(value, null);
+            return;
+        }
 
+        // if the list is not empty
+        head = new Node(value, head);
+        size++;
     }
 
     /**
@@ -23,6 +57,17 @@ public class LinkedIntList implements IntList {
     @Override
     public void addBack(int value) {
 
+        if (head == null) {
+            head = new Node(value, null);
+        } else {
+            Node current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+
+            current.next = new Node(value, null);
+            size++;
+        }
     }
 
     /**
@@ -36,7 +81,32 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        if (index > size) {
+            System.out.println("index larger than size");
+            return;
+        } else if (index < 0) {
+            System.out.println("index lower than 0");
+            return;
+        }
 
+        int nodeIndex = 0;
+        Node current = head;
+        Node temp = null;
+
+        while (current.next != null && nodeIndex != index) {
+            current = current.next;
+            nodeIndex++;
+        }
+
+        if (size == index && current.next == null) {
+            current.next = new Node(value, null);
+            size++;
+        } else {
+            temp = new Node(current.data, current.next);
+            current.data = value;
+            current.next = temp;
+            size++;
+        }
     }
 
     /**
@@ -46,7 +116,10 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        if (head.next == null) {
+            System.out.println("single value in list");
+        }
+        head = head.next;
     }
 
     /**
@@ -55,6 +128,22 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void removeBack() {
+        Node current = head;
+
+        if (current == null) {
+            System.out.println("Empty");
+        } else if (current.next == null) {
+            System.out.println("No back to remove");
+        } else {
+            while (current.next.next != null) {
+                current = current.next;
+            }
+
+            current.next = null;
+        }
+    }
+
+    public void removeMiddle() {
 
     }
 
@@ -69,7 +158,15 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        int nodeIndex = 0;
+        Node current = head;
+        Node temp = null;
+
+        while (current.next != null && nodeIndex != index) {
+            current = current.next;
+            nodeIndex++;
+        }
+
     }
 
     /**
@@ -92,7 +189,21 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
-        return false;
+        boolean result = false;
+        Node current = head;
+
+        while (current.next != null) {
+            if (current.data == value) {
+                result = true;
+            }
+            current = current.next;
+        }
+
+        if (current.data == value) {
+            result = true;
+        }
+
+        return result;
     }
 
     /**
@@ -105,7 +216,15 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        Node current = head;
+        int nodeIndex = 0;
+
+        while (current.next != null && current.data != value) {
+            current = current.next;
+            nodeIndex++;
+        }
+
+        return nodeIndex;
     }
 
     /**
@@ -115,7 +234,11 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        if (head == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -125,7 +248,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -134,7 +257,7 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void clear() {
-
+        head = null;
     }
 
     /**
@@ -144,6 +267,75 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new LinkedIterator();
+    }
+
+    // helper method (not required, but nice example to reference)
+    public void print() {
+        // create temp variable )almost like an index i)
+        // copy in the address from head and save it
+        Node current = head;
+
+        while (current != null) {
+            // print the value inside the node
+            System.out.println(current.data);
+
+            // go to the next node
+            current = current.next;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        if (head == null) {
+            return "[]";
+        }
+
+        // If I get here, the list is not empty
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node current = head;
+        while (current.next != null) {
+            sb.append(current.data);
+            sb.append(", ");
+
+            current = current.next;
+        }
+
+        sb.append(current.data);
+
+        sb.append("]");
+
+        return sb.toString();
+    }
+
+    public class LinkedIterator implements Iterator<Integer> {
+        private Node current;
+
+        public LinkedIterator() {
+            // start the current position at the first node in list
+            current = head;
+        }
+        @Override
+        public boolean hasNext() {
+            if (current == null) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        @Override
+        public Integer next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
     }
 }

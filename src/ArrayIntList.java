@@ -25,19 +25,27 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
-        // check if full
-        if (size == buffer.length) {
+
+        // check if empty
+        if (size == 0) {
             resize(size + 1);
-        }
+            buffer[0] = value;
+            size++;
+        } else {
+            // check if full
+            if (size == buffer.length) {
+                resize(size + 1);
+            }
 
-        // open a spot at index 0 where value will be saved
-        // shift everything over to the right by 1 position
+            // open a spot at index 0 where value will be saved
+            // shift everything over to the right by 1 position
 
-        // put value in position [0]
-        for (int i = size; i >= 1; i--) {
-            buffer[i] = buffer[i-1];
+            // put value in position [0]
+            for (int i = size; i >= 1; i--) {
+                buffer[i] = buffer[i-1];
+            }
+            buffer[0] = value;
         }
-        buffer[0] = value;
     }
 
     private void resize(int newSize) {
@@ -85,6 +93,32 @@ public class ArrayIntList implements IntList {
     @Override
     public void add(int index, int value) {
 
+        // if the size is 0, resize the array and add the value to the 0 position
+        if (size == 0) {
+            resize(size + 1);
+            buffer[0] = value;
+            size++;
+
+        // if the selected index is greater than the size, it'll just add it to the back
+        } else if (index > size){
+            addBack(value);
+
+        // if all upper cases aren't true, we'll add the value to the index
+        } else {
+            resize(size + 1);
+            for (int i = size; i > 1; i--) {
+                if (i >= index) {
+                    buffer[i] = buffer[i-1];
+                }
+            }
+
+            if (index == 0) {
+                addFront(value);
+            } else {
+                buffer[index] = value;
+                size++;
+            }
+        }
     }
 
     /**
@@ -125,7 +159,18 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        int removed = buffer[index];
+        for (int i = 0; i < size; i++) {
+            if (i >= index) {
+                if (i < size - 1) {
+                    buffer[i] = buffer[i + 1];
+                }
+            }
+        }
+
+        removeBack();
+
+        return removed;
     }
 
     /**
@@ -196,7 +241,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return buffer.length;
+        return size;
     }
 
     /**

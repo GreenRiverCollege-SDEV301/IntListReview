@@ -3,36 +3,24 @@ import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
-
-        int[] arrayofNumbers = new int[10];
-
-        IntList list1 = new ArrayIntList();
         IntList list2 = new LinkedIntList();
 
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(52);
-        list1.addBack(97);
-        System.out.println(list1.indexOf(52));
+        // -------------------------------
+        // Linked List Short Test
+        // -------------------------------
+        list2.addBack(2);
+        list2.addBack(4);
+        list2.addBack(5);
+        list2.addBack(6);
+        list2.addBack(7);
+        list2.remove(2);
+        System.out.println(list2.toString());
 
-        System.out.println(list1.toString());
+//        Iterator<Integer> iterator = list2.iterator();
+//        while (iterator.hasNext()) {
+//            int value = iterator.next();
+//            System.out.println(value);
+//        }
 
-        Iterator<Integer> itr = list1.iterator();
-        while (itr.hasNext()) {
-            int value = itr.next();
-            System.out.println(value);
-        }
     }
 }
