@@ -1,15 +1,62 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+    public static void main(String[] args)
+    {
+        //IntList list1 = new ArrayIntList();
+        IntList list1 = new LinkedIntList();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        list1.addBack(4);
+        list1.add(2, 5);
+        list1.addFront(9);
+        list1.removeBack();
+        list1.removeFront();
+        list1.clear();
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        for(int i : list1)
+        {
+            System.out.printf(i + ", ");
         }
+        System.out.println();
+        System.out.println(list1);
+
+        System.out.println(list1.contains(2));
+        System.out.println(list1.indexOf(2));
+        System.out.println(list1.contains(4));
+        System.out.println(list1.indexOf(4));
+        System.out.println(list1.size());
+        System.out.println(list1.isEmpty());
+        list1.clear();
+        System.out.println(list1.isEmpty());
+        list1.addBack(5);
+        System.out.println(list1.isEmpty());
+        list1.removeFront();
+        System.out.println(list1.isEmpty());
+
+        list1.addBack(1);
+        list1.addBack(2);
+        list1.addBack(3);
+        list1.addBack(4);
+        list1.add(2, 5);
+        list1.addFront(9);
+        System.out.println(list1);
+        System.out.println(list1.get(2));
+        System.out.println(list1);
+        list1.remove(2);
+        System.out.println(list1);
     }
 }
