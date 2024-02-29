@@ -1,6 +1,34 @@
 import java.util.Iterator;
 
 public class LinkedIntList implements IntList{
+    Node head;
+    int size;
+
+    private class Node {
+        int val;
+        Node next;
+
+        public Node() {
+
+        }
+
+        public Node(int value) {
+            this.val = value;
+        }
+
+        public Node(int value, Node next) {
+            this.val = value;
+            this.next = next;
+        }
+    }
+
+
+
+    public LinkedIntList() {
+
+    }
+
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -10,7 +38,9 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void addFront(int value) {
+        Node temp = new Node(value, head);
 
+        size++;
     }
 
     /**
@@ -20,7 +50,14 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void addBack(int value) {
+        Node temp = new Node(value);
+        Node pointer = head;
 
+        while(pointer.next != null) {
+            pointer = pointer.next;
+        }
+
+        pointer.next = temp;
     }
 
     /**
@@ -34,7 +71,13 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
+        Node pointer = head;
 
+        for(int i = 0; i < index -1; i++) {
+            pointer = pointer.next;
+        }
+        Node next = pointer.next;
+        pointer.next = new Node(value, next);
     }
 
     /**
@@ -44,7 +87,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void removeFront() {
-
+        head = head.next;
     }
 
     /**
@@ -53,6 +96,13 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void removeBack() {
+        Node pointer = head;
+
+        while(pointer.next.next != null) {
+            pointer = pointer.next;
+        }
+
+        pointer.next = null;
 
     }
 
@@ -67,7 +117,21 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if(index > size) {
+            throw new IndexOutOfBoundsException("given index out of bounds");
+        }
+
+        Node pointer = head;
+
+        for (int i = 0; i < index-1; i++) {
+            pointer = pointer.next;
+        }
+        int temp = pointer.next.next.val;
+        pointer.next = pointer.next.next;
+
+        return temp;
+
+
     }
 
     /**
@@ -79,7 +143,16 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int get(int index) {
-        return 0;
+        if(index > size) {
+            throw new IndexOutOfBoundsException("given index out of bounds");
+        }
+        Node pointer = head;
+
+        for (int i = 0; i < index-1; i++) {
+            pointer = pointer.next;
+        }
+
+        return pointer.val;
     }
 
     /**
@@ -90,6 +163,16 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public boolean contains(int value) {
+        Node pointer = head;
+
+        while(pointer.next != null) {
+            if(pointer.val == value){
+                return true;
+            }
+
+            pointer = pointer.next;
+        }
+
         return false;
     }
 
@@ -103,7 +186,18 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        int count = 0;
+        Node pointer = head;
+
+        while(pointer.next != null) {
+            if(pointer.val == value){
+                return count;
+            }
+
+            pointer = pointer.next;
+            count++;
+        }
+        return -1;
     }
 
     /**
@@ -113,7 +207,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size==0;
     }
 
     /**
@@ -123,7 +217,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -132,7 +226,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void clear() {
-
+        head = new Node();
     }
 
     /**
@@ -142,6 +236,17 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new Iterator<>() {
+            Node iterator = head;
+            @Override
+            public boolean hasNext() {
+                return iterator.next == null;
+            }
+
+            @Override
+            public Integer next() {
+                return iterator.next.val;
+            }
+        };
     }
 }
