@@ -36,13 +36,14 @@ public class LinkedIntList implements IntList
      *
      * @param value value to be inserted
      */
+    //T = 7 is 0(1) constant time
     @Override
     public void addFront(int value)
     {
         //this works due to if the list is null then we will simply assign next as null
-        Node temp = new Node(value, head);
-        head = temp;
-        size++;
+        Node temp = new Node(value, head); //+1 assignment + 2 in new value head
+        head = temp; //+1
+        size++; //+1
     }
 
     /**
@@ -50,26 +51,35 @@ public class LinkedIntList implements IntList
      *
      * @param value value to be inserted
      */
+
+    /*
+    into if T = 5
+    into else T = 1+1+(2*size) + 4
+    2*size + 6
+    2n+6
+    n = size btw
+    T= 2n+6
+     */
     @Override
     public void addBack(int value)
     {
         //check if head is null
-        if(head == null)
+        if(head == null) //1
         {
-            head = new Node(value, null);
+            head = new Node(value, null); //1 for = 1 for new 2 for node(value, null) (4 in total)
         }
         //move through the list and add back value
         else
         {
-            Node temp = head;
+            Node temp = head; //1
             //go through list until find the end
-            while(temp.next != null)
+            while(temp.next != null) //1 + size (number of times) (total is 2*size) this is cause 1+1 *size
             {
-                temp = temp.next;
+                temp = temp.next; //1
             }
-            temp.next = new Node(value, null);
+            temp.next = new Node(value, null); //1
         }
-        size++;
+        size++; //1
     }
 
     /**
@@ -86,7 +96,7 @@ public class LinkedIntList implements IntList
     {
         try
         {
-            if (size == 0)
+            if (head == null && index == 0)
             {
                 size++;
                 head = new Node(value, null);
