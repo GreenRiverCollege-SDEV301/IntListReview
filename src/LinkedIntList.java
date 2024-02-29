@@ -165,6 +165,7 @@ public class LinkedIntList implements IntList {
         while (current.next != null && nodeIndex != index) {
             current = current.next;
             nodeIndex++;
+            System.out.println();
         }
 
         return -1;
