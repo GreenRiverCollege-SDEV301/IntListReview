@@ -15,6 +15,7 @@ public class LinkedIntList implements IntList
             next = null;
         }
 
+        // T = 2 is O(1) constant time
         public Node(int data, Node next)
         {
             this.data = data;
@@ -27,6 +28,9 @@ public class LinkedIntList implements IntList
     private Node head;      // address of first node in list
     private int size;       // number of nodes/items in list
 
+    /*
+
+    */
     public LinkedIntList()
     {
         head = null;
@@ -38,6 +42,8 @@ public class LinkedIntList implements IntList
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
+     *
+     * T = 7 is O(1) constant time
      *
      * @param value value to be inserted
      */
@@ -63,6 +69,10 @@ public class LinkedIntList implements IntList
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     *
+     * if list is empty (go into if), T = 5 which is O(1) constant time
+     * if list is not empty (go into else), T = 2 * size + 6, which is O(n) linear
+     *                                      T = 2n + 6, which is 0(n) linear
      *
      * @param value value to be inserted
      */
