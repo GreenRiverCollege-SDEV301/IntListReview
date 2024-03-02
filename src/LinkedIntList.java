@@ -91,32 +91,27 @@ public class LinkedIntList implements IntList
      * @param value value to be inserted
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    @Override //MUST BE FIXED still not fixed
+    @Override
     public void add(int index, int value)
     {
-        try
+        if(index < 0 || index > size)
         {
-            if (head == null && index == 0)
-            {
-                size++;
-                head = new Node(value, null);
-            }
-            else
-            {
-                Node temp = head;
-                for (int i = 0; i < index; i++)
-                {
-                    temp = temp.next;
-                }
-                Node insert = new Node(value, temp.next);
-                temp.next = insert;
-            }
-            size++;
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
-        catch (NullPointerException e)
+        if (index == 0)
         {
-            throw new NullPointerException("Index out of bounds");
+            head = new Node(value, null);
         }
+        else
+        {
+            Node temp = head;
+            for (int i = 0; i < index -1; i++)
+            {
+                temp = temp.next;
+            }
+            temp.next = new Node(value, temp.next);
+        }
+        size++;
     }
 
     /**
