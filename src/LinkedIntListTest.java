@@ -51,15 +51,69 @@ class LinkedIntListTest {
     @Test
     void removeFront()
     {
-
+        LinkedIntList theList = new LinkedIntList();
+        theList.addBack(1);
+        theList.removeFront();
+        assertEquals(0, theList.size()); //remove front from list with one item
+        String out = theList.toString();
+        assertEquals(out, "Head -> "); //check an empty list
+        //remove front from an empty list
+        theList.removeFront();
+        theList.toString();
+        assertEquals(out, "Head -> "); //check an empty list
+        theList.addBack(1);
+        theList.addBack(2);
+        theList.addBack(3);
+        theList.addBack(4);
+        theList.removeFront();
+        out = theList.toString();
+        assertEquals(3, theList.size()); //check size of list
+        assertEquals(out, "Head ->  [2] [3] [4]"); //check to see fronts removed
     }
 
     @Test
-    void removeBack() {
+    void removeBack()
+    {
+        LinkedIntList thelist = new LinkedIntList();
+        thelist.addBack(1);
+        thelist.addBack(2);
+        thelist.addBack(3);
+        thelist.addBack(4);
+        String out = thelist.toString();
+        assertEquals(4, thelist.size());
+        assertEquals(out, "Head ->  [1] [2] [3] [4]");
+        thelist.removeBack();
+        out = thelist.toString();
+        assertEquals(3, thelist.size());
+        assertEquals(out, "Head ->  [1] [2] [3]");
+        thelist.clear();
+        thelist.removeBack();
+        out = thelist.toString();
+        assertEquals(out, "Head -> ");
     }
 
     @Test
-    void remove() {
+    void remove()
+    {
+        LinkedIntList thelist = new LinkedIntList();
+        assertEquals(-1, thelist.remove(1));
+        assertEquals(-1, thelist.remove(4));
+        thelist.addBack(1);
+        thelist.addBack(2);
+        thelist.addBack(3);
+        thelist.addBack(4);
+        thelist.addBack(5);
+        assertEquals(4, thelist.remove(3));
+        String out = thelist.toString();
+        assertEquals(out, "Head ->  [1] [2] [3] [5]");
+        assertEquals(5, thelist.remove(3));
+        assertEquals(3, thelist.size());
+        out = thelist.toString();
+        assertEquals(out, "Head ->  [1] [2] [3]");
+        assertEquals(1,thelist.remove(0));
+        out = thelist.toString();
+        assertEquals(out, "Head ->  [2] [3]");
+        assertEquals(2, thelist.size());
     }
 
     @Test

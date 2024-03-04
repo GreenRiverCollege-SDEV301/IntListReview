@@ -122,7 +122,7 @@ public class LinkedIntList implements IntList
     @Override
     public void removeFront()
     {
-        if (head.next != null)
+        if (head != null)
         {
             head = head.next;
             size--;
@@ -161,22 +161,24 @@ public class LinkedIntList implements IntList
     @Override
     public int remove(int index)
     {
+        if (index < 0 || index >= size) {
+            // Invalid index
+            return -1;
+        }
+        if (index == 0) {
+            // only if index is 0 (removing front)
+            int removedData = head.data;
+            head = head.next;
+            size--;
+            return removedData;
+        }
+        // For all other indexes
         Node temp = head;
-        for (int i = 0; i < index; i++)
-        {
-            if (temp.next != null)
-            {
-                temp = temp.next;
-            }
+        for (int i = 0; i < index - 1; i++) {
+            temp = temp.next;
         }
-
-        //store removed data in order to return
         int removedData = temp.next.data;
-        if (temp.next.next != null)
-        {
-
-            temp.next = temp.next.next;
-        }
+        temp.next = temp.next.next;
         size--;
         return removedData;
     }
