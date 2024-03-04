@@ -49,7 +49,41 @@ class LinkedIntListTest {
     }
 
     @Test
-    void add() {
+    void addWithEmptyLinkedIntListToFront() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        ll.add(0, 5);
+        assertEquals(ll.get(0), 5);
+    }
+
+    @Test
+    void addWithEmptyLinkedIntListToMiddle() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.add(5, 5));
+    }
+
+    @Test
+    void addWithNonEmptyLinkedIntListToFront() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.add(0, 5);
+        assertEquals(ll.get(0), 5);
+        assertEquals(ll.get(1), 1);
+    }
+
+    @Test
+    void addWithNonEmptyLinkedIntListToMiddle() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.add(2, 5);
+        assertEquals(ll.get(1), 2);
+        assertEquals(ll.get(2), 5);
+        assertEquals(ll.get(3), 3);
+    }
+
+    @Test
+    void addWithNonEmptyLinkedIntListToEnd() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.add(4, 10);
+        assertEquals(ll.get(3), 4);
+        assertEquals(ll.get(4), 10);
     }
 
     @Test

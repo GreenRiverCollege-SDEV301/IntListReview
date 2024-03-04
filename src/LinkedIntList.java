@@ -19,6 +19,7 @@ public class LinkedIntList implements IntList {
             this.next = null;
         }
 
+        //T = 2 is O(1) constant time
         //Create a new Node object with data and a next node value
         public Node(int data, Node next) {
             this.data = data;
@@ -30,39 +31,59 @@ public class LinkedIntList implements IntList {
     Node head;
     int size;
 
+    //Constructor
+    public LinkedIntList() {
+        head = null;
+        size = 0;
+    }
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     * T = 6 is O(1) constant time
+     *
      * @param value value to be inserted
      */
     @Override
     public void addFront(int value) {
-        this.head = new Node(value, head);
-        size++;
+        //Code analysis:
+        //Bc this calls a method, we have to analyze the method value. For new Node(), it's 2.
+        //
+        this.head = new Node(value, head); //1 (assignment) + 1 (new) + 2 (value, head)
+        size++; //2
     }
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     *
+     * If list is empty (go into the if statement), T = 5 which is constant time
+     * Into if T = 5 + 9 => 14
+     *
+     * If list isn't empty (go into the else statement), T = 2 * size + 6, which is O(n) linear
+     *                                                   T = 2n + 6, which is O(n) linear
+     * Into else T = 1 + 1 + (2*size) + 4 => (2*size) + 6 => 2n * 6 => n + 6 => n, which is O(n) linear
      *
      * @param value value to be inserted
      */
     @Override
     public void addBack(int value) {
         //If head is null, that means we have an empty LinkedIntList
-        if (this.head == null) {
-            this.head = new Node(value);
+        if (this.head == null) { //Comparison is 1
+            this.head = new Node(value); //assignment is 1, new is 1, Node(value is 2 => 4
         } else {
             //If head is not null, we have to find the end of the LinkedIntList and add the
             //new node
-            Node currentNode = this.head;
+            Node currentNode = this.head; //assignment is 1
 
-            while (currentNode.next != null) {
-                currentNode = currentNode.next;
+            //While loop will run "size" amount of times
+            //The entire while loop will run (2 * size)
+            while (currentNode.next != null) { //!= is 1
+                currentNode = currentNode.next; //assignment is 1
             }
 
-            currentNode.next = new Node(value);
+            currentNode.next = new Node(value); //assignment is 1, new is 1, Node(value) is 2 => 4
         }
         size++;
     }
@@ -78,7 +99,33 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        //If the index is at the head
+        if (index == 0) {
+            Node nextNode = this.head;
 
+            this.head = new Node(value, nextNode);
+            this.size++;
+            return;
+        }
+
+        if (index > this.size) {
+            throw new IndexOutOfBoundsException("Please provide a valid index (value of 0 up to and including " + (this.size - 1));
+        }
+
+        //If the index is in the middle or end
+        int counter = 0;
+        Node currentNode = this.head;
+
+        while (counter < index) {
+            if (counter + 1 == index) {
+                Node tempNextNode = currentNode.next;
+                currentNode.next = new Node(value, tempNextNode);
+                this.size++;
+                return;
+            }
+            currentNode = currentNode.next;
+            counter++;
+        }
     }
 
     /**
@@ -131,6 +178,8 @@ public class LinkedIntList implements IntList {
 
     /**
      * Returns the value at the specified position in the list.
+     *
+     * O(n) linear - to get an item at an index, you have to start at the head and walk up to the size positions over
      *
      * @param index index of the value to return
      * @return the value at the specified position in this list
