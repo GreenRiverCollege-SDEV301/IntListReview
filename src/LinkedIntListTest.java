@@ -58,7 +58,7 @@ class LinkedIntListTest {
     @Test
     void addWithEmptyLinkedIntListToMiddle() {
         LinkedIntList ll = getEmptyLinkedIntList();
-        assertThrows(IndexOutOfBoundsException.class, () -> ll.add(5, 5));
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.add(1, 5));
     }
 
     @Test
@@ -120,7 +120,37 @@ class LinkedIntListTest {
     }
 
     @Test
-    void remove() {
+    void removeFromEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.get(0));
+    }
+
+    @Test
+    void removeFromEmptyLinkedIntListWithNegativeIndex() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        assertThrows(IndexOutOfBoundsException.class, () -> ll.get(-1));
+    }
+
+    @Test
+    void removeFromNonEmptyLinkedIntListAtFront() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.remove(0);
+        assertEquals(ll.get(0), 2);
+    }
+
+    @Test
+    void removeFromNonEmptyLinkedIntListAtMiddle() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.remove(2);
+        assertEquals(ll.get(1), 2);
+        assertEquals(ll.get(2), 4);
+    }
+
+    @Test
+    void removeFromNonEmptyLinkedIntListAtEnd() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.remove(3);
+        assertEquals(ll.get(2), 3);
     }
 
     @Test

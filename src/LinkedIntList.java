@@ -108,7 +108,7 @@ public class LinkedIntList implements IntList {
             return;
         }
 
-        if (index > this.size) {
+        if (index > this.size || index < 0) {
             throw new IndexOutOfBoundsException("Please provide a valid index (value of 0 up to and including " + (this.size - 1));
         }
 
@@ -173,7 +173,34 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index > this.size - 1 || index < 0) {
+            throw new IndexOutOfBoundsException("Please provide a valid index (value of 0 up to and including " + (this.size - 1));
+        }
+
+        //If the index is at the head
+        if (index == 0) {
+            int removedValue = this.head.data;
+            this.head = this.head.next;
+            this.size--;
+            return removedValue;
+        }
+
+        //If the index is in the middle or end
+        int counter = 0;
+        Node currentNode = this.head;
+        int removedValue = 0;
+
+        while (counter < index) {
+            if (counter + 1 == index) {
+                removedValue = currentNode.next.data;
+                currentNode.next = currentNode.next.next;
+                this.size--;
+                break;
+            }
+            currentNode = currentNode.next;
+            counter++;
+        }
+        return removedValue;
     }
 
     /**
