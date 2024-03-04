@@ -22,6 +22,7 @@ public class ArrayIntList implements IntList
      *
      * @param value value to be inserted
      */
+    //slow 1(n)
     @Override
     public void addFront(int value)
     {
@@ -49,6 +50,7 @@ public class ArrayIntList implements IntList
      *
      * @param value value to be inserted
      */
+    //fast 0(1)
     @Override
     public void addBack(int value)
     {
@@ -277,6 +279,7 @@ public class ArrayIntList implements IntList
      * Removes all the values from this list.
      * The list will be empty after this call returns.
      */
+    //fast 0(1)
     @Override
     public void clear()
     {

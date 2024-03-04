@@ -91,6 +91,7 @@ public class LinkedIntList implements IntList
      * @param value value to be inserted
      * @throws IndexOutOfBoundsException if the index is out of range
      */
+    //slow 1(n)
     @Override
     public void add(int index, int value)
     {
@@ -119,6 +120,7 @@ public class LinkedIntList implements IntList
      * (at index 0), if it is present.
      * Shifts any subsequent values to the left.
      */
+    //fast 1(0)
     @Override
     public void removeFront()
     {
@@ -133,6 +135,7 @@ public class LinkedIntList implements IntList
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
      */
+    //1(size)
     @Override
     public void removeBack()
     {
@@ -158,6 +161,7 @@ public class LinkedIntList implements IntList
      * @return the value previously at the specified position
      * @throws IndexOutOfBoundsException if the index is out of range
      */
+    //1(size)
     @Override
     public int remove(int index)
     {
