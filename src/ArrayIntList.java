@@ -30,6 +30,8 @@ public class ArrayIntList implements IntList{
         for(int i = size; i > 0; i--){
            buffer[i] = buffer[i - 1];
         }
+        buffer[0] = value;
+        size++;
     }
 
     private void resize(int newSize){ //linear time.
@@ -71,12 +73,15 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public void add(int index, int value) { // linear time
         //TO DO
+        if(index > size){
+            throw new IndexOutOfBoundsException();
+        }
         if(buffer.length == size){
             //if size matches capacity then it is full and need to resize creating a larger buffer and copy values over
             resize(buffer.length * 2);
         }
 
-        for(int i = index + 1; i < buffer.length; i++){
+        for(int i = index; i < buffer.length; i++){
             int temp = buffer[i];
             buffer[i] = value;
             value = temp;
@@ -92,10 +97,13 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public void removeFront() { //linear time
         //TO DO
-        for (int i = 0; i < buffer.length - 1; i++){
-            buffer[i] = buffer[i + 1];
+        if(size > 0) {
+            for (int i = 0; i < buffer.length - 1; i++) {
+                buffer[i] = buffer[i + 1];
+            }
+            buffer[buffer.length - 1] = 0;
+            size--;
         }
-        buffer[buffer.length - 1] = 0;
     }
 
     /**
@@ -105,7 +113,7 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public void removeBack() { //constant time
         if(size == 0){
-            throw new IllegalArgumentException("Already Empty");
+            throw new IllegalStateException("Already Empty");
         }
         size--;
         buffer[size] = 0;
@@ -123,10 +131,14 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public int remove(int index) {
         //TO DO
+        if(index > size - 1){
+            throw new IndexOutOfBoundsException();
+        }
         int value = buffer[index];
         for(int i = index; i < buffer.length - 1; i++){
             buffer[i] = buffer[i + 1];
         }
+        size--;
         return value;
     }
 
@@ -140,6 +152,9 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public int get(int index) {
         //TO DO
+        if(size < 1 || index < 0){
+            throw new IndexOutOfBoundsException();
+        }
         return buffer[index]; //fast. constant time
     }
 
@@ -152,6 +167,9 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public boolean contains(int value) {
         //TO DO
+//        if(size == 0){
+//            return false;
+//        }
         for(int i = 0; i < buffer.length; i++){
             if(buffer[i] == value){
                 return true;
@@ -187,12 +205,7 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public boolean isEmpty() {
         //TO DO
-        if(buffer.length == 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return size == 0;
     }
 
     /**
@@ -203,7 +216,7 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public int size() {
         //TO DO
-        return buffer.length;
+        return size;
     }
 
     /**
@@ -213,8 +226,10 @@ public class ArrayIntList implements IntList{
     @java.lang.Override
     public void clear() {
         //TO DO
-        for(int i = 0; i < buffer.length; i++){
+        while (size != 0){
+            int i = size - 1;
             buffer[i] = 0;
+            size--;
         }
     }
 
