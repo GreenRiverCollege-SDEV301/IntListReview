@@ -1,24 +1,71 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 public class LinkedIntList implements IntList{
+    public class Node{
+        int data;
+        Node next; //holds address of next node
+
+        public Node(){
+            data = 0;
+            next = null;
+        }
+
+        public Node(int data, Node next){
+            this.data = data;
+            this.next = next;
+        }
+    }//end of class node
+
+    //fields for LinkedIntList
+    private Node head;
+    private int size;
+
+    /**
+     *
+     */
+    public LinkedIntList(){
+        head = new Node();
+    }
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     * T = O()
+     *
      * @param value value to be inserted
      */
     @java.lang.Override
     public void addFront(int value) {
-
+        Node temp = new Node(value, head);
+        temp.next = head;
+        head = temp;
+        size++;
     }
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
      *
+     * if list is empty T=5 O(1)
+     * if list not empty T = 2N + 6 O(N)
+     *
      * @param value value to be inserted
      */
     @java.lang.Override
     public void addBack(int value) {
-
+        //To Do
+        if(head == null){
+            head = new Node(value, null);
+        }
+        else {
+            Node temp = head;
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = new Node(value, null);
+        }
     }
 
     /**
@@ -42,7 +89,8 @@ public class LinkedIntList implements IntList{
      */
     @java.lang.Override
     public void removeFront() {
-
+        //To Do
+        head = head.next;
     }
 
     /**
@@ -51,7 +99,12 @@ public class LinkedIntList implements IntList{
      */
     @java.lang.Override
     public void removeBack() {
-
+        //To Do
+        Node temp = head;
+        while(temp.next != null){
+            temp = temp.next;
+        }
+        temp = null;
     }
 
     /**
@@ -139,7 +192,64 @@ public class LinkedIntList implements IntList{
      * @return an Iterator.
      */
     @java.lang.Override
-    public java.util.Iterator<T> iterator() {
-        return null;
+    public Iterator<Integer> iterator() {
+        return new LinkedIterator();
+    }
+
+    public void print(){
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data);
+            current = current.next;
+        }
+    }
+
+    public String toString(){
+        if(head == null){
+            return"[]";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        Node current = head;
+        while(current.next != null){
+            sb.append(current.data);
+            sb.append(", ");
+            current = current.next;
+        }
+
+        //add last node
+        sb.append(current.data);
+        sb.append("]");
+
+        return sb.toString();
+    }
+
+    public class LinkedIterator implements Iterator<Integer>{
+        private Node current;
+
+        public LinkedIterator(){
+            current = head;
+        }
+        public boolean hasNext(){
+            return current != null;
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next() {
+            if(current.next == null){
+                throw new NoSuchElementException();
+            }
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
+
     }
 }

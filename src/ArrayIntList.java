@@ -3,7 +3,7 @@ import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList{
 
-    //privsate representation
+    //private representation
     private int[] buffer;
     private int size;
 
@@ -57,8 +57,8 @@ public class ArrayIntList implements IntList{
             //if size matches capacity then it is full and need to resize creating a larger buffer and copy values over
             resize(buffer.length * 2);
         }
-        buffer[size] = value;
         size++;
+        buffer[size - 1] = value;
     }
 
     /**
@@ -252,17 +252,17 @@ public class ArrayIntList implements IntList{
 
     public String toString(){// linear time
         if(size == 0){
-            return "";
+            return "[]";
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append("[");
+        sb.append(buffer[0]);
 
-        for(int i = 0; i < size - 1; i++){
-            sb.append(buffer[i]);
+        for(int i = 1; i < size; i++){
             sb.append(", ");
+            sb.append(buffer[i]);
         }
-        sb.append(buffer[size]);
         sb.append("]");
 
         return sb.toString();

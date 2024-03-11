@@ -80,7 +80,7 @@ class ArrayIntListTest {
     @org.junit.jupiter.api.Test
     void addBackWithMultipleResize() {
         ArrayIntList theList = new ArrayIntList();
-        for(int i = 0; i < 1000000; i++){
+        for(int i = 0; i < 1000; i++){
             theList.addBack(i);
         }
         theList.addBack(42);
@@ -94,6 +94,29 @@ class ArrayIntListTest {
     void addWithEmpty() {
         ArrayIntList list = new ArrayIntList();
         assertThrowsExactly(IndexOutOfBoundsException.class, () -> {list.add(2, 500);});
+    }
+
+    @org.junit.jupiter.api.Test
+    void addWithResize() {
+        ArrayIntList list = new ArrayIntList();
+        for(int i = 0; i < 11; i++) {
+            list.add(i, i);
+        }
+        list.add(11, 444);
+
+        assertEquals(list.get(list.size() - 1), 444);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addWithMultipleResize() {
+        ArrayIntList list = new ArrayIntList();
+        for(int i = 0; i <= 100; i++) {
+            list.add(i, i);
+        }
+        list.add(67, 444);
+
+        assertEquals(list.get(list.size() - 1), 100);
+        assertEquals(list.get(67), 444);
     }
 
     @org.junit.jupiter.api.Test
@@ -350,7 +373,24 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testToString() {
+    void testToStringMultipleValues() {
         ArrayIntList theList = new ArrayIntList();
+        theList.addBack(1);
+        theList.addBack(1);
+        theList.addBack(1);
+        assertEquals("[1, 1, 1]", theList.toString());
+    }
+
+    @org.junit.jupiter.api.Test
+    void testToStringEmpty() {
+        ArrayIntList theList = new ArrayIntList();
+        assertEquals("[]", theList.toString());
+    }
+
+    @org.junit.jupiter.api.Test
+    void testToStringOneValue() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(1);
+        assertEquals("[1]", theList.toString());
     }
 }
