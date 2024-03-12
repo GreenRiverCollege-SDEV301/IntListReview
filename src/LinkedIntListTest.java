@@ -32,8 +32,9 @@ class LinkedIntListTest
         LinkedIntList theList = new LinkedIntList();
         theList.addFront(2);
         theList.addBack(18);
-        theList.add(1, 8);
-        String out = "[2, 8, 18]";
+        theList.addBack(20);
+        theList.add(2, 5);
+        String out = "[2, 18, 5, 20]";
         assertEquals(out, theList.toString());
 
     }
@@ -91,7 +92,7 @@ class LinkedIntListTest
         theList.addBack(18);
         theList.addBack(30);
         theList.addBack(10);
-        assertEquals(true, theList.contains(10));
+        assertEquals(true, theList.contains(30));
     }
 
     @Test

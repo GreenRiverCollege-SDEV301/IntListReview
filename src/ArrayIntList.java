@@ -111,22 +111,13 @@ public class ArrayIntList implements  IntList
         }
         else
         {
-            for (int i = buffer.length - 1; i > 0; i--)
+            for (int i = buffer.length - 1; i > index; i--)
             {
-
-
-                if (i == index)
-                {
-                    buffer[i] = value;
-
-                } else
-                {
                     buffer[i] = buffer[i - 1];
-                }
-
             }
-            size++;
+            buffer[index] = value;
         }
+        size++;
 
     }
 
@@ -144,12 +135,12 @@ public class ArrayIntList implements  IntList
         }
 
         buffer[0] = 0;
-        size--;
-
         for (int i = 0; i < size; i++)
         {
             buffer[i] = buffer[i + 1];
         }
+        size--;
+
 
     }
 
@@ -166,8 +157,9 @@ public class ArrayIntList implements  IntList
             throw new IllegalStateException("already empty!");
         }
 
-        size --;        //to get the last index, because size is last index.next
         buffer[size] = 0;
+        size --;        //to get the last index, because size is last index.next
+
 
 
     }
@@ -195,13 +187,13 @@ public class ArrayIntList implements  IntList
         }
 
         int temp = buffer[index];
-        size--;
 
         for (int i = index; i <size ; i++)
         {
             buffer[i] = buffer[i + 1];
         }
 
+        size--;
         return temp;
     }
 

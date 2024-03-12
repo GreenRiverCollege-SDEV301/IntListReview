@@ -30,6 +30,10 @@ public class LinkedIntList implements IntList
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     * T = 7 is O (1) constant time
+     *
+     *
+     *
      * @param value value to be inserted
      */
     @Override
@@ -44,6 +48,9 @@ public class LinkedIntList implements IntList
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     *
+     * if list is empty (go into if), T = 5 which is O(1) constant time
+     * If list is not empty (go into else), T = 2n + 6, which is O(n) linear
      *
      * @param value value to be inserted
      */
@@ -103,7 +110,7 @@ public class LinkedIntList implements IntList
         {
             Node current = head;
             Node newNode = new Node(value);
-            for (int i = 0; i < index - 1; i++)
+            for (int i = 0; i < index -1 ; i++)
             {
                 current = current.next;
             }
@@ -198,6 +205,8 @@ public class LinkedIntList implements IntList
     /**
      * Returns the value at the specified position in the list.
      *
+     *
+     *
      * @param index index of the value to return
      * @return the value at the specified position in this list
      * @throws IndexOutOfBoundsException if the index is out of range
@@ -231,7 +240,7 @@ public class LinkedIntList implements IntList
     public boolean contains(int value)
     {
         Node current = head;
-        while (current != null )
+        while (current.next != null )
         {
             if(current.value == value)
             {

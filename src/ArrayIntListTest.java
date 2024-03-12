@@ -144,8 +144,8 @@ class ArrayIntListTest
         }
 
         theList.add(3, 83);
-        int out = theList.get(3);
-        assertEquals(83, out);
+        String out = theList.toString();
+        assertEquals("[0, 1, 2, 83, 3, 4]", out);
     }
 
     //Remove front
@@ -256,18 +256,18 @@ class ArrayIntListTest
     }
 
     @org.junit.jupiter.api.Test
-    void removeFromListOf10()
+    void removeFromListOf5()
     {
         ArrayIntList theList = new ArrayIntList();
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             theList.addBack(i);
         }
 
-        theList.remove(1);
-        int out = theList.get(1);
-        assertEquals(2, out);
+        theList.remove(3);
+        String out = theList.toString();
+        assertEquals("[0, 1, 2, 4]", out);
 
 
     }
