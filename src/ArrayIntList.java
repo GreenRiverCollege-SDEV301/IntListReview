@@ -1,7 +1,15 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList {
+    final int INITIAL_CAPACITY = 10;
+    private int[] buffer;
+    private int size;
 
+    public ArrayIntList() {
+        buffer = new int[INITIAL_CAPACITY];
+        size = 0;
+    }
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -11,7 +19,24 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addFront(int value) {
+        if (size == buffer.length) {
+            resize();
+        }
+        for (int i = size; i >= 1; i--) {
+            buffer[i] = buffer[i - 1];
+        }
 
+        buffer[0] = value;
+        size++;
+    }
+
+    private void resize() {
+        int temp[] = new int[buffer.length * 2];
+        for (int i = 0; i < size; i++) {
+            temp[i] = buffer[i];
+        }
+
+        buffer = temp;
     }
 
     /**
@@ -21,7 +46,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void addBack(int value) {
-
+        if (buffer.length == size) {
+            resize();
+        }
+        buffer[size] = value;
+        size++;
     }
 
     /**
@@ -35,7 +64,21 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void add(int index, int value) {
-
+        if (index > size) {
+            throw new IndexOutOfBoundsException("Index is not valid");
+        } else if (buffer.length == size || buffer.length - 1 == size) {
+            resize();
+        } else {
+            if (index == size) {
+                addBack(value);
+            } else {
+                for (int i = size; i >= index; i--) {
+                    buffer[i + 1] = buffer[i];
+                }
+                buffer[index] = value;
+                size++;
+            }
+        }
     }
 
     /**
@@ -45,7 +88,18 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeFront() {
-
+        if (!isEmpty()) {
+            if (size > 1) {
+                for (int i = 0; i < size; i++) {
+                    buffer[i] = buffer[i + 1];
+                }
+            } else {
+                buffer[0] = 0;
+            }
+            size--;
+        } else {
+            throw new IndexOutOfBoundsException("List is empty");
+        }
     }
 
     /**
@@ -54,7 +108,11 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void removeBack() {
-
+        if (size == 0) {
+            throw new IndexOutOfBoundsException("ArrayList is empty");
+        }
+        size--;
+        buffer[size] = 0;
     }
 
     /**
@@ -68,7 +126,15 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index < size) {
+            int temp = buffer[index];
+            for (int i = index; i < size - 1; i++) {
+                buffer[i] = buffer[i + 1];
+            }
+            size--;
+            return temp;
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     /**
@@ -80,7 +146,10 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index < size) {
+            return buffer[index];
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     /**
@@ -91,7 +160,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean contains(int value) {
-        return false;
+        return indexOf(value) != -1;
     }
 
     /**
@@ -104,7 +173,14 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        if (!isEmpty()) {
+            for (int i = 0; i < size; i++) {
+                if (buffer[i] == value) {
+                    return i;
+                }
+            }
+        }
+        return -1;
     }
 
     /**
@@ -114,7 +190,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     /**
@@ -124,7 +200,7 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -133,7 +209,12 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public void clear() {
-
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                buffer[i] = 0;
+            }
+            size = 0;
+        }
     }
 
     /**
@@ -143,6 +224,38 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new Iterator() {
+            int index = -1;
+            @Override
+            public boolean hasNext() { return (index < size); }
+
+            @Override
+            public Object next() {
+                if (hasNext()) {
+                    index++;
+                    return buffer[index];
+                }
+                throw new NoSuchElementException("");
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        if(size == 0) {
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        for (int i = 0; i < size; i++) {
+            sb.append(buffer[i]);
+            if (i != size - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }
