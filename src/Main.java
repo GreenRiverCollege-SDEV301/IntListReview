@@ -1,14 +1,28 @@
+import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hi");
-        IntList list1 = new ArrayIntList();
-        IntList list2 = new LinkedIntList();
 
-        list1.addBack(42);
-        list1.addBack(82);
-        list1.addBack(97);
+        IntList list = new LinkedIntList();
+        System.out.println(list);
+        list.addFront(9);
+        list.addFront(3);
+        list.addFront(10);
+        list.addFront(12);
+        System.out.println(list);
 
-        System.out.println(list1);
+        // short way
+        for(int value:list){
+            System.out.println(value);
+        }
+
+        // long way
+        /*
+        Iterator<Integer> itr = list.iterator();
+        while (itr.hasNext()){
+            System.out.println(itr.next());
+        }
+        */
 
 
     }
