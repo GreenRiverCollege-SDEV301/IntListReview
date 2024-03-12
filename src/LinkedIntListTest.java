@@ -114,6 +114,7 @@ class LinkedIntListTest
         theList.addBack(18);
         theList.addBack(30);
         theList.addBack(10);
+        theList.addBack(12);
         assertEquals(false, theList.isEmpty());
 
     }
