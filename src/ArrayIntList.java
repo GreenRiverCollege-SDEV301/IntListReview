@@ -21,6 +21,10 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void addFront(int value) {
+        if(size == buffer.length) {
+            resize(size * 2);
+        }
+
         if(size > 0) {
             for(int i = size; i > 0; i--) {
                 buffer[i] = buffer[i - 1];
@@ -57,11 +61,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
-        if(index >= size || isEmpty()){
+        if(index > size || isEmpty()){
            throw new IndexOutOfBoundsException();
         }
 
-        if(index == size - 1) {
+        if(index == size) {
             addBack(value);
         } else if(index == 0){
             addFront(value);
@@ -82,14 +86,16 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void removeFront() {
-        if(!isEmpty()) {
-            for (int i = 0; i < size - 1; i++) {
-                buffer[i] = buffer[i + 1];
-            }
-
-            buffer[size - 1] = 0;
-            size--;
+        if(isEmpty()) {
+            throw new IllegalStateException("The list is already empty");
         }
+
+        for (int i = 0; i < size - 1; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+
+        buffer[size - 1] = 0;
+        size--;
     }
 
     /**
@@ -182,10 +188,6 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        if(!contains(value)) {
-            return -1;
-        }
-
         for(int i = 0; i < size; i++) {
             if(buffer[i] == value) {
                 return i;
