@@ -3,6 +3,9 @@
  * for an ordered (indexed) collection of ints, which
  * in mathematics is known as a sequence.
  */
+
+// interfaces -> one way to create our own data types
+    // an interface only tells us what, not how
 public interface IntList extends Iterable<Integer> {
 
     /**
