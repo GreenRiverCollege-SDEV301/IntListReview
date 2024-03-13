@@ -8,13 +8,21 @@ public class LinkedIntList implements IntList {
         // this attribute makes this a self-referential class
         Node next; // holds address of next node
 
-        // constructor for empty
+        /**
+         * Constructor
+         * T = 2
+         * runtime is constant
+         * */
         Node(){
             data = 0;
             next = null;
         }
 
-        // constructor with the data and next
+        /**
+         * Constructor
+         * T = 2
+         * runtime is constant
+         * */
         Node(int data, Node next){
             this.data = data;
             this.next = next;
@@ -25,6 +33,11 @@ public class LinkedIntList implements IntList {
     private Node head;
     private int size;
 
+    /**
+     * Constructor
+     * T = 2
+     * runtime is constant
+     * */
     public LinkedIntList() {
         head = null;
         size = 0;
@@ -39,23 +52,29 @@ public class LinkedIntList implements IntList {
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     * T = 6 is O(1) constant time
+     *
      * @param value value to be inserted
      */
     @Override
     public void addFront(int value) {
-        // if the list is empty
+        // this route is much slightly better runtime than below
+        head = new Node(value, head);
+        /* the following's run time is ~7, constant, no dominating factor O(1)
         if (head == null){
             head = new Node(value, null);
         } else {
             // if the list is not empty
             head = new Node(value, head);
-        }
+        }*/
+
         size++;
     }
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
-     *
+     * T = 5 if head == null AKA O(1), constant time
+     * T = 2n+6 if head != null AKA O(n), linear time
      * @param value value to be inserted
      */
     @Override
@@ -83,6 +102,13 @@ public class LinkedIntList implements IntList {
      * Inserts the specified value at the specified position in this list.
      * Shifts the value currently at that position (if any) and any subsequent
      * values to the right.
+     *
+     * T = linear O(n)
+     * We have to go through the list n times (up to the full size)
+     * in order to search for the index and then we have to also
+     * put in the value with some variable assigning.
+     * If the index is out of bounds or there is one item in the list, it
+     * can be constant time.
      *
      * @param index index at which the specified value is to be inserted
      * @param value value to be inserted
@@ -123,6 +149,10 @@ public class LinkedIntList implements IntList {
      * Removes the value located at the front of the list
      * (at index 0), if it is present.
      * Shifts any subsequent values to the left.
+     *
+     * T = O(1) AKA constant time
+     * We only have to find the head and reset it, there is no searching
+     * or rearranging needed.
      */
     @Override
     public void removeFront() {
@@ -134,6 +164,9 @@ public class LinkedIntList implements IntList {
     /**
      * Removes the value located at the back of the list
      * (at index size()-1), if it is present.
+     *
+     * T = O(n) linear time
+     * No matter what we have to go through the whole list so the time is O(size)
      */
     @Override
     public void removeBack() {
@@ -164,24 +197,77 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int remove(int index) {
+        if (index >= size){
+            throw new IndexOutOfBoundsException("This index is outside of the list");
+        }
 
-        return 0;
+        Node current = head;
+        // create index tracker
+        int count = 0;
+
+        while(current.next != null){
+            // check index and return if matches
+            if (count == index){
+                int ret = current.data;
+                // reassign the node to the next node
+                current = current.next;
+                // return the removed value
+                return ret;
+            }
+            // if not the same as value, keep searching
+            current = current.next;
+            count++;
+        }
+        // checked the final value
+        if (count == index){
+            int ret = current.data;
+            // reassign the node to the next node
+            current = current.next;
+            // return the removed value
+            return ret;
+        }
+        // if we make it this far we didn't find it
+        return -1;
     }
 
     /**
      * Returns the value at the specified position in the list.
-     *
+     * T = linear AKA O(n), have to start at head and walk through size amount of times
      * @param index index of the value to return
      * @return the value at the specified position in this list
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index >= size){
+            throw new IndexOutOfBoundsException("This index is outside of the list");
+        }
+
+        Node current = head;
+        // create index tracker
+        int count = 0;
+
+        while(current.next != null){
+            // check index and return if matches
+            if (count == index){
+                return current.data;
+            }
+            // if not the same as value, keep searching
+            current = current.next;
+            count++;
+        }
+        // checked the final value
+        if (count == index){
+            return current.data;
+        }
+        // if we make it this far we didn't find it
+        return -1;
     }
 
     /**
      * Returns true if this list contains the specified value.
+     * T = linear O(n), have to walk through potentially the whole list
+     *  if head is null, constant time
      *
      * @param value value whose presence in this list is to be searched for
      * @return true if this list contains the specified value
@@ -214,6 +300,9 @@ public class LinkedIntList implements IntList {
     /**
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
+     *  T = O(n)
+     *  Linear time, best case scenario head is null and it returns O(1)
+     *  but otherwise it could potentially have to search the whole list one by one
      *
      * @param value value to search for
      * @return the index of the first occurrence of the specified value in this list
@@ -247,6 +336,8 @@ public class LinkedIntList implements IntList {
 
     /**
      * Returns true if this list contains no values.
+     * T = O(1)
+     * Constant time
      *
      * @return true if this list contains no values
      */
@@ -258,6 +349,7 @@ public class LinkedIntList implements IntList {
 
     /**
      * Returns the number of values in this list.
+     * T = O(1), constant time
      *
      * @return the number of values in this list
      */
@@ -269,9 +361,13 @@ public class LinkedIntList implements IntList {
     /**
      * Removes all the values from this list.
      * The list will be empty after this call returns.
+     *
+     * T = O(1) constant time
      */
     @Override
     public void clear() {
+        // set head to null
+        head = null;
 
     }
 
