@@ -1,3 +1,6 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {
@@ -267,10 +270,28 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void iterator() {
+    void iteratorWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        Iterator<Integer> listIter = list.iterator();
+        assertThrows(NoSuchElementException.class, listIter::next);
     }
 
     @org.junit.jupiter.api.Test
-    void testToString() {
+    void iteratorWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        Iterator<Integer> listIter = list.iterator();
+        assertTrue(listIter.hasNext());
+    }
+
+    @org.junit.jupiter.api.Test
+    void testToStringWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertEquals("[]", list.toString());
+    }
+
+    @org.junit.jupiter.api.Test
+    void testToStringWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertEquals("[1, 2, 3, 42]", list.toString());
     }
 }
