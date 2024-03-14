@@ -13,14 +13,9 @@ public class Main {
         list2.addBack(5);
         list2.addBack(6);
         list2.addBack(7);
-        list2.remove(2);
         System.out.println(list2.toString());
 
-//        Iterator<Integer> iterator = list2.iterator();
-//        while (iterator.hasNext()) {
-//            int value = iterator.next();
-//            System.out.println(value);
-//        }
+        System.out.println(list2.get(0));
 
     }
 }

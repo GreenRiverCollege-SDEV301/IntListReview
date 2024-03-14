@@ -120,6 +120,7 @@ public class LinkedIntList implements IntList {
             System.out.println("single value in list");
         }
         head = head.next;
+        size--;
     }
 
     /**
@@ -141,10 +142,9 @@ public class LinkedIntList implements IntList {
 
             current.next = null;
         }
-    }
-
-    public void removeMiddle() {
-
+        if (size > 0) {
+            size--;
+        }
     }
 
     /**
@@ -168,6 +168,9 @@ public class LinkedIntList implements IntList {
             System.out.println();
         }
 
+        if (size > 0) {
+            size--;
+        }
         return -1;
     }
 
@@ -180,7 +183,19 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        Node current = head;
+        int count = 0;
+
+        while (current != null) {
+            if (count == index) {
+                return current.data;
+            }
+            count++;
+            current = current.next;
+        }
+
+        // Return -1 for invalid index
+        return -1;
     }
 
     /**
