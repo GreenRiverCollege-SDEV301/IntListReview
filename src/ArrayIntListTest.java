@@ -199,7 +199,21 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void contains() {
+    void containsFromEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertFalse(list.contains(5));
+    }
+
+    @org.junit.jupiter.api.Test
+    void containsFromNonEmptyListAndIsFalse() {
+        ArrayIntList list = getListWithFourValues();
+        assertFalse(list.contains(5));
+    }
+
+    @org.junit.jupiter.api.Test
+    void containsFromNonEmptyListAndIsTrue() {
+        ArrayIntList list = getListWithFourValues();
+        assertTrue(list.contains(2));
     }
 
     @org.junit.jupiter.api.Test
