@@ -217,15 +217,39 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void indexOf() {
+    void indexOfEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertEquals(-1, list.indexOf(1));
     }
 
     @org.junit.jupiter.api.Test
-    void isEmpty() {
+    void indexOfNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertEquals(1, list.indexOf(2));
     }
 
     @org.junit.jupiter.api.Test
-    void size() {
+    void isEmptyWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertTrue(list.isEmpty());
+    }
+
+    @org.junit.jupiter.api.Test
+    void isEmptyWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertFalse(list.isEmpty());
+    }
+
+    @org.junit.jupiter.api.Test
+    void sizeWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertEquals(0, list.size());
+    }
+
+    @org.junit.jupiter.api.Test
+    void sizeWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertEquals(4, list.size());
     }
 
     @org.junit.jupiter.api.Test
