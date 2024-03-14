@@ -217,7 +217,17 @@ class LinkedIntListTest {
     }
 
     @Test
-    void clear() {
+    void clearWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        ll.clear();
+        assertNull(ll.head);
+    }
+
+    @Test
+    void clearWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        ll.clear();
+        assertNull(ll.head);
     }
 
     @Test
