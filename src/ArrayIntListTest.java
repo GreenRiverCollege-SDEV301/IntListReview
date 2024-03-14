@@ -8,6 +8,13 @@ class ArrayIntListTest {
         return new ArrayIntList();
     }
 
+    //Create a list with 1 value
+    public ArrayIntList getListWithOneValue() {
+        ArrayIntList list = new ArrayIntList();
+        list.addBack(1);
+        return list;
+    }
+
     //Create a list with 4 values
     public ArrayIntList getListWithFourValues() {
         ArrayIntList list = new ArrayIntList();
@@ -102,13 +109,29 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void addWithNonEmptyList() {
-        ArrayIntList list = getEmptyList();
-        list.add(0, 0);
-        assertEquals(list.get(0), 0);
+        ArrayIntList list = getListWithFourValues();
+        list.add(1, 3);
+        assertEquals(list.get(1), 3);
     }
 
     @org.junit.jupiter.api.Test
-    void removeFront() {
+    void addWithResize() {
+        ArrayIntList list = getListWithTenValues();
+        list.add(11, 4);
+        assertEquals(list.get(11), 4);
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontFromEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertThrows(IllegalStateException.class, list::removeFront);
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFrontFromNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        list.removeFront();
+        assertEquals(list.get(0), 2);
     }
 
     @org.junit.jupiter.api.Test
@@ -127,7 +150,9 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void removeBackFromSingletonList() {
-
+        ArrayIntList list = getListWithOneValue();
+        list.removeBack();
+        assertEquals(list.size(), 0);
     }
 
     @org.junit.jupiter.api.Test
@@ -149,7 +174,16 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void remove() {
+    void removeFromEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertThrows(IllegalStateException.class, () -> list.remove(0));
+    }
+
+    @org.junit.jupiter.api.Test
+    void removeFromNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        list.remove(2);
+        assertEquals(42, list.get(2));
     }
 
     @org.junit.jupiter.api.Test
