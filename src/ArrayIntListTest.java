@@ -187,7 +187,15 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void get() {
+    void getFromEmptyList() {
+        ArrayIntList list = getEmptyList();
+        assertThrows(IndexOutOfBoundsException.class, () -> list.get(0));
+    }
+
+    @org.junit.jupiter.api.Test
+    void getFromNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        assertEquals(2, list.get(1));
     }
 
     @org.junit.jupiter.api.Test

@@ -81,6 +81,8 @@ public class ArrayIntList implements IntList {
         if (index == 0) {
             this.addFront(value);
             return;
+        } else if (index < 0) {
+            throw new IndexOutOfBoundsException("Index out of bounds");
         }
 
         //Check if our buffer is full or if the given index is outside our buffer length
@@ -90,7 +92,6 @@ public class ArrayIntList implements IntList {
         } else if (index >= this.buffer.length) {
             //If we insert to an index outside the length of buffer, we have to resize it first
             resize(2 * index);
-            this.size = index;
         }
 
         int[] newList = new int[this.buffer.length];
@@ -98,6 +99,10 @@ public class ArrayIntList implements IntList {
         int counter = 0;
         //Go through the array until we get to the index (index) given
         for (int i = 0; i < index; i++) {
+            if (i == this.size - 1) {
+                this.size++;
+            }
+
             newList[i] = this.buffer[i];
             counter = i;
         }
@@ -217,6 +222,9 @@ public class ArrayIntList implements IntList {
      */
     @Override
     public int get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("The given index is out of bounds!");
+        }
         return this.buffer[index];
     }
 
