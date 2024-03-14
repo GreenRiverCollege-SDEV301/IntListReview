@@ -1,4 +1,6 @@
 import org.junit.jupiter.api.Test;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LinkedIntListTest {
@@ -231,6 +233,16 @@ class LinkedIntListTest {
     }
 
     @Test
-    void iterator() {
+    void iteratorWithEmptyLinkedIntList() {
+        LinkedIntList ll = getEmptyLinkedIntList();
+        Iterator<Integer> llIter = ll.iterator();
+        assertThrows(NoSuchElementException.class, llIter::next);
+    }
+
+    @Test
+    void iteratorWithNonEmptyLinkedIntList() {
+        LinkedIntList ll = getLinkedIntListWithFourValues();
+        Iterator<Integer> llIter = ll.iterator();
+        assertTrue(llIter.hasNext());
     }
 }
