@@ -253,7 +253,17 @@ class ArrayIntListTest {
     }
 
     @org.junit.jupiter.api.Test
-    void clear() {
+    void clearWithEmptyList() {
+        ArrayIntList list = getEmptyList();
+        list.clear();
+        assertEquals(0, list.size());
+    }
+
+    @org.junit.jupiter.api.Test
+    void clearWithNonEmptyList() {
+        ArrayIntList list = getListWithFourValues();
+        list.clear();
+        assertEquals(0, list.size());
     }
 
     @org.junit.jupiter.api.Test
