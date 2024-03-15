@@ -1,7 +1,21 @@
+import com.sun.source.tree.BreakTree;
+
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 public class Array implements IntList {
 
+    private int[] buffer;
+    private int size;
+    private final static int INITIAL_CAPACITY = 10;
+
+    public Array() {
+        buffer = new int[10];
+        size = 0;
+
+    }
 
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
@@ -12,16 +26,45 @@ public class Array implements IntList {
      */
     @Override
     public void addFront(int value) {
+        if (size == buffer.length) {
+            resize(2 * buffer.length);
+        }
+        for (int i = size; i >= 1; i--) {
+            buffer[i] = buffer[i - 1];
+        }
+
+
+        buffer[0] = value;
+
+
+        size++;
 
     }
 
-    /**
-     * Appends (inserts) the specified value at the back of the list (at index size()-1).
-     *
-     * @param value value to be inserted
-     */
+
+    private void resize(int newSize) {
+
+        //create new array
+        int[] temp = new int[newSize];
+        // copy values from buffer
+        for (int i = 0; i < size; i++) {
+            temp[i] = buffer[i];
+        }
+        //make the switchover
+        buffer = temp;
+    }
+
     @Override
     public void addBack(int value) {
+        if (size == buffer.length) {
+            //create new array and copy the old array over
+            resize(2 * buffer.length);
+            //making new array twice as large
+        }
+
+        buffer[size] = value;
+        size++;
+
 
     }
 
@@ -55,6 +98,13 @@ public class Array implements IntList {
      */
     @Override
     public void removeBack() {
+        if (size == 0) {
+            throw new IllegalStateException("already empty");
+        }
+
+        size--;
+        buffer[size] = 0;
+
 
     }
 
@@ -81,7 +131,7 @@ public class Array implements IntList {
      */
     @Override
     public int get(int index) {
-        return 0;
+        return buffer.length;
     }
 
     /**
@@ -92,9 +142,13 @@ public class Array implements IntList {
      */
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if (get(i) == value) {
+                return true;
+            }
+        }
         return false;
     }
-
     /**
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
@@ -142,9 +196,88 @@ public class Array implements IntList {
      *
      * @return an Iterator.
      */
+//    @Override
+//    public Iterator<Integer> iterator() {
+//        return new ArrayIntListIterator();
+//
+//
+//    }
+
+    @Override
+    public String toString() {
+        if (size == 0) {
+            return "[]";
+
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        sb.append(buffer[0]);
+        for (int i = 1; i < size; i++) {
+
+            sb.append(", ");
+            sb.append(buffer[i]);
+        }
+
+        sb.append("]");
+        return sb.toString();
+
+    }
+
     @Override
     public Iterator<Integer> iterator() {
         return null;
     }
-}
+
+    @Override
+    public void forEach(Consumer<? super Integer> action) {
+        IntList.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<Integer> spliterator() {
+        return IntList.super.spliterator();
+    }
+
+    //nested class
+//    public class ArrayIntListIterator extends Iterator<Integer> {
+//        private int currentPosition;
+//
+//        public ArrayIntListIterator() {
+//            currentPosition = 0;
+//
+//        }
+//
+//        public boolean hasNext() {
+//        }
+//
+//        @Override
+//        public Integer next() {
+//            if (!hasNext()) {
+//                throw new NoSuchElementException();
+//            }
+//
+//            int value = get(currentPosition);
+//            currentPosition++;
+//            return value;
+//        }
+
+//    @Override
+//    public void remove() {
+//        Iterator.super.remove();
+//    }
+//
+//    @Override
+//    public void forEachRemaining(Consumer<? super Integer> action) {
+//        Iterator.super.forEachRemaining(action);
+//    }
+//        if (currentPosition < size){
+//            return true;
+//    }else {
+//            return false;
+//         }
+//    }
+
+
+    }
 
