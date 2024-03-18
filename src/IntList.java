@@ -93,4 +93,6 @@ public interface IntList extends Iterable<Integer> {
      * The list will be empty after this call returns.
      */
     void clear();
+
+    void resize(int newSize);
 }
