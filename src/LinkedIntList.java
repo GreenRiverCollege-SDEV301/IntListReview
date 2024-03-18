@@ -177,7 +177,7 @@ public class LinkedIntList implements IntList{
     @Override
     public boolean contains(int value) {
         Node current2 = head;
-        while(current2 !=null) {
+        while(current2 !=null ) {
 
             if(current2.data == value) {
                 return true;
@@ -249,7 +249,21 @@ public class LinkedIntList implements IntList{
 
     @Override
     public void resize(int newSize) {
+        if (newSize < 0) {
+            throw new IllegalArgumentException("Wrong size!");
+        }
 
+
+        int currentSize = size();
+        while (currentSize > newSize) {
+            removeBack();
+            currentSize--;
+        }
+
+        while (currentSize < newSize) {
+            addBack(0);
+            currentSize++;
+        }
     }
 
     /**
