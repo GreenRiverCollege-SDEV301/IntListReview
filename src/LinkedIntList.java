@@ -3,13 +3,7 @@ import java.util.NoSuchElementException;
 
 public class LinkedIntList implements IntList{
     private Node head;
-    /**
-     * Prepends (inserts) the specified value at the front of the list (at index 0).
-     * Shifts the value currently at the front of the list (if any) and any
-     * subsequent values to the right.
-     *
-     * @param value value to be inserted
-     */
+
     public LinkedIntList() {
         head = null;
     }
