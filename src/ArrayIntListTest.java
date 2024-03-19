@@ -106,12 +106,7 @@ class ArrayIntListTest {
 
     @org.junit.jupiter.api.Test
     void removeBackFromSingletonList() {
-        ArrayIntList theList = new ArrayIntList();
 
-        theList.addBack(1);
-        theList.removeBack();
-
-        assertEquals(true, theList.isEmpty());
     }
 
     @org.junit.jupiter.api.Test

@@ -34,6 +34,7 @@ public class LinkedIntList implements IntList {
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
      *
+     *
      * @param value value to be inserted
      */
     @Override
@@ -51,6 +52,10 @@ public class LinkedIntList implements IntList {
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     *
+     * if list is empty (go into if), t = 5 which is 0(1) constant time
+     * if list is not empty (go into else), t = 2 * size + 6, which is 0(n)
+     *                                      t = 2n + 6, which is 0(n) linear
      *
      * @param value value to be inserted
      */
@@ -120,7 +125,6 @@ public class LinkedIntList implements IntList {
             System.out.println("single value in list");
         }
         head = head.next;
-        size--;
     }
 
     /**
@@ -142,9 +146,6 @@ public class LinkedIntList implements IntList {
 
             current.next = null;
         }
-        if (size > 0) {
-            size--;
-        }
     }
 
     /**
@@ -158,20 +159,32 @@ public class LinkedIntList implements IntList {
      */
     @Override
     public int remove(int index) {
-        int nodeIndex = 0;
-        Node current = head;
-        Node temp = null;
 
-        while (current.next != null && nodeIndex != index) {
-            current = current.next;
-            nodeIndex++;
-            System.out.println();
+        int valueRemoved = 0;
+
+        if (head == null) {
+            System.out.println("Empty head");
         }
 
-        if (size > 0) {
-            size--;
+        if (index == 0) {
+            head = head.next;
+        } else {
+            Node prev = null;
+            Node current = head;
+            int count = 0;
+
+            while (current != null && count < index) {
+                prev = current;
+                current = current.next;
+                count++;
+            }
+
+            if (current != null) {
+                valueRemoved = current.data;
+                prev.next = current.next;
+            }
         }
-        return -1;
+        return valueRemoved;
     }
 
     /**
@@ -184,18 +197,21 @@ public class LinkedIntList implements IntList {
     @Override
     public int get(int index) {
         Node current = head;
-        int count = 0;
+        int indexCount = 0;
 
-        while (current != null) {
-            if (count == index) {
-                return current.data;
-            }
-            count++;
-            current = current.next;
+        if (index > size) {
+            throw new IndexOutOfBoundsException();
         }
 
-        // Return -1 for invalid index
-        return -1;
+        while (current.next != null) {
+            if (indexCount == index) {
+                return current.data;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return indexCount;
     }
 
     /**
