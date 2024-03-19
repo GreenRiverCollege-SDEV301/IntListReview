@@ -129,10 +129,13 @@ public class ArrayIntList implements IntList {
     @Override
     public void removeFront() {
         buffer[0] = 0;
-        size--;
-        for (int i = 0; i < size; i++) {
-            buffer[i] = buffer[i+1];
+        int[] temp = new int[buffer.length - 1];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = buffer[i + 1];
         }
+
+        buffer = temp;
+        size--;
     }
 
     /**
@@ -144,8 +147,13 @@ public class ArrayIntList implements IntList {
         if (size == 0) {
             throw new IllegalStateException("already empty");
         }
+        int[] temp = new int[buffer.length - 1];
+        for (int i = 0; i < temp.length; i++) {
+            temp[i] = buffer[i];
+        }
+
+        buffer = temp;
         size--;
-        buffer[size] = 0;
     }
 
     /**
