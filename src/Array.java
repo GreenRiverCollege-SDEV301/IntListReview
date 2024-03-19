@@ -57,9 +57,9 @@ public class Array implements IntList {
     @Override
     public void addBack(int value) {
         if (size == buffer.length) {
-            //create new array and copy the old array over
+            //create new array and uses buffer to increase size
             resize(2 * buffer.length);
-            //making new array twice as large
+
         }
 
         buffer[size] = value;
@@ -79,8 +79,22 @@ public class Array implements IntList {
      */
     @Override
     public void add(int index, int value) {
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException("This index does not exist");
+        }
+        if (size == buffer.length) {
+            resize(buffer.length * 2);
+        }
 
+        for (int i = size; i > index; i--) {
+            buffer[i] = buffer[i - 1];
+        }
+
+        buffer[index] = value;
+
+        size++;
     }
+
 
     /**
      * Removes the value located at the front of the list
@@ -89,8 +103,14 @@ public class Array implements IntList {
      */
     @Override
     public void removeFront() {
-
+        // Move everything to the left
+        for (int i = 0; i < size; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+        // take away front
+        size--;
     }
+
 
     /**
      * Removes the value located at the back of the list
@@ -119,7 +139,19 @@ public class Array implements IntList {
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException("No index");
+        }
+        int remove = buffer[index];
+
+        for (int i = index; i < size; i++) {
+            //shifting left
+            buffer[i] = buffer[i + 1];
+        }
+
+        size--;
+
+        return remove;
     }
 
     /**
@@ -131,8 +163,19 @@ public class Array implements IntList {
      */
     @Override
     public int get(int index) {
-        return buffer.length;
+        if (index > size || index < 0) {
+            throw new IndexOutOfBoundsException("This index doesint exist");
+        }
+
+        for (int i = 0; i <= index; i++) {
+            if (i == index) {
+                return buffer[index];
+            }
+        }
+
+        return -1;
     }
+
 
     /**
      * Returns true if this list contains the specified value.
@@ -143,12 +186,13 @@ public class Array implements IntList {
     @Override
     public boolean contains(int value) {
         for (int i = 0; i < size; i++) {
-            if (get(i) == value) {
-                return true;
+            if (get(i) != value) {
+                return false;
             }
         }
-        return false;
+        return true;
     }
+
     /**
      * Returns the index of the first occurrence of the specified value
      * in this list, or -1 if this list does not contain the value.
@@ -159,7 +203,13 @@ public class Array implements IntList {
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if (buffer[i] == value) {
+                return i;
+            }
+        }
+        // return -1, I dont really understand that standard...
+        return -1;
     }
 
     /**
@@ -169,17 +219,24 @@ public class Array implements IntList {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        if (size != 0) {
+            return false;
+        }
+        // not 0 not empty
+        return true;
     }
 
     /**
      * Returns the number of values in this list.
+     * <p>
+     * Speed: O(1)
+     * just returns a value
      *
      * @return the number of values in this list
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -188,40 +245,8 @@ public class Array implements IntList {
      */
     @Override
     public void clear() {
-
-    }
-
-    /**
-     * Returns an iterator over elements of type {@code T}.
-     *
-     * @return an Iterator.
-     */
-//    @Override
-//    public Iterator<Integer> iterator() {
-//        return new ArrayIntListIterator();
-//
-//
-//    }
-
-    @Override
-    public String toString() {
-        if (size == 0) {
-            return "[]";
-
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-
-        sb.append(buffer[0]);
-        for (int i = 1; i < size; i++) {
-
-            sb.append(", ");
-            sb.append(buffer[i]);
-        }
-
-        sb.append("]");
-        return sb.toString();
-
+        // new empty list
+        buffer = new int[INITIAL_CAPACITY];
     }
 
     @Override
@@ -239,45 +264,34 @@ public class Array implements IntList {
         return IntList.super.spliterator();
     }
 
-    //nested class
-//    public class ArrayIntListIterator extends Iterator<Integer> {
-//        private int currentPosition;
-//
-//        public ArrayIntListIterator() {
-//            currentPosition = 0;
-//
-//        }
-//
-//        public boolean hasNext() {
-//        }
-//
-//        @Override
-//        public Integer next() {
-//            if (!hasNext()) {
-//                throw new NoSuchElementException();
-//            }
-//
-//            int value = get(currentPosition);
-//            currentPosition++;
-//            return value;
-//        }
 
-//    @Override
-//    public void remove() {
-//        Iterator.super.remove();
-//    }
-//
-//    @Override
-//    public void forEachRemaining(Consumer<? super Integer> action) {
-//        Iterator.super.forEachRemaining(action);
-//    }
-//        if (currentPosition < size){
-//            return true;
-//    }else {
-//            return false;
-//         }
-//    }
+    public class ArrayIntListIterator implements Iterator<Integer> {
+        private int Position;
+
+        // constructor
+        public ArrayIntListIterator(){
+            Position = 0;
+        }
 
 
+        @Override
+        public boolean hasNext() {
+            if (Position < size()){
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+
+        @Override
+        public Integer next() {
+            if (!hasNext()){
+                throw new NoSuchElementException("You have the end");
+            }
+            int value = get(Position);
+            Position++;
+            return value;
+        }
     }
-
+}
