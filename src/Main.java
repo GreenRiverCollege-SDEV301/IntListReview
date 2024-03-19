@@ -1,15 +1,34 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.util.Iterator;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    int [] arrayofNumbers = new int[10];
+
+     IntList list1 = new Array();
+     IntList list2 = new Linkedintlist();
+
+     list1.addBack(42);
+     list1.addBack(82);
+     list1.addBack(97);
+list1.add(10,5);
+        System.out.println(list1);
+        System.out.println(list1.contains(97));
+
+
+
+//        for(int value : list1){
+//            System.out.println(value);
+//
+//        }
+//        System.out.println("----------");
+//        Iterator<Integer> itr = list1.iterator();
+//        while(itr.hasNext()){
+//            int value= itr.next();
+//            System.out.println(value);
         }
     }
-}
+
+
+
+
