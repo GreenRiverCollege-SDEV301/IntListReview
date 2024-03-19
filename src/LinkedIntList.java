@@ -12,6 +12,7 @@ public class LinkedIntList implements  IntList{
             next = null;
         }
 
+        // T = 2 is O(1) constant
         public Node (int data, Node next) {
             this.data = data;
             this.next = next;
@@ -22,6 +23,9 @@ public class LinkedIntList implements  IntList{
     private Node head;      //address of first node in list
     private int size;       // number of nodes/items in list
 
+    /**
+     * T = 2 is O(1) constant
+     */
     public LinkedIntList() {
         head = null;
         size = 0;
@@ -31,6 +35,8 @@ public class LinkedIntList implements  IntList{
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
      * subsequent values to the right.
+     *
+     * T = 6 is O(1) constant
      *
      * @param value value to be inserted
      */
@@ -53,6 +59,10 @@ public class LinkedIntList implements  IntList{
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
+     *
+     * If list is empty (go into if). T = 7 which is O(1) constant time
+     * If list not empty (go into else). T = 2 * size + 8 which is O(n) linear time
+     *                                   T = 2n + 8
      *
      * @param value value to be inserted
      */
@@ -91,7 +101,23 @@ public class LinkedIntList implements  IntList{
      */
     @Override
     public void add(int index, int value) {
+        if(head == null) {
+            throw new IndexOutOfBoundsException("Nothing in list!");
+        }
+        else if (index > size) {
+            throw new IndexOutOfBoundsException("Index out of bounds!");
+        }
+        else {
+            Node current = head;
 
+            // move before to the index node
+            for (int i = 1; i < index; i++) {
+                current = current.next;
+            }
+            // put in the node between the nodes
+            Node newNode = new Node(value, current.next);
+            current.next = newNode;
+        }
     }
 
     /**
@@ -158,6 +184,7 @@ public class LinkedIntList implements  IntList{
                 // cannot make it past head.next because doesn't exist
                 head = null;
             }
+            size--;
             return data;
         }
         // start at 1, needs to have access to the index after current one
@@ -176,6 +203,7 @@ public class LinkedIntList implements  IntList{
                     // if we can skip over current.next, skip
                     current.next = current.next.next;
                 }
+                size--;
                 return i;
             }
             current = current.next;
@@ -186,6 +214,9 @@ public class LinkedIntList implements  IntList{
 
     /**
      * Returns the value at the specified position in the list.
+     *
+     * O(n) linear - to get an item at an index, I have to start at the
+     * head and walk up to the size positions over 
      *
      * @param index index of the value to return
      * @return the value at the specified position in this list

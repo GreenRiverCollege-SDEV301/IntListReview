@@ -90,7 +90,27 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
+        // check if index is out of range
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index out of range!");
+        }
+        // adding last item?
+        else if (size == index){
+            addBack(value);
 
+        }
+        else {
+            // shifts all items over to right (if needed)
+            for (int i = size; i > index; i--) {
+                // resize
+                if (size == buffer.length) {
+                    resize(2*buffer.length);
+                }
+                buffer[i] = buffer[i-1];
+            }
+            buffer[index] = value;
+        }
+        size++;
     }
 
     /**
@@ -140,7 +160,19 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if(size==0) {
+            throw new IllegalStateException("ArrayList is empty!");
+        } else if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Out of index range!");
+        }
+
+        int savedValue = buffer[index];
+        // shifts all other units to the left
+        for (int i = index; i < size; i++) {
+            buffer[i] = buffer[i+1];
+        }
+        size--;
+        return savedValue;
     }
 
     /**
@@ -166,6 +198,11 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean contains(int value) {
+        for (int i = 0; i < size; i++) {
+            if(buffer[i] == value) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -181,7 +218,12 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for (int i = 0; i < size; i++) {
+            if(buffer[i] == value) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -211,10 +253,12 @@ public class ArrayIntList implements IntList{
     /**
      * Removes all the values from this list.
      * The list will be empty after this call returns.
+     * Fast method, constant time, O(1)
      */
     @Override
     public void clear() {
-
+        buffer = new int[INITIAL_CAPACITY];
+        size = 0;
     }
 
     /**

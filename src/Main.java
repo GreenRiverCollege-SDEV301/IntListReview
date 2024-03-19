@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class Main {
@@ -9,10 +10,14 @@ public class Main {
         IntList list1 = new ArrayIntList();
         IntList list2 = new LinkedIntList();
 
+        System.out.println(Arrays.toString(arrayOfNumbers));
         //adds 3 ints to the back of the list
         list1.addBack(42);
         list1.addBack(82);
         list1.addBack(97);
+
+        System.out.println(list1);
+        list1.remove(2);
 
         System.out.println(list1);
 
@@ -41,6 +46,10 @@ public class Main {
         list2.addFront(7);
         list2.addFront(4);
         list2.addBack(18);
+
+        System.out.println(list2);
+
+        list2.add(2, 42);
 
         System.out.println(list2);
 
@@ -86,5 +95,10 @@ public class Main {
         System.out.println(list2);
         System.out.println(list2.isEmpty());
 
+    }
+
+    public static void tryout(int one, int two, int three, int four, int five) {
+        int[] array = new int[5];
+        array.toString();
     }
 }

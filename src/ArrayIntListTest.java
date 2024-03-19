@@ -1,13 +1,38 @@
-import java.lang.reflect.Array;
+import java.sql.Array;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayIntListTest {
 
+    // addFront() --------------------------------------------
     @org.junit.jupiter.api.Test
-    void addFront() {
+    void addFrontWithEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(42);
+        assertEquals(theList.get(0), 42);
+    }
+    @org.junit.jupiter.api.Test
+    void addFrontWithNonEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addFront(1);
+        theList.addFront(2);
+        theList.addFront(3);
+        theList.addFront(4);
+        theList.addFront(42);
+        String out = theList.toString();
+        assertEquals(out, "[42, 4, 3, 2, 1]");
+    }
+    @org.junit.jupiter.api.Test
+    void addFrontWithResizedList() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addFront(i);
+        }
+        theList.addFront(42);
+        assertEquals(theList.get(0), 42);
     }
 
+    // addBack() --------------------------------------------
     @org.junit.jupiter.api.Test
     void addBackWithEmptyList() {
         ArrayIntList theList = new ArrayIntList();
@@ -49,14 +74,61 @@ class ArrayIntListTest {
         assertEquals(theList.get(theList.size()-1), 42);
     }
 
+    // add() ----------------------------------
     @org.junit.jupiter.api.Test
-    void add() {
+    void addWithEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.add(0,42);
+        assertEquals(theList.get(0), 42);
+    }
+
+    @org.junit.jupiter.api.Test
+    void addAt10() {
+        ArrayIntList theList = new ArrayIntList();
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.add(10,42);});
+
+    }
+
+    @org.junit.jupiter.api.Test
+    void addWithFullList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(10);
+        theList.addBack(11);
+        theList.addBack(12);
+        theList.addBack(13);
+        theList.addBack(14);
+        theList.addBack(15);
+        theList.addBack(16);
+        theList.addBack(17);
+        theList.addBack(18);
+        theList.addBack(19);
+        theList.add(5,42);
+        assertEquals(theList.toString(), "[10, 11, 12, 13, 14, 42, 15, 16, 17, 18, 19]");
+    }
+
+    @org.junit.jupiter.api.Test
+    void addFirstWithFullList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(10);
+        theList.addBack(11);
+        theList.addBack(12);
+        theList.addBack(13);
+        theList.addBack(14);
+        theList.addBack(15);
+        theList.addBack(16);
+        theList.addBack(17);
+        theList.addBack(18);
+        theList.addBack(19);
+        theList.add(0,42);
+        assertEquals(theList.toString(), "[42, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]");
     }
 
     @org.junit.jupiter.api.Test
     void removeFront() {
     }
 
+    // removeBack() -------------------------------------------
     @org.junit.jupiter.api.Test
     void removeBackFromEmptyList() {
         ArrayIntList theList = new ArrayIntList();
