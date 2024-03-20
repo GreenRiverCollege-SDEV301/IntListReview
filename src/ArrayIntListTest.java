@@ -1,4 +1,5 @@
 import java.sql.Array;
+import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -124,8 +125,37 @@ class ArrayIntListTest {
         assertEquals(theList.toString(), "[42, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]");
     }
 
+    // removeFront() ------------------------------------------
     @org.junit.jupiter.api.Test
-    void removeFront() {
+    void removeFrontFromEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+
+        theList.removeFront();
+        String out = theList.toString();
+        assertEquals(out, "[]");
+    }
+    @org.junit.jupiter.api.Test
+    void removeFrontFromListOf10() {
+        ArrayIntList theList = new ArrayIntList();
+
+        // fill list
+        for (int i = 0; i < 10; i++) {
+            theList.addFront(i);
+        }
+        theList.removeFront();
+
+        String out = theList.toString();
+        assertEquals(out, "[8, 7, 6, 5, 4, 3, 2, 1, 0]");
+    }
+    @org.junit.jupiter.api.Test
+    void removeFrontSizeTest() {
+        ArrayIntList theList = new ArrayIntList();
+
+        theList.addFront(42);
+        theList.removeFront();
+
+        String out = theList.toString();
+        assertEquals(0, theList.size());
     }
 
     // removeBack() -------------------------------------------
@@ -157,40 +187,180 @@ class ArrayIntListTest {
         assertEquals(0, theList.size());
     }
 
-
+    // remove() ------------------------------------------------
     @org.junit.jupiter.api.Test
-    void remove() {
+    void removeFromEmptyList() {
+       ArrayIntList theList = new ArrayIntList();
+        assertThrowsExactly(IllegalStateException.class,
+                () -> {theList.remove(0);});
     }
-
     @org.junit.jupiter.api.Test
-    void get() {
+    void removeOutOfBoundsPositive() {
+       ArrayIntList theList = new ArrayIntList();
+       theList.addFront(1);
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.remove(1);});
     }
-
     @org.junit.jupiter.api.Test
-    void contains() {
+    void removeOutOfBoundsNegative() {
+       ArrayIntList theList = new ArrayIntList();
+       theList.addFront(1);
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.remove(-1);});
     }
-
     @org.junit.jupiter.api.Test
-    void indexOf() {
+    void removeFromListOf10() {
+       ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        theList.remove(4);
+        String out = theList.toString();
+        assertEquals(out, "[0, 1, 2, 3, 5, 6, 7, 8, 9]");
     }
-
     @org.junit.jupiter.api.Test
-    void isEmpty() {
+    void removeLastItemFromListOf10() {
+       ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        theList.remove(9);
+        String out = theList.toString();
+        assertEquals(out, "[0, 1, 2, 3, 4, 5, 6, 7, 8]");
     }
-
+    // get() ---------------------------------------------------
     @org.junit.jupiter.api.Test
-    void size() {
+    void getFromEmptyList() {
+        ArrayIntList theList = new ArrayIntList();
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.get(0);});
     }
-
     @org.junit.jupiter.api.Test
-    void clear() {
+    void getNegativeOutOfBounds() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.get(-1);});
+    }
+    @org.junit.jupiter.api.Test
+    void getPositiveOutOfBounds() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(42);
+        assertThrowsExactly(IndexOutOfBoundsException.class,
+                () -> {theList.get(1);});
+    }
+    @org.junit.jupiter.api.Test
+    void getMiddleOfList() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(1);
+        theList.addBack(2);
+        theList.addBack(42);
+        theList.addBack(4);
+        assertEquals(theList.get(2), 42);
+    }
+    // contains() ---------------------------------------------
+    @org.junit.jupiter.api.Test
+    void containsNotThere() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertFalse(theList.contains(42));
+    }
+    @org.junit.jupiter.api.Test
+    void containsThere() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertTrue(theList.contains(4));
+    }
+    // indexOf() --------------------------------------------
+    @org.junit.jupiter.api.Test
+    void indexOfNotThere() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertEquals(theList.indexOf(42), -1);
+    }
+    @org.junit.jupiter.api.Test
+    void indexOfThere() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertEquals(theList.indexOf(2), 2);
+    }
+    // isEmpty() ------------------------------------------------
+    @org.junit.jupiter.api.Test
+    void isEmptyEmpty() {
+        ArrayIntList theList = new ArrayIntList();
+        assertTrue(theList.isEmpty());
+    }
+    @org.junit.jupiter.api.Test
+    void isEmptyNotEmpty() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertFalse(theList.isEmpty());
+    }
+    // size() -------------------------------------------
+    @org.junit.jupiter.api.Test
+    void sizeEmpty() {
+        ArrayIntList theList = new ArrayIntList();
+        assertEquals(theList.size(), 0);
+    }
+    @org.junit.jupiter.api.Test
+    void sizeTen() {
+        ArrayIntList theList = new ArrayIntList();
+        for (int i = 0; i < 10; i++) {
+            theList.addBack(i);
+        }
+        assertEquals(theList.size(), 10);
+    }
+    // clear() ---------------------------------------------------
+    @org.junit.jupiter.api.Test
+    void clearSizeTest() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.clear();
+        assertEquals(theList.size(), 0);
+    }
+    @org.junit.jupiter.api.Test
+    void clearListTest() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.clear();
+        String out = theList.toString();
+        assertEquals(out, "[]");
     }
 
     @org.junit.jupiter.api.Test
     void iterator() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(1);
+        theList.addBack(2);
+        theList.addBack(3);
+        theList.addBack(4);
+        theList.addBack(5);
+        int total = 0;
+        Iterator<Integer> itr = theList.iterator();
+        while (itr.hasNext()) {
+            total = total+itr.next();
+        }
+        assertEquals(total, 15);
     }
 
     @org.junit.jupiter.api.Test
     void testToString() {
+        ArrayIntList theList = new ArrayIntList();
+        theList.addBack(1);
+        theList.addBack(2);
+        theList.addBack(3);
+        theList.addBack(4);
+        theList.addBack(5);
+        theList.removeFront();
+        String out = theList.toString();
+        assertEquals(out, "[2, 3, 4, 5]");
     }
 }

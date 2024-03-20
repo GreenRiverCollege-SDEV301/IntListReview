@@ -124,7 +124,12 @@ public class ArrayIntList implements IntList{
     public void removeFront() {
         // shift everything to the left by 1
         for (int i = 0; i < size; i++) {
-            buffer[i] = buffer[i+1];
+            // if the size is as large as buffer length, do something special
+            if(i == (buffer.length-1)  && size == buffer.length) {
+                buffer[i] = 0;
+            } else {
+                buffer[i] = buffer[i + 1];
+            }
         }
 
         // lower size
@@ -162,14 +167,19 @@ public class ArrayIntList implements IntList{
     public int remove(int index) {
         if(size==0) {
             throw new IllegalStateException("ArrayList is empty!");
-        } else if (index < 0 || index > size) {
+        } else if (index < 0 || index > size-1) {
             throw new IndexOutOfBoundsException("Out of index range!");
         }
 
         int savedValue = buffer[index];
         // shifts all other units to the left
         for (int i = index; i < size; i++) {
-            buffer[i] = buffer[i+1];
+            // if the size is as large as buffer length, do something special
+            if(i == (buffer.length-1)  && size == buffer.length) {
+                buffer[i] = 0;
+            } else {
+                buffer[i] = buffer[i + 1];
+            }
         }
         size--;
         return savedValue;
@@ -185,6 +195,9 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public int get(int index) {
+        if (index < 0 || index > size-1 || size == 0) {
+            throw new IndexOutOfBoundsException("Out of index range!");
+        }
         return buffer[index];
     }
 
@@ -235,7 +248,7 @@ public class ArrayIntList implements IntList{
      */
     @Override
     public boolean isEmpty() {
-        return size != 0;
+        return size == 0;
     }
 
     /**
