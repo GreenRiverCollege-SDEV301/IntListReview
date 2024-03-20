@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayIntList implements IntList{
 
@@ -19,6 +20,19 @@ public class ArrayIntList implements IntList{
         buffer = new int[INITIAL_CAPACITY];
         size = 0;
     }
+
+    /**
+     * Prepends (inserts) the specified value at the front of the list (at index)
+     * Shifts the value currently at the front of the list (if any) and any
+     * subsequent values to the right
+     *
+     * This is a relatively slow operation
+     * Linear time - O(size)
+     * all values in the buffer have to be shifted to the right
+     * resize will also increase the linear time
+     *
+     * @param value value to be inserted
+     */
     @Override
     public void addFront(int value) {
         if (size == buffer.length ){
@@ -68,6 +82,19 @@ private void resize(int newSize){
     @Override
     public void add(int index, int value) {
 
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index out of Range.");
+        }else{
+            if (size == buffer.length ){
+                resize(buffer.length+10);
+            }
+            for (int i = size; i >index; i--){
+                buffer[i] = buffer[i-1];
+            }
+            buffer[index]= value;
+            size ++;
+        }
+
     }
 
     /**
@@ -77,6 +104,10 @@ private void resize(int newSize){
      */
     @Override
     public void removeFront() {
+        if (size ==0){
+            throw new IllegalStateException("Already Empty!");
+        }
+
         size--;
         for (int i = 0; i <size; i++){
             buffer[i] = buffer[i+1];
@@ -110,7 +141,17 @@ private void resize(int newSize){
      */
     @Override
     public int remove(int index) {
-        return 0;
+        if (index < 0 || index > size - 1) {
+            throw new IndexOutOfBoundsException("Index out of Range.");
+        } else {
+            int removedValue = buffer[index];
+            size--;
+            for (int i = index; i < size; i++){
+                buffer[i] = buffer[i+1];
+            }
+            buffer[size]=0;
+            return removedValue;
+        }
     }
 
     /**
@@ -122,7 +163,7 @@ private void resize(int newSize){
      */
     @Override
     public int get(int index) {
-        return 0;
+        return buffer[index];
     }
 
     /**
@@ -133,7 +174,14 @@ private void resize(int newSize){
      */
     @Override
     public boolean contains(int value) {
-        return false;
+        boolean result = false;
+        for(int num : buffer){
+            if(num == value){
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 
     /**
@@ -146,7 +194,12 @@ private void resize(int newSize){
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        for(int i = 0; i < size; i++){
+            if(buffer[i] == value){
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
@@ -156,7 +209,8 @@ private void resize(int newSize){
      */
     @Override
     public boolean isEmpty() {
-        return false;
+
+        return !(size > 0);
     }
 
     /**
@@ -166,7 +220,7 @@ private void resize(int newSize){
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -175,7 +229,8 @@ private void resize(int newSize){
      */
     @Override
     public void clear() {
-
+        buffer = new int[0];
+        size = 0;
     }
 
     /**
@@ -185,7 +240,7 @@ private void resize(int newSize){
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new ArrayIntListIterator();
     }
 
     @Override
@@ -205,4 +260,47 @@ private void resize(int newSize){
         sb.append("]");
         return sb.toString();
     }
+
+    // nested / inner/ helper class
+    public class ArrayIntListIterator implements Iterator<Integer>{
+        private int currentPosition;
+
+        public ArrayIntListIterator() {
+            currentPosition = 0;
+        }
+
+        /**
+         * Returns {@code true} if the iteration has more elements.
+         * (In other words, returns {@code true} if {@link #next} would
+         * return an element rather than throwing an exception.)
+         *
+         * @return {@code true} if the iteration has more elements
+         */
+        @Override
+        public boolean hasNext() {
+//            if (currentPosition < size) {
+//                return true;
+//            }else {
+//                return false;
+//            }
+            return (currentPosition < size());
+        }
+
+        /**
+         * Returns the next element in the iteration.
+         *
+         * @return the next element in the iteration
+         * @throws NoSuchElementException if the iteration has no more elements
+         */
+        @Override
+        public Integer next() {
+            if (!hasNext()){
+                throw new NoSuchElementException();
+            }
+            int value = get(currentPosition);
+            currentPosition ++;
+            return value;
+        }
+    }
+
 }

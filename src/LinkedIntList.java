@@ -1,6 +1,31 @@
 import java.util.Iterator;
+import java.util.function.Consumer;
 
 public class LinkedIntList implements IntList{
+
+    public class Node {
+    int data;
+    Node next;
+
+    public Node() {
+        data = 0;
+        next = null;
+    }
+
+    public Node(int data, Node next){
+        this.data = data;
+        this.next = next;
+    }
+    }
+
+    private Node head;
+    private int size;
+
+    public LinkedIntList() {
+        head = null;
+        size = 0;
+    }
+
     /**
      * Prepends (inserts) the specified value at the front of the list (at index 0).
      * Shifts the value currently at the front of the list (if any) and any
@@ -10,17 +35,35 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void addFront(int value) {
+//        Node temp = head;
+//        head = new Node(value, temp);
 
+        Node front = new Node(value, head);
+        head = front;
+        size ++;
     }
 
     /**
      * Appends (inserts) the specified value at the back of the list (at index size()-1).
      *
+     *if list is empty runtime is T=5 O(1) constant, if list not empty, T=2n+6 (n = size) O(n) linear
      * @param value value to be inserted
      */
     @Override
     public void addBack(int value) {
+        if(head == null){
+            head = new Node(value, null);
+        }else{
+            Node current = head;
 
+            while (current.next != null) {
+                current = current.next;
+            }
+
+            current.next = new Node(value, null);
+        }
+
+        size ++;
     }
 
     /**
@@ -34,7 +77,20 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void add(int index, int value) {
-
+        if (index < 0 || index > size){
+            throw new IndexOutOfBoundsException("Index out of Range.");
+        }else{
+            Node current = head;
+            if(index == 0){
+                head = new Node(value, current);
+            }else{
+                for (int i = 0; i < index-1; i++) {
+                    current = current.next;
+                }
+                current.next = new Node(value, current.next);
+            }
+            size++;
+        }
     }
 
     /**
@@ -44,7 +100,8 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void removeFront() {
-
+        head = head.next;
+        size--;
     }
 
     /**
@@ -53,7 +110,13 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void removeBack() {
+        Node current = head;
 
+        while (current.next.next != null) {
+            current = current.next;
+        }
+        current.next = null;
+        size --;
     }
 
     /**
@@ -67,7 +130,24 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int remove(int index) {
-        return 0;
+        int value = 0;
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index out of Range.");
+        } else {
+            Node current = head;
+            if(index == 0){
+                value = head.data;
+                head = head.next;
+            }else{
+                for (int i = 0; i < index-1; i++) {
+                    current = current.next;
+                }
+                value = current.next.data;
+                current.next = current.next.next;
+            }
+            size--;
+        }
+        return value;
     }
 
     /**
@@ -79,7 +159,15 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int get(int index) {
-        return 0;
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index out of Range.");
+        } else {
+            Node current = head;
+            for (int i = 0; i < index; i++) {
+                current = current.next;
+            }
+            return current.data;
+        }
     }
 
     /**
@@ -90,6 +178,13 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public boolean contains(int value) {
+        Node current = head;
+        while(current!=null){
+            if(current.data == value){
+                return true;
+            }
+            current = current.next;
+        }
         return false;
     }
 
@@ -103,7 +198,16 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int indexOf(int value) {
-        return 0;
+        Node current = head;
+        int index = 0;
+        while(current!=null){
+            if(current.data == value){
+                return index;
+            }
+            current = current.next;
+            index ++;
+        }
+        return -1;
     }
 
     /**
@@ -113,7 +217,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return head == null;
     }
 
     /**
@@ -123,7 +227,7 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     /**
@@ -132,7 +236,9 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public void clear() {
-
+        head.next = null;
+        head.data = 0;
+        size = 0;
     }
 
     /**
@@ -142,6 +248,59 @@ public class LinkedIntList implements IntList{
      */
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+        return new LinkedIterator();
+    }
+
+    public void print() {
+        Node current = head;
+
+        while (current != null) {
+            System.out.println(current.data);
+
+            current = current.next;
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        if (head == null) {
+            return "[]";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            Node current = head;
+            while (current.next != null){
+                sb.append(current.data);
+                sb.append(", ");
+                current = current.next;
+            }
+            sb.append(current.data);
+            sb.append("]");
+            return sb.toString();
+        }
+    }
+
+    public class LinkedIterator implements Iterator<Integer> {
+
+        private Node current;
+
+        public LinkedIterator(){
+            current = head;
+        }
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public Integer next() {
+            int result = current.data;
+            current = current.next;
+            return result;
+        }
+
     }
 }
+
+
